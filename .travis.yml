@@ -4,4 +4,7 @@ jdk:
   - openjdk7
 
 before_install:
- - chmod +x gradlew
+ - sudo chmod +x gradlew
+
+script:
+ - sudo chmod +x gradlew
