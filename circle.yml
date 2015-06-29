@@ -1,0 +1,5 @@
+deployment:
+  debug: # just a label; label names are completely up to you
+    branch: master
+    commands:
+      - ./gradlew testfairyDebug
