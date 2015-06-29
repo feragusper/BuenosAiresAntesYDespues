@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'testfairy'
 
 android {
     compileSdkVersion 22
@@ -16,6 +17,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    testfairyConfig {
+        apiKey "dd03ac43033035aad3d11fdaec75d5024f9cf7e5"
     }
 }
 
