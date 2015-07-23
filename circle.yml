@@ -6,4 +6,4 @@ deployment:
 machine:
   java:
     version:
-      oraclejdk8
+      openjdk8
