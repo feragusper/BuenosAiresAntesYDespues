@@ -3,3 +3,7 @@ deployment:
     branch: master
     commands:
       - ./gradlew testfairyDebug
+machine:
+  java:
+    version:
+      oraclejdk8
