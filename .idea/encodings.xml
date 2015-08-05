@@ -46,9 +46,8 @@
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/BaseFragment.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/HistoricalRecordDetailsFragment.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/HistoricalRecordListFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/drawable/selector_item_user.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/activity_historical_record_details.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/activity_historical_record_list.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/activity_user_details.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/fragment_user_details.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/fragment_user_list.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/row_user.xml" charset="windows-1252" />

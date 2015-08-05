@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2015 Fernando Cejas Open Source Project
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.feragusper.buenosairesantesydespues.di.modules;
 
 import com.feragusper.buenosairesantesydespues.di.PerActivity;
@@ -29,6 +14,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * @author Fernando.Perez
+ * @since 0.1
+ *
  * Dagger module that provides historicalRecord related collaborators.
  */
 @Module
@@ -46,17 +34,14 @@ public class HistoricalRecordModule {
     @Provides
     @PerActivity
     @Named("historicalRecordList")
-    UseCase provideGetHistoricalRecordListUseCase(
-            GetHistoricalRecordListUseCase getHistoricalRecordListUseCase) {
+    UseCase provideGetHistoricalRecordListUseCase(GetHistoricalRecordListUseCase getHistoricalRecordListUseCase) {
         return getHistoricalRecordListUseCase;
     }
 
     @Provides
     @PerActivity
     @Named("historicalRecordDetails")
-    UseCase provideGetHistoricalRecordDetailsUseCase(
-            HistoricalRecordRepository historicalRecordRepository, ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
+    UseCase provideGetHistoricalRecordDetailsUseCase(HistoricalRecordRepository historicalRecordRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new GetHistoricalRecordDetailsUseCase(historicalRecordId, historicalRecordRepository, threadExecutor, postExecutionThread);
     }
 }

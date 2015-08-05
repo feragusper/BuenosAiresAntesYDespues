@@ -1,13 +1,12 @@
-/**
- * Copyright (C) 2014 android10.org. All rights reserved.
- * @author Fernando Cejas (the android10 coder)
- */
 package com.feragusper.buenosairesantesydespues.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Window;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 
 import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.di.HasComponent;
@@ -17,60 +16,78 @@ import com.feragusper.buenosairesantesydespues.di.modules.HistoricalRecordModule
 import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordDetailsFragment;
 
 /**
+ * @author Fernando.Perez
+ * @since 0.1
+ * <p>
  * Activity that shows details of a certain historicalRecord.
  */
 public class HistoricalRecordDetailsActivity extends BaseActivity implements HasComponent<HistoricalRecordComponent> {
 
-  private static final String INTENT_EXTRA_PARAM_USER_ID = "org.android10.INTENT_PARAM_USER_ID";
-  private static final String INSTANCE_STATE_PARAM_USER_ID = "org.android10.STATE_PARAM_USER_ID";
+    private static final String INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.INTENT_PARAM_HISTORICAL_RECORD_ID";
+    private static final String INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.STATE_PARAM_HISTORICAL_RECORD_ID";
 
-  private int historicalRecordId;
-  private HistoricalRecordComponent historicalRecordComponent;
+    private int historicalRecordId;
+    private HistoricalRecordComponent historicalRecordComponent;
 
-  public static Intent getCallingIntent(Context context, int historicalRecordId) {
-    Intent callingIntent = new Intent(context, HistoricalRecordDetailsActivity.class);
-    callingIntent.putExtra(INTENT_EXTRA_PARAM_USER_ID, historicalRecordId);
+    public static Intent getCallingIntent(Context context, int historicalRecordId) {
+        Intent callingIntent = new Intent(context, HistoricalRecordDetailsActivity.class);
+        callingIntent.putExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID, historicalRecordId);
 
-    return callingIntent;
-  }
-
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-    setContentView(R.layout.activity_user_details);
-
-    this.initializeActivity(savedInstanceState);
-    this.initializeInjector();
-  }
-
-  @Override protected void onSaveInstanceState(Bundle outState) {
-    if (outState != null) {
-      outState.putInt(INSTANCE_STATE_PARAM_USER_ID, this.historicalRecordId);
+        return callingIntent;
     }
-    super.onSaveInstanceState(outState);
-  }
 
-  /**
-   * Initializes this activity.
-   */
-  private void initializeActivity(Bundle savedInstanceState) {
-    if (savedInstanceState == null) {
-      this.historicalRecordId = getIntent().getIntExtra(INTENT_EXTRA_PARAM_USER_ID, -1);
-      addFragment(R.id.fl_fragment, HistoricalRecordDetailsFragment.newInstance(this.historicalRecordId));
-    } else {
-      this.historicalRecordId = savedInstanceState.getInt(INSTANCE_STATE_PARAM_USER_ID);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Commented because of error = requestFeature() must be called before adding content
+//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setContentView(R.layout.activity_historical_record_details);
+
+        initializeToolBar();
+
+        this.initializeActivity(savedInstanceState);
+        this.initializeInjector();
     }
-  }
 
-  private void initializeInjector() {
-    this.historicalRecordComponent = DaggerHistoricalRecordComponent.builder()
-        .applicationComponent(getApplicationComponent())
-        .activityModule(getActivityModule())
-        .historicalRecordModule(new HistoricalRecordModule(this.historicalRecordId))
-        .build();
-  }
+    private void initializeToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+    }
 
-  @Override public HistoricalRecordComponent getComponent() {
-    return historicalRecordComponent;
-  }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putInt(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID, this.historicalRecordId);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Initializes this activity.
+     */
+    private void initializeActivity(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            this.historicalRecordId = getIntent().getIntExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID, -1);
+            addFragment(R.id.fl_fragment, HistoricalRecordDetailsFragment.newInstance(this.historicalRecordId));
+        } else {
+            this.historicalRecordId = savedInstanceState.getInt(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID);
+        }
+    }
+
+    private void initializeInjector() {
+        this.historicalRecordComponent = DaggerHistoricalRecordComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .historicalRecordModule(new HistoricalRecordModule(this.historicalRecordId))
+                .build();
+    }
+
+    @Override
+    public HistoricalRecordComponent getComponent() {
+        return historicalRecordComponent;
+    }
 }

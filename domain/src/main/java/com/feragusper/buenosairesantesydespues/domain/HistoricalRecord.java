@@ -1,93 +1,133 @@
-/**
- * Copyright (C) 2015 Fernando Cejas Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.feragusper.buenosairesantesydespues.domain;
 
 /**
+ * @author Fernando.Perez
+ * @since 0.1
+ * <p>
  * Class that represents a HistoricalRecord in the domain layer.
  */
 public class HistoricalRecord {
 
-  private final int historicalRecordId;
+    private final int historicalRecordId;
+    private String neighborhood;
+    private String imageURLBefore;
+    private String imageURLAfter;
+    private String address;
+    private double lat;
+    private double lng;
+    private String shareURL;
 
-  public HistoricalRecord(int historicalRecordId) {
-    this.historicalRecordId = historicalRecordId;
-  }
+    public HistoricalRecord(int historicalRecordId) {
+        this.historicalRecordId = historicalRecordId;
+    }
 
-  private String coverUrl;
-  private String fullName;
-  private String email;
-  private String description;
-  private int followers;
+    private String title;
 
-  public int getHistoricalRecordId() {
-    return historicalRecordId;
-  }
+    private String credits;
 
-  public String getCoverUrl() {
-    return coverUrl;
-  }
+    private String folder;
 
-  public void setCoverUrl(String coverUrl) {
-    this.coverUrl = coverUrl;
-  }
+    private String description;
 
-  public String getFullName() {
-    return fullName;
-  }
+    private String year;
 
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public String getCredits() {
+        return credits;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setCredits(String credits) {
+        this.credits = credits;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getFolder() {
+        return folder;
+    }
 
-  public int getFollowers() {
-    return followers;
-  }
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
 
-  public void setFollowers(int followers) {
-    this.followers = followers;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  @Override public String toString() {
-    StringBuilder stringBuilder = new StringBuilder();
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    stringBuilder.append("***** HistoricalRecord Details *****\n");
-    stringBuilder.append("id=" + this.getHistoricalRecordId() + "\n");
-    stringBuilder.append("cover url=" + this.getCoverUrl() + "\n");
-    stringBuilder.append("fullname=" + this.getFullName() + "\n");
-    stringBuilder.append("email=" + this.getEmail() + "\n");
-    stringBuilder.append("description=" + this.getDescription() + "\n");
-    stringBuilder.append("followers=" + this.getFollowers() + "\n");
-    stringBuilder.append("*******************************");
+    public int getHistoricalRecordId() {
+        return historicalRecordId;
+    }
 
-    return stringBuilder.toString();
-  }
+    public String getYear() {
+        return year;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getImageURLBefore() {
+        return imageURLBefore;
+    }
+
+    public String getImageURLAfter() {
+        return imageURLAfter;
+    }
+
+    public void setImageURLAfter(String imageURLAfter) {
+        this.imageURLAfter = imageURLAfter;
+    }
+
+    public void setImageURLBefore(String imageURLBefore) {
+        this.imageURLBefore = imageURLBefore;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setShareURL(String shareURL) {
+        this.shareURL = shareURL;
+    }
+
+    public String getShareURL() {
+        return shareURL;
+    }
 }

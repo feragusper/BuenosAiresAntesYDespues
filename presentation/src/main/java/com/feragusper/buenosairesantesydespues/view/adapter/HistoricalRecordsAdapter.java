@@ -54,7 +54,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
 
   @Override public void onBindViewHolder(UserViewHolder holder, final int position) {
     final HistoricalRecordModel userModel = this.usersCollection.get(position);
-    holder.textViewTitle.setText(userModel.getFullName());
+    holder.textViewTitle.setText(userModel.getTitle());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (HistoricalRecordsAdapter.this.onItemClickListener != null) {
