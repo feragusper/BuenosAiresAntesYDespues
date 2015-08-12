@@ -37,7 +37,7 @@ import butterknife.InjectView;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Fragment that shows details of a certain historical record.
  */
 public class HistoricalRecordDetailsFragment extends BaseFragment implements HistoricalRecordDetailsView {
@@ -97,39 +97,8 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         super.onViewCreated(view, savedInstanceState);
 
         mMap = ((SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-        ivBefore.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                int x = (int) event.getX();
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        ivBefore.getLayoutParams().width = x;
-                        slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
-                        sliderContainer.requestLayout();
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        ivAfter.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                int x = (int) event.getX();
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        ivBefore.getLayoutParams().width = x;
-                        slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
-                        sliderContainer.requestLayout();
-                        break;
-                }
-
-                return true;
-            }
-        });
+        ivBefore.setOnTouchListener(new BeforeAfterSliderTouchListener());
+        ivAfter.setOnTouchListener(new BeforeAfterSliderTouchListener());
     }
 
     @Override
@@ -183,7 +152,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
                 @Override
                 public void onError() {
-
+                    // Do nothing...
                 }
             });
             Picasso.with(getContext()).load(historicalRecord.getImageURLAfter()).into(ivAfter);
@@ -247,6 +216,23 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     private void loadUserDetails() {
         if (this.historicalRecordDetailsPresenter != null) {
             this.historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
+        }
+    }
+
+    private class BeforeAfterSliderTouchListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int x = (int) event.getX();
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_MOVE:
+                    ivBefore.getLayoutParams().width = x;
+                    slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
+                    sliderContainer.requestLayout();
+                    break;
+            }
+
+            return true;
         }
     }
 

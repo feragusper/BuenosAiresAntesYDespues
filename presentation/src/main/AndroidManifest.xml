@@ -23,7 +23,7 @@
             android:name=".view.activity.HistoricalRecordListActivity"
             android:label="@string/activity_title_historical_record_list" >
         </activity>
-        <activity android:name=".view.activity.HistoricalRecordDetailsActivity" >
+        <activity android:name=".view.activity.HistoricalRecordDetailsActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,11 +38,6 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".view.fragment.MapsActivity"
-            android:label="@string/title_activity_maps" >
-
-        </activity>
     </application>
 
 </manifest>
