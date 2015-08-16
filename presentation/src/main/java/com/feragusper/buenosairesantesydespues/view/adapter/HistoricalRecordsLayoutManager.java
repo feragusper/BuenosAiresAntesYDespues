@@ -1,17 +1,19 @@
-/**
- * Copyright (C) 2014 android10.org. All rights reserved.
- * @author Fernando Cejas (the android10 coder)
- */
 package com.feragusper.buenosairesantesydespues.view.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 /**
+ * @author Fernando.Perez
+ * @since 0.1
+ * <p>
  * Layout manager to position items inside a {@link android.support.v7.widget.RecyclerView}.
  */
-public class HistoricalRecordsLayoutManager extends LinearLayoutManager {
-  public HistoricalRecordsLayoutManager(Context context) {
-    super(context);
-  }
+public class HistoricalRecordsLayoutManager extends GridLayoutManager {
+    public HistoricalRecordsLayoutManager(Context context) {
+        super(context, 2);
+    }
+
 }

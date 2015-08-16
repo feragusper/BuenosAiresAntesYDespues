@@ -1,8 +1,3 @@
-/**
- * Copyright (C) 2014 android10.org. All rights reserved.
- *
- * @author Fernando Cejas (the android10 coder)
- */
 package com.feragusper.buenosairesantesydespues.view.activity;
 
 import android.content.Context;
@@ -18,6 +13,9 @@ import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordListFragment;
 
 /**
+ * @author Fernando.Perez
+ * @since 0.1
+ *
  * Activity that shows a list of HistoricalRecords.
  */
 public class HistoricalRecordListActivity extends BaseActivity implements HasComponent<HistoricalRecordComponent>,
@@ -32,8 +30,11 @@ public class HistoricalRecordListActivity extends BaseActivity implements HasCom
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        // Commented because of error = requestFeature() must be called before adding content
+//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_historical_record_list);
+
+        initializeToolBar();
 
         this.initializeInjector();
     }

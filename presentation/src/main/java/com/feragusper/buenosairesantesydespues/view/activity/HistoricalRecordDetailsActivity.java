@@ -49,21 +49,22 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
         this.initializeInjector();
     }
 
-    private void initializeToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
             outState.putInt(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID, this.historicalRecordId);
         }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void initializeToolBar() {
+        super.initializeToolBar();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
     }
 
     /**

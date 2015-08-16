@@ -10,6 +10,7 @@ import com.feragusper.buenosairesantesydespues.entity.mapper.HistoricalRecordEnt
 import com.feragusper.buenosairesantesydespues.exception.NetworkConnectionException;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -48,14 +49,18 @@ public class RestApiImpl implements RestApi {
 
                 if (isThereInternetConnection()) {
                     try {
-                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
-                        if (responseHistoricalRecordEntities != null) {
-                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(
-                                    responseHistoricalRecordEntities));
+//                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
+//                        if (responseHistoricalRecordEntities != null) {
+//                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(responseHistoricalRecordEntities));
+                        List<HistoricalRecordEntity> historicalRecordEntities = new ArrayList<HistoricalRecordEntity>();
+                            for (int i = 0; i < 20; i++) {
+                                historicalRecordEntities.add(HistoricalRecordEntity.newMockInstnace());
+                            }
+                        subscriber.onNext(historicalRecordEntities);
                             subscriber.onCompleted();
-                        } else {
+//                        } else {
                             subscriber.onError(new NetworkConnectionException());
-                        }
+//                        }
                     } catch (Exception e) {
                         subscriber.onError(new NetworkConnectionException(e.getCause()));
                     }
@@ -77,18 +82,7 @@ public class RestApiImpl implements RestApi {
                         String responseHistoricalRecordDetails = getHistoricalRecordDetailsFromApi(historicalRecordId);
                         if (responseHistoricalRecordDetails != null) {
 //                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(responseHistoricalRecordDetails));
-                            final HistoricalRecordEntity historicalRecordEntity = new HistoricalRecordEntity();
-                            historicalRecordEntity.setTitle("Av Virrey V\u00e9rtiz - 1916");
-                            historicalRecordEntity.setImageURLBefore("http://bsasantesydespues.com.ar/fotos/castillo_los_leones/antes.jpg");
-                            historicalRecordEntity.setImageURLAfter("http://bsasantesydespues.com.ar/fotos/castillo_los_leones/ahora.jpg");
-                            historicalRecordEntity.setAddress("Av Virrey V\u00e9rtiz y Jos\u00e9 Hern\u00e1ndez");
-                            historicalRecordEntity.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam imperdiet elit nisl, sit amet tristique lectus egestas id. Ut magna lorem, auctor id lobortis rhoncus, convallis non tortor.");
-                            historicalRecordEntity.setYear("1916");
-                            historicalRecordEntity.setNeighborhood("Belgrano");
-                            historicalRecordEntity.setLat(-34.561179);
-                            historicalRecordEntity.setLng(-58.445531);
-                            historicalRecordEntity.setShareURL("http://bsasantesydespues.com.ar/#42");
-                            subscriber.onNext(historicalRecordEntity);
+                            subscriber.onNext(HistoricalRecordEntity.newMockInstnace());
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());

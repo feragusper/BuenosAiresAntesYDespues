@@ -23,7 +23,7 @@
 
             <ImageView
                 android:id="@+id/iv_historical_record_before"
-                android:layout_width="200dp"
+                android:layout_width="@dimen/iv_historical_record_before_width"
                 android:layout_height="wrap_content"
                 android:scaleType="matrix"/>
 
@@ -55,7 +55,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/share_off"/>
+                    android:src="@drawable/share"/>
 
                 <TextView
                     android:id="@+id/tv_historical_record_address"

@@ -13,4 +13,5 @@
     <dimen name="lv_row_text_size">20sp</dimen>
     <dimen name="lv_row_icon_width">50dp</dimen>
     <dimen name="lv_row_icon_padding">5dp</dimen>
+    <dimen name="iv_historical_record_before_width">200dp</dimen>
 </resources>

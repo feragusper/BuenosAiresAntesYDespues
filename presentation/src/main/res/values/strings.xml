@@ -20,4 +20,6 @@
     <string name="exception_message_no_connection">There is no internet connection</string>
     <string name="exception_message_user_not_found">Cannot retrieve user data. Check your internet connection</string>
     <string name="title_activity_maps">Map</string>
+    <string name="share_subject">Buenos Aires Antes y Despues - %1$s</string>
+    <string name="share_body">Mira el antes y el despues de %1$s en => %2$s</string>
 </resources>

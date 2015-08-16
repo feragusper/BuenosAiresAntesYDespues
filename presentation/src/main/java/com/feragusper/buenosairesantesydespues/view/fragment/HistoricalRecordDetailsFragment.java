@@ -43,6 +43,7 @@ import butterknife.InjectView;
 public class HistoricalRecordDetailsFragment extends BaseFragment implements HistoricalRecordDetailsView {
 
     private static final String ARGUMENT_KEY_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.ARGUMENT_HISTORICAL_RECORD_ID";
+    private static final float PX_OFFSET_SLIDER = 25;
 
     private int historicalRecordId;
 
@@ -145,7 +146,8 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
             Picasso.with(getContext()).load(historicalRecord.getImageURLBefore()).into(ivBefore, new Callback() {
                 @Override
                 public void onSuccess() {
-                    slider.setX(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 190, getResources().getDisplayMetrics()));
+                    // getResources().getDimension(R.dimen.iv_historical_record_before_width)
+                    slider.setX(getResources().getDimension(R.dimen.iv_historical_record_before_width) - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
                     slider.requestLayout();
                     slider.setVisibility(View.VISIBLE);
                 }
@@ -170,7 +172,8 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
                 public void onClick(View v) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, historicalRecord.getShareURL());
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject, historicalRecord.getTitle()));
                     sendIntent.setType("text/plain");
                     startActivity(sendIntent);
                 }
@@ -227,7 +230,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
             switch (event.getAction()) {
                 case MotionEvent.ACTION_MOVE:
                     ivBefore.getLayoutParams().width = x;
-                    slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
+                    slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
                     sliderContainer.requestLayout();
                     break;
             }
