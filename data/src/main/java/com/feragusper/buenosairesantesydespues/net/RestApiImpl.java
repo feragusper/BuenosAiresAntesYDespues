@@ -3,11 +3,14 @@ package com.feragusper.buenosairesantesydespues.net;
 import android.net.ConnectivityManager;
 import android.content.Context;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.feragusper.buenosairesantesydespues.ApiConnection;
 import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.entity.mapper.HistoricalRecordEntityJsonMapper;
 import com.feragusper.buenosairesantesydespues.exception.NetworkConnectionException;
+
+import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import rx.Subscriber;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p/>
  * {@link RestApi} implementation for retrieving data from the network.
  */
 public class RestApiImpl implements RestApi {
@@ -49,19 +52,15 @@ public class RestApiImpl implements RestApi {
 
                 if (isThereInternetConnection()) {
                     try {
-//                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
-//                        if (responseHistoricalRecordEntities != null) {
-//                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(responseHistoricalRecordEntities));
-                        List<HistoricalRecordEntity> historicalRecordEntities = new ArrayList<HistoricalRecordEntity>();
-                            for (int i = 0; i < 20; i++) {
-                                historicalRecordEntities.add(HistoricalRecordEntity.newMockInstnace());
-                            }
-                        subscriber.onNext(historicalRecordEntities);
+                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
+                        if (responseHistoricalRecordEntities != null) {
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).getJSONObject("feed").getJSONArray("entry").toString()));
                             subscriber.onCompleted();
-//                        } else {
+                        } else {
                             subscriber.onError(new NetworkConnectionException());
-//                        }
+                        }
                     } catch (Exception e) {
+                        Log.e(this.getClass().getName(), "An error ocurred while trying to get the results for the list of historical records", e);
                         subscriber.onError(new NetworkConnectionException(e.getCause()));
                     }
                 } else {
@@ -72,22 +71,21 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<HistoricalRecordEntity> getHistoricalRecordEntityById(final int historicalRecordId) {
+    public Observable<HistoricalRecordEntity> getHistoricalRecordEntityById(String historicalRecordId) {
         return Observable.create(new Observable.OnSubscribe<HistoricalRecordEntity>() {
             @Override
             public void call(Subscriber<? super HistoricalRecordEntity> subscriber) {
-
                 if (isThereInternetConnection()) {
                     try {
-                        String responseHistoricalRecordDetails = getHistoricalRecordDetailsFromApi(historicalRecordId);
-                        if (responseHistoricalRecordDetails != null) {
-//                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(responseHistoricalRecordDetails));
-                            subscriber.onNext(HistoricalRecordEntity.newMockInstnace());
+                        String responseHistoricalRecordEntity = getHistoricalRecordEntityFromApi(historicalRecordId);
+                        if (responseHistoricalRecordEntity != null) {
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(new JSONObject(responseHistoricalRecordEntity).getJSONObject("entry").toString()));
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());
                         }
                     } catch (Exception e) {
+                        Log.e(this.getClass().getName(), "An error ocurred while trying to get the results for the list of historical records", e);
                         subscriber.onError(new NetworkConnectionException(e.getCause()));
                     }
                 } else {
@@ -97,13 +95,12 @@ public class RestApiImpl implements RestApi {
         });
     }
 
-    private String getHistoricalRecordEntitiesFromApi() throws MalformedURLException {
-        return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
+    private String getHistoricalRecordEntityFromApi(String historicalRecordId) throws MalformedURLException {
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BASE + "/" + historicalRecordId + API_PARAM_GET_HISTORICAL_RECORD_BASE_JSON).requestSyncCall();
     }
 
-    private String getHistoricalRecordDetailsFromApi(int historicalRecordId) throws MalformedURLException {
-        String apiUrl = API_URL_GET_USER_DETAILS + historicalRecordId + ".json";
-        return ApiConnection.createGET(apiUrl).requestSyncCall();
+    private String getHistoricalRecordEntitiesFromApi() throws MalformedURLException {
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST).requestSyncCall();
     }
 
     /**

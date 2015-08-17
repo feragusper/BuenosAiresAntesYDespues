@@ -20,10 +20,12 @@ public class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore
     private final RestApi restApi;
     private final HistoricalRecordCache historicalRecordCache;
 
-    private final Action1<HistoricalRecordEntity> saveToCacheAction =
-            historicalRecord -> {
-                if (historicalRecord != null) {
-                    CloudHistoricalRecordDataStore.this.historicalRecordCache.put(historicalRecord);
+    private final Action1<List<HistoricalRecordEntity>> saveToCacheAction =
+            historicalRecordList -> {
+                if (historicalRecordList != null) {
+                    for (HistoricalRecordEntity historicalRecordEntity : historicalRecordList) {
+                        CloudHistoricalRecordDataStore.this.historicalRecordCache.put(historicalRecordEntity);
+                    }
                 }
             };
 
@@ -40,11 +42,12 @@ public class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore
 
     @Override
     public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList() {
-        return this.restApi.getHistoricalRecordEntityList();
+        return this.restApi.getHistoricalRecordEntityList().doOnNext(saveToCacheAction);
     }
 
     @Override
-    public Observable<HistoricalRecordEntity> getHistoricalRecordEntityDetails(final int historicalRecordId) {
-        return this.restApi.getHistoricalRecordEntityById(historicalRecordId).doOnNext(saveToCacheAction);
+    public Observable<HistoricalRecordEntity> getHistoricalRecordEntityDetails(String historicalRecordId) {
+        return this.restApi.getHistoricalRecordEntityById(historicalRecordId);
     }
+
 }

@@ -4,6 +4,7 @@ import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,18 +34,24 @@ public class HistoricalRecordEntityDataMapper {
     public HistoricalRecord transform(HistoricalRecordEntity historicalRecordEntity) {
         HistoricalRecord historicalRecord = null;
         if (historicalRecordEntity != null) {
-            historicalRecord = new HistoricalRecord(historicalRecordEntity.getHistoricalRecordId());
+            final String[] historicalRecordEntityIdParts = historicalRecordEntity.getHistoricalRecordId().split("/");
+            historicalRecord = new HistoricalRecord(historicalRecordEntityIdParts[historicalRecordEntityIdParts.length - 1]);
+
             historicalRecord.setDescription(historicalRecordEntity.getFolder());
             historicalRecord.setTitle(historicalRecordEntity.getTitle());
             historicalRecord.setDescription(historicalRecordEntity.getDescription());
-            historicalRecord.setLat(historicalRecordEntity.getLat());
-            historicalRecord.setLng(historicalRecordEntity.getLng());
+
+            final String[] latLng = historicalRecordEntity.getGeo().split(",");
+
+            historicalRecord.setLat(Double.valueOf(latLng[0]));
+            historicalRecord.setLng(Double.valueOf(latLng[1]));
+
             historicalRecord.setYear(historicalRecordEntity.getYear());
             historicalRecord.setNeighborhood(historicalRecordEntity.getNeighborhood());
-            historicalRecord.setImageURLBefore(historicalRecordEntity.getImageURLBefore());
-            historicalRecord.setImageURLAfter(historicalRecordEntity.getImageURLAfter());
+            historicalRecord.setImageURLBefore("http://bsasantesydespues.com.ar/fotos/" + historicalRecordEntity.getFolder() + "/antes.jpg");
+            historicalRecord.setImageURLAfter("http://bsasantesydespues.com.ar/fotos/" + historicalRecordEntity.getFolder() + "/ahora.jpg");
             historicalRecord.setAddress(historicalRecordEntity.getAddress());
-            historicalRecord.setShareURL(historicalRecordEntity.getShareURL());
+            historicalRecord.setShareURL("http://bsasantesydespues.com.ar/#" + historicalRecordEntity.getHistoricalRecordId());
         }
 
         return historicalRecord;

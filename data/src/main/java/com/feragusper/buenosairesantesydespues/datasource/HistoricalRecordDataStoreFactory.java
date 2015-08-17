@@ -34,7 +34,7 @@ public class HistoricalRecordDataStoreFactory {
     /**
      * Create {@link HistoricalRecordDataStore} from a user id.
      */
-    public HistoricalRecordDataStore create(int historicalRecordId) {
+    public HistoricalRecordDataStore create(String historicalRecordId) {
         HistoricalRecordDataStore historicalRecordDataStore;
 
         if (!this.historicalRecordCache.isExpired() && this.historicalRecordCache.isCached(historicalRecordId)) {

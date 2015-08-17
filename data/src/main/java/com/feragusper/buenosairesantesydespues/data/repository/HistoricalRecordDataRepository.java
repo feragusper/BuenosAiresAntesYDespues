@@ -49,7 +49,7 @@ public class HistoricalRecordDataRepository implements HistoricalRecordRepositor
 
     @SuppressWarnings("Convert2MethodRef")
     @Override
-    public Observable<HistoricalRecord> getHistoricalRecord(int historicalRecordId) {
+    public Observable<HistoricalRecord> getHistoricalRecord(String historicalRecordId) {
         final HistoricalRecordDataStore historicalRecordDataStore = this.historicalRecordDataStoreFactory.create(historicalRecordId);
         return historicalRecordDataStore.getHistoricalRecordEntityDetails(historicalRecordId).map(historicalRecordEntity -> this.historicalRecordEntityDataMapper.transform(historicalRecordEntity));
     }

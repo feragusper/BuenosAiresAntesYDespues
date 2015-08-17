@@ -74,11 +74,11 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         super();
     }
 
-    public static HistoricalRecordDetailsFragment newInstance(int userId) {
+    public static HistoricalRecordDetailsFragment newInstance(String historicalRecordId) {
         HistoricalRecordDetailsFragment historicalRecordDetailsFragment = new HistoricalRecordDetailsFragment();
 
         Bundle argumentsBundle = new Bundle();
-        argumentsBundle.putInt(ARGUMENT_KEY_HISTORICAL_RECORD_ID, userId);
+        argumentsBundle.putString(ARGUMENT_KEY_HISTORICAL_RECORD_ID, historicalRecordId);
         historicalRecordDetailsFragment.setArguments(argumentsBundle);
 
         return historicalRecordDetailsFragment;

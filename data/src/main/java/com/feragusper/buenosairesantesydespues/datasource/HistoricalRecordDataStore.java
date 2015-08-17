@@ -23,5 +23,5 @@ public interface HistoricalRecordDataStore {
      *
      * @param historicalRecordId The id to retrieve user data.
      */
-    Observable<HistoricalRecordEntity> getHistoricalRecordEntityDetails(final int historicalRecordId);
+    Observable<HistoricalRecordEntity> getHistoricalRecordEntityDetails(final String historicalRecordId);
 }

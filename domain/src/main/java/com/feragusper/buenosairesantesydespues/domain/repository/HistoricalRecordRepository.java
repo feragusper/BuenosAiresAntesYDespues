@@ -21,7 +21,7 @@ public interface HistoricalRecordRepository {
     /**
      * Get an {@link Observable} which will emit a {@link HistoricalRecord}.
      *
-     * @param userId The user id used to retrieve user data.
+     * @param historicalRecordId The historical record id used to retrieve user data.
      */
-    Observable<HistoricalRecord> getHistoricalRecord(final int userId);
+    Observable<HistoricalRecord> getHistoricalRecord(final String historicalRecordId);
 }

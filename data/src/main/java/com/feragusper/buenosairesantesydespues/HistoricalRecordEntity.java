@@ -11,156 +11,74 @@ import com.google.gson.annotations.SerializedName;
 public class HistoricalRecordEntity {
 
     @SerializedName("id")
-    private int historicalRecordId;
+    private SpreadsheetString historicalRecordId;
 
-    private String title;
+    @SerializedName("gsx$titulo")
+    private SpreadsheetString title;
 
-    private String credits;
+    @SerializedName("gsx$creditos")
+    private SpreadsheetString credits;
 
-    private String folder;
+    @SerializedName("gsx$carpeta")
+    private SpreadsheetString folder;
 
-    private String description;
+    @SerializedName("gsx$descripcion")
+    private SpreadsheetString description;
 
-    private String geo;
+    @SerializedName("gsx$geo")
+    private SpreadsheetString geo;
 
-    private String year;
+    @SerializedName("gsx$año")
+    private SpreadsheetString year;
 
-    private String neighborhood;
-    private String imageURLBefore;
-    private String imageURLAfter;
-    private String address;
-    private double lat;
-    private double lng;
-    private String shareURL;
+    @SerializedName("gsx$direccion")
+    private SpreadsheetString address;
+
+    @SerializedName("gsx$barrio")
+    private SpreadsheetString neighborhood;
 
     public HistoricalRecordEntity() {
         //empty
     }
 
-    public int getHistoricalRecordId() {
-        return historicalRecordId;
-    }
-
-    public void setHistoricalRecordId(int historicalRecordId) {
-        this.historicalRecordId = historicalRecordId;
+    public String getHistoricalRecordId() {
+        return historicalRecordId.toString();
     }
 
     public String getTitle() {
-        return title;
+        return title.toString();
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title.setValue(title);
     }
 
     public String getCredits() {
-        return credits;
-    }
-
-    public void setCredits(String credits) {
-        this.credits = credits;
+        return credits.toString();
     }
 
     public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(String folder) {
-        this.folder = folder;
+        return folder.toString();
     }
 
     public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        return description.toString();
     }
 
     public String getGeo() {
-        return geo;
-    }
-
-    public void setGeo(String geo) {
-        this.geo = geo;
+        return geo.toString();
     }
 
     public String getYear() {
-        return year;
+        return year.toString();
     }
 
     public String getNeighborhood() {
-        return neighborhood;
-    }
-
-    public void setImageURLBefore(String imageURLBefore) {
-        this.imageURLBefore = imageURLBefore;
-    }
-
-    public void setImageURLAfter(String imageURLAfter) {
-        this.imageURLAfter = imageURLAfter;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
-    }
-
-    public String getImageURLBefore() {
-        return imageURLBefore;
-    }
-
-    public String getImageURLAfter() {
-        return imageURLAfter;
+        return neighborhood.toString();
     }
 
     public String getAddress() {
-        return address;
+        return address.toString();
     }
 
-    public double getLat() {
-        return lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public void setShareURL(String shareURL) {
-        this.shareURL = shareURL;
-    }
-
-    public String getShareURL() {
-        return shareURL;
-    }
-
-    public static HistoricalRecordEntity newMockInstnace() {
-        HistoricalRecordEntity historicalRecordEntity = new HistoricalRecordEntity();
-        historicalRecordEntity.setTitle("Av Virrey V\u00e9rtiz - 1916");
-        historicalRecordEntity.setImageURLBefore("http://bsasantesydespues.com.ar/fotos/castillo_los_leones/antes.jpg");
-        historicalRecordEntity.setImageURLAfter("http://bsasantesydespues.com.ar/fotos/castillo_los_leones/ahora.jpg");
-        historicalRecordEntity.setAddress("Av Virrey V\u00e9rtiz y Jos\u00e9 Hern\u00e1ndez");
-        historicalRecordEntity.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam imperdiet elit nisl, sit amet tristique lectus egestas id. Ut magna lorem, auctor id lobortis rhoncus, convallis non tortor.");
-        historicalRecordEntity.setYear("1916");
-        historicalRecordEntity.setNeighborhood("Belgrano");
-        historicalRecordEntity.setLat(-34.561179);
-        historicalRecordEntity.setLng(-58.445531);
-        historicalRecordEntity.setShareURL("http://bsasantesydespues.com.ar/#42");
-        return historicalRecordEntity;
-    }
 }

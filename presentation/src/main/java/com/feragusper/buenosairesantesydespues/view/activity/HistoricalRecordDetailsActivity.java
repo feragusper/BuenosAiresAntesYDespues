@@ -26,10 +26,10 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
     private static final String INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.INTENT_PARAM_HISTORICAL_RECORD_ID";
     private static final String INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.STATE_PARAM_HISTORICAL_RECORD_ID";
 
-    private int historicalRecordId;
+    private String historicalRecordId;
     private HistoricalRecordComponent historicalRecordComponent;
 
-    public static Intent getCallingIntent(Context context, int historicalRecordId) {
+    public static Intent getCallingIntent(Context context, String historicalRecordId) {
         Intent callingIntent = new Intent(context, HistoricalRecordDetailsActivity.class);
         callingIntent.putExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID, historicalRecordId);
 
@@ -52,7 +52,7 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (outState != null) {
-            outState.putInt(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID, this.historicalRecordId);
+            outState.putString(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID, this.historicalRecordId);
         }
         super.onSaveInstanceState(outState);
     }
@@ -72,10 +72,10 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
      */
     private void initializeActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            this.historicalRecordId = getIntent().getIntExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID, -1);
+            this.historicalRecordId = getIntent().getStringExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID);
             addFragment(R.id.fl_fragment, HistoricalRecordDetailsFragment.newInstance(this.historicalRecordId));
         } else {
-            this.historicalRecordId = savedInstanceState.getInt(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID);
+            this.historicalRecordId = savedInstanceState.getString(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID);
         }
     }
 

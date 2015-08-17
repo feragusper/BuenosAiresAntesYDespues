@@ -22,12 +22,12 @@ import dagger.Provides;
 @Module
 public class HistoricalRecordModule {
 
-    private int historicalRecordId = -1;
+    private String historicalRecordId = "";
 
     public HistoricalRecordModule() {
     }
 
-    public HistoricalRecordModule(int historicalRecordId) {
+    public HistoricalRecordModule(String historicalRecordId) {
         this.historicalRecordId = historicalRecordId;
     }
 

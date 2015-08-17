@@ -51,8 +51,9 @@ public class Navigator {
      * Goes to the user details screen.
      *
      * @param context A Context needed to open the destiny activity.
+     * @param historicalRecordId
      */
-    public void navigateToHistoricalRecordDetails(Context context, int historicalRecordId) {
+    public void navigateToHistoricalRecordDetails(Context context, String historicalRecordId) {
         if (context != null) {
             Intent intentToLaunch = HistoricalRecordDetailsActivity.getCallingIntent(context, historicalRecordId);
             context.startActivity(intentToLaunch);

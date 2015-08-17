@@ -28,7 +28,7 @@ public interface HistoricalRecordCache {
    *
    * @param userId The user id to retrieve data.
    */
-  Observable<HistoricalRecordEntity> get(final int userId);
+  Observable<HistoricalRecordEntity> get(final String userId);
 
   /**
    * Puts and element into the cache.
@@ -43,7 +43,7 @@ public interface HistoricalRecordCache {
    * @param historicalRecordId The id used to look for inside the cache.
    * @return true if the element is cached, otherwise false.
    */
-  boolean isCached(final int historicalRecordId);
+  boolean isCached(final String historicalRecordId);
 
   /**
    * Checks if the cache is expired.

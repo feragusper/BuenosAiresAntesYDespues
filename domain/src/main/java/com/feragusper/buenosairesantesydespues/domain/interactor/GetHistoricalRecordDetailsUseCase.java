@@ -17,13 +17,13 @@ import rx.Observable;
  */
 public class GetHistoricalRecordDetailsUseCase extends UseCase {
 
-    private final int historicalRecordId;
+    private final String historicalRecordId;
     private final HistoricalRecordRepository historicalRecordRepository;
 
     @Inject
-    public GetHistoricalRecordDetailsUseCase(int userId, HistoricalRecordRepository historicalRecordRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public GetHistoricalRecordDetailsUseCase(String historicalRecordId, HistoricalRecordRepository historicalRecordRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.historicalRecordId = userId;
+        this.historicalRecordId = historicalRecordId;
         this.historicalRecordRepository = historicalRecordRepository;
     }
 

@@ -8,7 +8,7 @@ package com.feragusper.buenosairesantesydespues.domain;
  */
 public class HistoricalRecord {
 
-    private final int historicalRecordId;
+    private final String historicalRecordId;
     private String neighborhood;
     private String imageURLBefore;
     private String imageURLAfter;
@@ -17,7 +17,7 @@ public class HistoricalRecord {
     private double lng;
     private String shareURL;
 
-    public HistoricalRecord(int historicalRecordId) {
+    public HistoricalRecord(String historicalRecordId) {
         this.historicalRecordId = historicalRecordId;
     }
 
@@ -63,7 +63,7 @@ public class HistoricalRecord {
         this.description = description;
     }
 
-    public int getHistoricalRecordId() {
+    public String getHistoricalRecordId() {
         return historicalRecordId;
     }
 
