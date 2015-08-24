@@ -60,8 +60,8 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
     @Override
     public void onBindViewHolder(HistoricalRecordViewHolder holder, final int position) {
         final HistoricalRecordModel historicalRecordModel = this.historicalRecordsCollection.get(position);
-        holder.textViewTitle.setText(historicalRecordModel.getAddress());
-        Picasso.with(context).load(historicalRecordModel.getImageURLBefore()).into(holder.avatar);
+        holder.textViewTitle.setText(historicalRecordModel.getTitle());
+        Picasso.with(context).load(historicalRecordModel.getThumbnail()).into(holder.avatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

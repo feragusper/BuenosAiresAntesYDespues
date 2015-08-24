@@ -21,6 +21,12 @@ import javax.inject.Singleton;
 @Singleton
 public class HistoricalRecordEntityDataMapper {
 
+    private static final String BASE_URL = "http://bsasantesydespues.com.ar";
+    private static final String IMAGE_URL = BASE_URL + "/fotos/";
+    private static final String BEFORE_IMAGE = "/antes.jpg";
+    private static final String AFTER_IMAGE = "/ahora.jpg";
+    private static final String THUMNAIL_IMAGE = "/th.jpg";
+
     @Inject
     public HistoricalRecordEntityDataMapper() {
     }
@@ -48,10 +54,11 @@ public class HistoricalRecordEntityDataMapper {
 
             historicalRecord.setYear(historicalRecordEntity.getYear());
             historicalRecord.setNeighborhood(historicalRecordEntity.getNeighborhood());
-            historicalRecord.setImageURLBefore("http://bsasantesydespues.com.ar/fotos/" + historicalRecordEntity.getFolder() + "/antes.jpg");
-            historicalRecord.setImageURLAfter("http://bsasantesydespues.com.ar/fotos/" + historicalRecordEntity.getFolder() + "/ahora.jpg");
+            historicalRecord.setImageURLBefore(IMAGE_URL + historicalRecordEntity.getFolder() + BEFORE_IMAGE);
+            historicalRecord.setImageURLAfter(IMAGE_URL + historicalRecordEntity.getFolder() + AFTER_IMAGE);
+            historicalRecord.setThumbnail(IMAGE_URL + historicalRecordEntity.getFolder() + THUMNAIL_IMAGE);
             historicalRecord.setAddress(historicalRecordEntity.getAddress());
-            historicalRecord.setShareURL("http://bsasantesydespues.com.ar/#" + historicalRecordEntity.getHistoricalRecordId());
+            historicalRecord.setShareURL(BASE_URL + "/#" + historicalRecordEntity.getHistoricalRecordId());
         }
 
         return historicalRecord;

@@ -44,6 +44,7 @@ public class HistoricalRecordModelDataMapper {
         historicalRecordModel.setAddress(historicalRecord.getAddress());
         historicalRecordModel.setImageURLBefore(historicalRecord.getImageURLBefore());
         historicalRecordModel.setImageURLAfter(historicalRecord.getImageURLAfter());
+        historicalRecordModel.setThumbnail(historicalRecord.getThumbnail());
         historicalRecordModel.setShareURL(historicalRecord.getShareURL());
 
         return historicalRecordModel;

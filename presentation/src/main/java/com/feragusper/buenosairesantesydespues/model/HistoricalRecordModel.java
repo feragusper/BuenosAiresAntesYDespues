@@ -15,6 +15,7 @@ public class HistoricalRecordModel {
     private double lat;
     private double lng;
     private String shareURL;
+    private String thumbnail;
 
     public HistoricalRecordModel(String historicalRecordId) {
         this.historicalRecordId = historicalRecordId;
@@ -130,5 +131,13 @@ public class HistoricalRecordModel {
 
     public String getShareURL() {
         return shareURL;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
