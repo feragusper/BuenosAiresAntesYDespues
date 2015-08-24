@@ -59,10 +59,8 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     TextView address;
     @InjectView(R.id.tv_historical_record_description)
     TextView description;
-    @InjectView(R.id.tv_historical_record_year)
-    TextView year;
-    @InjectView(R.id.tv_historical_record_neighborhood)
-    TextView neighborhood;
+    @InjectView(R.id.tv_historical_record_year_neighborhood)
+    TextView yearAndNeighborhood;
     @InjectView(R.id.slider_container)
     View sliderContainer;
     @InjectView(R.id.iv_historical_record_share)
@@ -158,9 +156,17 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
             });
             Picasso.with(getContext()).load(historicalRecord.getImageURLAfter()).into(ivAfter);
             address.setText(historicalRecord.getAddress());
-            description.setText(historicalRecord.getDescription());
-            year.setText(historicalRecord.getYear());
-            neighborhood.setText(historicalRecord.getNeighborhood());
+
+            if (historicalRecord.getDescription() != null && !historicalRecord.getDescription().isEmpty()) {
+                description.setText(historicalRecord.getDescription());
+                description.setVisibility(View.VISIBLE);
+            }
+
+            if ((historicalRecord.getYear() != null && !historicalRecord.getYear().isEmpty()) || (historicalRecord.getNeighborhood() != null && !historicalRecord.getNeighborhood().isEmpty())) {
+                yearAndNeighborhood.setText(historicalRecord.getYear() + " - " + historicalRecord.getNeighborhood());
+                yearAndNeighborhood.setVisibility(View.VISIBLE);
+            }
+
             final LatLng latLng = new LatLng(historicalRecord.getLat(), historicalRecord.getLng());
             mMap.addMarker(new MarkerOptions().position(latLng).title(historicalRecord.getAddress()).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_off)));
             CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(14.0f).build();
