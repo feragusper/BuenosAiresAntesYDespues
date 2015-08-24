@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2015 Fernando Cejas Open Source Project
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.feragusper.buenosairesantesydespues.presenter;
 
 import android.support.annotation.NonNull;
@@ -35,6 +20,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
+ * @author Fernando.Perez
+ * @since 0.1
+ * <p>
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
@@ -43,13 +31,13 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
     private HistoricalRecordListView viewListView;
 
-    private final UseCase getUserListUseCase;
-    private final HistoricalRecordModelDataMapper userModelDataMapper;
+    private final UseCase getHistoricalRecordListUseCase;
+    private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
 
     @Inject
-    public HistoricalRecordListPresenter(@Named("historicalRecordList") UseCase getUserListUserCase, HistoricalRecordModelDataMapper userModelDataMapper) {
-        this.getUserListUseCase = getUserListUserCase;
-        this.userModelDataMapper = userModelDataMapper;
+    public HistoricalRecordListPresenter(@Named("historicalRecordList") UseCase getHistoricalRecordListUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
+        this.getHistoricalRecordListUseCase = getHistoricalRecordListUseCase;
+        this.historicalRecordModelDataMapper = historicalRecordModelDataMapper;
     }
 
     public void setView(@NonNull HistoricalRecordListView view) {
@@ -66,26 +54,26 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
     @Override
     public void destroy() {
-        this.getUserListUseCase.unsubscribe();
+        this.getHistoricalRecordListUseCase.unsubscribe();
     }
 
     /**
-     * Initializes the presenter by start retrieving the user list.
+     * Initializes the presenter by start retrieving the historicalRecord list.
      */
     public void initialize() {
         this.loadUserList();
     }
 
     /**
-     * Loads all users.
+     * Loads all historicalRecords.
      */
     private void loadUserList() {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getUserList();
+        this.getHistoricalRecordList();
     }
 
-    public void onUserClicked(HistoricalRecordModel historicalRecordModel) {
+    public void onHistoricalRecordClicked(HistoricalRecordModel historicalRecordModel) {
         this.viewListView.viewHistoricalRecord(historicalRecordModel);
     }
 
@@ -111,14 +99,14 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         this.viewListView.showError(errorMessage);
     }
 
-    private void showUsersCollectionInView(Collection<HistoricalRecord> usersCollection) {
-        final Collection<HistoricalRecordModel> userModelsCollection =
-                this.userModelDataMapper.transform(usersCollection);
-        this.viewListView.renderHistoricalRecordList(userModelsCollection);
+    private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
+        final Collection<HistoricalRecordModel> historicalRecordModelsCollection =
+                this.historicalRecordModelDataMapper.transform(historicalRecordsCollection);
+        this.viewListView.renderHistoricalRecordList(historicalRecordModelsCollection);
     }
 
-    private void getUserList() {
-        this.getUserListUseCase.execute(new HistoricalRecordListSubscriber());
+    private void getHistoricalRecordList() {
+        this.getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
     }
 
     private final class HistoricalRecordListSubscriber extends DefaultSubscriber<List<HistoricalRecord>> {
@@ -137,7 +125,7 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
         @Override
         public void onNext(List<HistoricalRecord> historicalRecords) {
-            HistoricalRecordListPresenter.this.showUsersCollectionInView(historicalRecords);
+            HistoricalRecordListPresenter.this.showHistoricalRecordsCollectionInView(historicalRecords);
         }
     }
 }

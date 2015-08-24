@@ -29,7 +29,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
     private final Context context;
 
     public interface OnItemClickListener {
-        void onUserItemClicked(HistoricalRecordModel userModel);
+        void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel);
     }
 
     private List<HistoricalRecordModel> historicalRecordsCollection;
@@ -66,7 +66,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
             @Override
             public void onClick(View v) {
                 if (HistoricalRecordsAdapter.this.onItemClickListener != null) {
-                    HistoricalRecordsAdapter.this.onItemClickListener.onUserItemClicked(historicalRecordModel);
+                    HistoricalRecordsAdapter.this.onItemClickListener.onHistoricalRecordItemClicked(historicalRecordModel);
                 }
             }
         });
