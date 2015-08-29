@@ -22,4 +22,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="share_subject">Buenos Aires Antes y Despues - %1$s</string>
     <string name="share_body">Mira el antes y el despues de %1$s en => %2$s</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

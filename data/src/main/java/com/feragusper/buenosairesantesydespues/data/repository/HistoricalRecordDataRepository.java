@@ -17,7 +17,7 @@ import rx.Observable;
  * @author Fernando.Perez
  * @since 0.1
  * <p>
- * {@link HistoricalRecordRepository} for retrieving user data.
+ * {@link HistoricalRecordRepository} for retrieving HistoricalRecord data.
  */
 @Singleton
 public class HistoricalRecordDataRepository implements HistoricalRecordRepository {
@@ -43,8 +43,7 @@ public class HistoricalRecordDataRepository implements HistoricalRecordRepositor
     public Observable<List<HistoricalRecord>> getHistoricalRecords() {
         //we always get all users from the cloud
         final HistoricalRecordDataStore historicalRecordDataStore = this.historicalRecordDataStoreFactory.createCloudDataStore();
-        return historicalRecordDataStore.getHistoricalRecordEntityList()
-                .map(historicalRecordEntities -> this.historicalRecordEntityDataMapper.transform(historicalRecordEntities));
+        return historicalRecordDataStore.getHistoricalRecordEntityList().map(historicalRecordEntities -> this.historicalRecordEntityDataMapper.transform(historicalRecordEntities));
     }
 
     @SuppressWarnings("Convert2MethodRef")
