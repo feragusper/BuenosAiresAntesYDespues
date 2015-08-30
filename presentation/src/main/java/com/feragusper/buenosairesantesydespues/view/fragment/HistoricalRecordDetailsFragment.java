@@ -17,6 +17,7 @@ import com.feragusper.buenosairesantesydespues.di.components.HistoricalRecordCom
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordDetailsPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordDetailsView;
+import com.feragusper.buenosairesantesydespues.view.widget.SlideImageView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,27 +43,20 @@ import butterknife.InjectView;
 public class HistoricalRecordDetailsFragment extends BaseFragment implements HistoricalRecordDetailsView {
 
     private static final String ARGUMENT_KEY_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.ARGUMENT_HISTORICAL_RECORD_ID";
-    private static final float PX_OFFSET_SLIDER = 25;
 
     private int historicalRecordId;
 
     @Inject
     HistoricalRecordDetailsPresenter historicalRecordDetailsPresenter;
 
-    @InjectView(R.id.iv_historical_record_before)
-    ImageView ivBefore;
-    @InjectView(R.id.iv_historical_record_after)
-    ImageView ivAfter;
-    @InjectView(R.id.iv_slider)
-    View slider;
+    @InjectView(R.id.siv_before_after)
+    SlideImageView slideImageView;
     @InjectView(R.id.tv_historical_record_address)
     TextView address;
     @InjectView(R.id.tv_historical_record_description)
     TextView description;
     @InjectView(R.id.tv_historical_record_year_neighborhood)
     TextView yearAndNeighborhood;
-    @InjectView(R.id.slider_container)
-    View sliderContainer;
     @InjectView(R.id.iv_historical_record_share)
     View ivHistoricalRecordShare;
     private GoogleMap mMap;
@@ -95,8 +89,6 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         super.onViewCreated(view, savedInstanceState);
 
         mMap = ((SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-        ivBefore.setOnTouchListener(new BeforeAfterSliderTouchListener());
-        ivAfter.setOnTouchListener(new BeforeAfterSliderTouchListener());
     }
 
     @Override
@@ -140,21 +132,8 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     public void renderHistoricalRecord(final HistoricalRecordModel historicalRecord) {
         if (historicalRecord != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(historicalRecord.getTitle());
-            Picasso.with(getContext()).load(historicalRecord.getImageURLBefore()).into(ivBefore, new Callback() {
-                @Override
-                public void onSuccess() {
-                    // getResources().getDimension(R.dimen.iv_historical_record_before_width)
-                    slider.setX(getResources().getDimension(R.dimen.iv_historical_record_before_width) - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
-                    slider.requestLayout();
-                    slider.setVisibility(View.VISIBLE);
-                }
 
-                @Override
-                public void onError() {
-                    // Do nothing...
-                }
-            });
-            Picasso.with(getContext()).load(historicalRecord.getImageURLAfter()).into(ivAfter);
+            slideImageView.setImageUrls(historicalRecord.getImageURLAfter(), historicalRecord.getImageURLBefore());
             address.setText(historicalRecord.getAddress());
 
             if (historicalRecord.getDescription() != null && !historicalRecord.getDescription().isEmpty()) {
@@ -224,23 +203,6 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     private void loadUserDetails() {
         if (this.historicalRecordDetailsPresenter != null) {
             this.historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
-        }
-    }
-
-    private class BeforeAfterSliderTouchListener implements View.OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            int x = (int) event.getX();
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_MOVE:
-                    ivBefore.getLayoutParams().width = x;
-                    slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
-                    sliderContainer.requestLayout();
-                    break;
-            }
-
-            return true;
         }
     }
 
