@@ -1,12 +1,12 @@
 package com.feragusper.buenosairesantesydespues.entity.mapper;
 
 import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
-import com.feragusper.buenosairesantesydespues.net.RestApi;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,7 +14,7 @@ import javax.inject.Inject;
 /**
  * @author Fernando.Perez
  * @since 0.1
- * <p/>
+ * <p>
  * Class used to transform from Strings representing json to valid objects.
  */
 public class HistoricalRecordEntityJsonMapper {
@@ -34,15 +34,7 @@ public class HistoricalRecordEntityJsonMapper {
      * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
      */
     public HistoricalRecordEntity transformHistoricalRecordEntity(String historicalRecordJsonResponse) throws JsonSyntaxException {
-        try {
-            Type historicalRecordEntityType = new TypeToken<HistoricalRecordEntity>() {
-            }.getType();
-            HistoricalRecordEntity historicalRecordEntity = this.gson.fromJson(historicalRecordJsonResponse, historicalRecordEntityType);
-
-            return historicalRecordEntity;
-        } catch (JsonSyntaxException jsonException) {
-            throw jsonException;
-        }
+        return this.gson.fromJson(historicalRecordJsonResponse, new TypeToken<HistoricalRecordEntity>() {}.getType());
     }
 
     /**
@@ -55,13 +47,10 @@ public class HistoricalRecordEntityJsonMapper {
     public List<HistoricalRecordEntity> transformUserEntityCollection(String historicalRecordListJsonResponse) throws JsonSyntaxException {
 
         List<HistoricalRecordEntity> historicalRecordEntityCollection;
-        try {
-            Type listOfHistoricalRecordEntityType = new TypeToken<List<HistoricalRecordEntity>>() {}.getType();
-            historicalRecordEntityCollection = this.gson.fromJson(historicalRecordListJsonResponse, listOfHistoricalRecordEntityType);
+            historicalRecordEntityCollection = this.gson.fromJson(historicalRecordListJsonResponse, new TypeToken<List<HistoricalRecordEntity>>() {}.getType());
+
+            Collections.reverse(historicalRecordEntityCollection);
 
             return historicalRecordEntityCollection;
-        } catch (JsonSyntaxException jsonException) {
-            throw jsonException;
-        }
     }
 }
