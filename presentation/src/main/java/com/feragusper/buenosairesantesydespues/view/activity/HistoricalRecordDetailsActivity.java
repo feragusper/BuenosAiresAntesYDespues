@@ -39,12 +39,6 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Commented because of error = requestFeature() must be called before adding content
-//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.activity_historical_record_details);
-
-        initializeToolBar();
-
         this.initializeActivity(savedInstanceState);
         this.initializeInjector();
     }
@@ -75,6 +69,11 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+    }
+
+    @Override
+    protected int getContentViewResourceId() {
+        return R.layout.activity_historical_record_details;
     }
 
     /**

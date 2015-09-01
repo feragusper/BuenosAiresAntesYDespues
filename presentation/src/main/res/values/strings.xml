@@ -13,5 +13,9 @@
     <string name="share_body">Mira el antes y el despues de %1$s en => %2$s</string>
 
     <!-- Menu -->
-    <string name="action_rate">Calificanos en el PlayStore</string>
+    <string name="rate_this_app">Calificanos!</string>
+    <string name="about">Acerca de</string>
+    <string name="send_feedback">Envianos tus comentarios</string>
+    <string name="version">Version %1$s</string>
+    <string name="send_feedback_subject">Feedback desde BAAD Android</string>
 </resources>

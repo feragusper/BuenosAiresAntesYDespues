@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,9 @@ import com.feragusper.buenosairesantesydespues.navigation.Navigator;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * @author Fernando.Perez
  * @since 0.1
@@ -31,12 +35,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject
     Navigator navigator;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getApplicationComponent().inject(this);
+        setContentView(getContentViewResourceId());
+        ButterKnife.inject(this);
+        initializeToolBar();
     }
+
+    protected abstract int getContentViewResourceId();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,14 +64,22 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_rate:
                 navigator.navigateToPlayStore(this);
                 return true;
+            case R.id.action_about:
+                navigator.navigateToAbout(this);
+                return true;
+            case R.id.action_send_feedback:
+                navigator.navigateToSendFeedback(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @CallSuper
     protected void initializeToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
     }
 
     /**

@@ -48,7 +48,6 @@
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/historical_record_item.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/view_progress.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/view_retry.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/view_user_details.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.di.components.HistoricalRecordComponent;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
+import com.feragusper.buenosairesantesydespues.navigation.Navigator;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordDetailsPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordDetailsView;
 import com.feragusper.buenosairesantesydespues.view.widget.SlideImageView;
@@ -151,15 +152,11 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
             CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(14.0f).build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             mMap.moveCamera(cameraUpdate);
+
             ivHistoricalRecordShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
-                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject, historicalRecord.getTitle()));
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
+                    navigateToShare(getContext(), historicalRecord);
                 }
             });
         }
@@ -197,17 +194,12 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         return getActivity().getApplicationContext();
     }
 
-    /**
-     * Loads all users.
-     */
-    private void loadUserDetails() {
-        if (this.historicalRecordDetailsPresenter != null) {
-            this.historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
-        }
+    private void navigateToShare(Context context, HistoricalRecordModel historicalRecord) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_subject, historicalRecord.getTitle()));
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
     }
-
-//    @OnClick(R.id.bt_retry)
-//    void onButtonRetryClick() {
-//        HistoricalRecordDetailsFragment.this.loadUserDetails();
-//    }
 }

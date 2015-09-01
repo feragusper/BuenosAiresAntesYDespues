@@ -2,6 +2,7 @@ package com.feragusper.buenosairesantesydespues.di.components;
 
 import com.feragusper.buenosairesantesydespues.di.PerActivity;
 import com.feragusper.buenosairesantesydespues.di.modules.ActivityModule;
+import com.feragusper.buenosairesantesydespues.di.modules.ApplicationModule;
 import com.feragusper.buenosairesantesydespues.di.modules.HistoricalRecordModule;
 import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordDetailsFragment;
 import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordListFragment;

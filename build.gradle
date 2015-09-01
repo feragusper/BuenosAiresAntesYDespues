@@ -1,32 +1,26 @@
 apply from: 'buildsystem/ci.gradle'
 apply from: 'buildsystem/dependencies.gradle'
 
-def getVersionCode = { ->
-    try {
-        def code = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'tag', '--list'
-            standardOutput = code
-        }
-        return code.toString().split("\n").size()
-    }
-    catch (ignored) {
-        return -1;
-    }
-}
-
 def getVersionName = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
+    def os = System.getProperty("os.name").toLowerCase()
+    def revision = new ByteArrayOutputStream()
+    if (!os.contains("windows")) {
         exec {
-            commandLine 'git', 'describe', '--tags', '--dirty'
-            standardOutput = stdout
+            executable "/bin/sh"
+            args "-c", "echo -n `git rev-list HEAD | wc -l | sed 's/^[ ^t]*//'`"
+            standardOutput = revision;
         }
-        return stdout.toString().trim()
+    } else {
+        exec {
+            executable "cmd"
+            args "/c", "git rev-list HEAD | find /c /v \"\""
+            standardOutput = revision;
+        }
+        revision = revision as String
+        revision = revision.trim()
     }
-    catch (ignored) {
-        return null;
-    }
+
+    return revision
 }
 
 buildscript {
@@ -47,8 +41,8 @@ allprojects {
     }
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
-        androidVersionCode = getVersionCode()
-        androidVersionName = getVersionName()
+        androidVersionCode = 1
+        androidVersionName = '0.1.0.' + getVersionName()
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         testApplicationId = 'com.feragusper.buenosairesantesydespues.presentation.test'
     }
