@@ -13,6 +13,9 @@ public class HistoricalRecordEntity {
     @SerializedName("id")
     private SpreadsheetString historicalRecordId;
 
+    @SerializedName("gsx$id")
+    private SpreadsheetString id;
+
     @SerializedName("gsx$titulo")
     private SpreadsheetString title;
 
@@ -81,4 +84,7 @@ public class HistoricalRecordEntity {
         return address.toString();
     }
 
+    public String getId() {
+        return id.toString();
+    }
 }

@@ -49,8 +49,6 @@ public class HistoricalRecordEntityJsonMapper {
         List<HistoricalRecordEntity> historicalRecordEntityCollection;
             historicalRecordEntityCollection = this.gson.fromJson(historicalRecordListJsonResponse, new TypeToken<List<HistoricalRecordEntity>>() {}.getType());
 
-            Collections.reverse(historicalRecordEntityCollection);
-
             return historicalRecordEntityCollection;
     }
 }

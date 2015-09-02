@@ -156,7 +156,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
             ivHistoricalRecordShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    navigateToShare(getContext(), historicalRecord);
+                    navigateToShare(historicalRecord);
                 }
             });
         }
@@ -194,12 +194,12 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         return getActivity().getApplicationContext();
     }
 
-    private void navigateToShare(Context context, HistoricalRecordModel historicalRecord) {
+    private void navigateToShare(HistoricalRecordModel historicalRecord) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_subject, historicalRecord.getTitle()));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getContext().getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.share_subject, historicalRecord.getTitle()));
         sendIntent.setType("text/plain");
-        context.startActivity(sendIntent);
+        getActivity().startActivity(sendIntent);
     }
 }

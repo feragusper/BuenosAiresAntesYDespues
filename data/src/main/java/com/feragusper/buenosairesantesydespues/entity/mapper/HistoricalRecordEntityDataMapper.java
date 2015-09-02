@@ -6,6 +6,7 @@ import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,7 +59,7 @@ public class HistoricalRecordEntityDataMapper {
             historicalRecord.setImageURLAfter(IMAGE_URL + historicalRecordEntity.getFolder() + AFTER_IMAGE);
             historicalRecord.setThumbnail(IMAGE_URL + historicalRecordEntity.getFolder() + THUMNAIL_IMAGE);
             historicalRecord.setAddress(historicalRecordEntity.getAddress());
-            historicalRecord.setShareURL(BASE_URL + "/#" + historicalRecordEntity.getHistoricalRecordId());
+            historicalRecord.setShareURL(BASE_URL + "/#" + historicalRecordEntity.getId());
         }
 
         return historicalRecord;
@@ -71,7 +72,7 @@ public class HistoricalRecordEntityDataMapper {
      * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
      */
     public List<HistoricalRecord> transform(Collection<HistoricalRecordEntity> historicalRecordEntityCollection) {
-        List<HistoricalRecord> historicalRecordList = new ArrayList<>(20);
+        List<HistoricalRecord> historicalRecordList = new ArrayList<>();
         HistoricalRecord historicalRecord;
         for (HistoricalRecordEntity historicalRecordEntity : historicalRecordEntityCollection) {
             historicalRecord = transform(historicalRecordEntity);
@@ -79,6 +80,8 @@ public class HistoricalRecordEntityDataMapper {
                 historicalRecordList.add(historicalRecord);
             }
         }
+
+        Collections.reverse(historicalRecordList);
 
         return historicalRecordList;
     }
