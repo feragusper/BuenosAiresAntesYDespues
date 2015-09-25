@@ -16,6 +16,7 @@ android {
         versionName globalConfiguration.getAt("androidVersionName")
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
         testApplicationId globalConfiguration.getAt("testApplicationId")
+        archivesBaseName = "BAAD-$versionName"
     }
 
     compileOptions {
@@ -36,7 +37,8 @@ android {
         abortOnError false
         ignoreWarnings true
         disable 'InvalidPackage'            //Some libraries have issues with this.
-        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'OldTargetApi'
+        //Lint gives this warning but SDK 20 would be Android L Beta.
         disable 'IconDensities'             //For testing purpose. This is safe to remove.
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
     }
@@ -48,9 +50,19 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('../buildsystem/release.keystore')
+            storePassword 'buenosairesantesydespues'
+            keyAlias 'baad'
+            keyPassword 'buenosairesantesydespues'
+        }
     }
 
     buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            debuggable false
+        }
         debug {
             signingConfig signingConfigs.debug
         }
@@ -84,6 +96,6 @@ dependencies {
     androidTestCompile presentationTestDependencies.testingSupportLib
 
     compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'com.google.android.gms:play-services:7.8.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
 }

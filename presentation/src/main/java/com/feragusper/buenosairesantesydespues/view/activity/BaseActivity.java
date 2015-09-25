@@ -47,6 +47,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         initializeToolBar();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.reset(this);
+    }
+
     protected abstract int getContentViewResourceId();
 
     @Override

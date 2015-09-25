@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/LICENSE" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/README.md" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/buildsystem" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/buildsystem/release.keystore" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/data-test/build.gradle" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/data/.gitignore" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/data/build.gradle" charset="windows-1252" />
