@@ -1,3 +1,7 @@
+dependencies:
+  pre:
+    - echo 'y' | android update sdk --filter build-tools-23.0.1 --no-ui --all
+
 deployment:
   debug: # just a label; label names are completely up to you
     branch: master
