@@ -15,7 +15,11 @@
     <!-- Menu -->
     <string name="rate_this_app">Calificanos!</string>
     <string name="about">Acerca de</string>
-    <string name="send_feedback">Envianos tus comentarios</string>
+    <string name="send_feedback">Feedback</string>
     <string name="version">Version %1$s</string>
     <string name="send_feedback_subject">Feedback desde BAAD Android</string>
+    <string name="about_history">Un viaje en el tiempo entre la Buenos Aires de ayer y hoy. La esencia de este proyecto se basa en una selección de fotos antiguas de la Capital Federal, a partir de las cuales buscamos imitar, en la actualidad, el ojo curioso de aquella época; el mismo lugar y ángulo del registro original.\n\n
+        La mayoría de las fotos antiguas son del Archivo General de la Nación y del grupo de Facebook <a href="https://www.facebook.com/groups/10915860738/?fref=nf">\"Fotos Antiguas de Buenos Aires\"</a>.
+        Si queres colaborar enviandonos fotos antiguas o tus propios antes y después envianos <a href="mailto:afotos@bsasantesydespues.com.ar">afotos@bsasantesydespues.com.ar</a>\n\n
+        ¡Gracias por sumarte a Buenos Aires antes y después!</string>
 </resources>

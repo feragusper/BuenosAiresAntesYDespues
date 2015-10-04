@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
@@ -23,9 +24,14 @@ public class AboutActivity extends BaseActivity {
     @InjectView(R.id.tv_app_version)
     TextView appVersion;
 
+    @InjectView(R.id.tv_about_history)
+    TextView aboutHistory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        aboutHistory.setMovementMethod(LinkMovementMethod.getInstance());
 
         try {
             appVersion.setText(getString(R.string.version, getPackageManager().getPackageInfo(getPackageName(), 0).versionName));
