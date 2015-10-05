@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="192dp"
-                android:layout_height="192dp"
-                android:padding="@dimen/lv_row_padding"
-                tools:ignore="UseCompoundDrawables">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="192dp"
+    android:layout_height="192dp"
+    android:padding="@dimen/lv_row_padding"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/avatar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:padding="5dp"
         android:ellipsize="end"
-        android:layout_margin="5dp"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:background="@color/black_almost_opaque"/>
 
 </RelativeLayout>
