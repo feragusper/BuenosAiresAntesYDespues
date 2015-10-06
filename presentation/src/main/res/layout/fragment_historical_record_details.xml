@@ -56,6 +56,12 @@
                 android:textStyle="italic"
                 android:visibility="gone" />
 
+            <TextView android:id="@+id/tv_credits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:textStyle="italic"/>
+
             <TextView
                 android:id="@+id/tv_historical_record_year_neighborhood"
                 android:layout_width="wrap_content"

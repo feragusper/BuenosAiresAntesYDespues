@@ -60,6 +60,9 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     TextView yearAndNeighborhood;
     @InjectView(R.id.iv_historical_record_share)
     View ivHistoricalRecordShare;
+    @InjectView(R.id.tv_credits)
+    TextView credits;
+
     private GoogleMap mMap;
 
     public HistoricalRecordDetailsFragment() {
@@ -129,6 +132,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         this.historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void renderHistoricalRecord(final HistoricalRecordModel historicalRecord) {
         if (historicalRecord != null) {
@@ -141,6 +145,8 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
                 description.setText(historicalRecord.getDescription());
                 description.setVisibility(View.VISIBLE);
             }
+
+            credits.setText(historicalRecord.getCredits());
 
             if ((historicalRecord.getYear() != null && !historicalRecord.getYear().isEmpty()) || (historicalRecord.getNeighborhood() != null && !historicalRecord.getNeighborhood().isEmpty())) {
                 yearAndNeighborhood.setText(historicalRecord.getYear() + " - " + historicalRecord.getNeighborhood());
@@ -159,6 +165,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
                     navigateToShare(historicalRecord);
                 }
             });
+
         }
     }
 

@@ -37,6 +37,7 @@ public class HistoricalRecordModelDataMapper {
         HistoricalRecordModel historicalRecordModel = new HistoricalRecordModel(historicalRecord.getHistoricalRecordId());
         historicalRecordModel.setTitle(historicalRecord.getTitle());
         historicalRecordModel.setDescription(historicalRecord.getDescription());
+        historicalRecordModel.setCredits(historicalRecord.getCredits());
         historicalRecordModel.setLat(historicalRecord.getLat());
         historicalRecordModel.setLng(historicalRecord.getLng());
         historicalRecordModel.setYear(historicalRecord.getYear());

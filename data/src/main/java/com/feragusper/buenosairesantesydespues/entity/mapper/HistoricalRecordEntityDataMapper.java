@@ -44,9 +44,9 @@ public class HistoricalRecordEntityDataMapper {
             final String[] historicalRecordEntityIdParts = historicalRecordEntity.getHistoricalRecordId().split("/");
             historicalRecord = new HistoricalRecord(historicalRecordEntityIdParts[historicalRecordEntityIdParts.length - 1]);
 
-            historicalRecord.setDescription(historicalRecordEntity.getFolder());
             historicalRecord.setTitle(historicalRecordEntity.getTitle());
             historicalRecord.setDescription(historicalRecordEntity.getDescription());
+            historicalRecord.setCredits(historicalRecordEntity.getCredits().replace(" - ", "\n"));
 
             final String[] latLng = historicalRecordEntity.getGeo().split(",");
 
