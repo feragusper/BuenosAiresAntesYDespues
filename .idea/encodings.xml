@@ -38,6 +38,7 @@
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/BaseActivity.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/HistoricalRecordDetailsActivity.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/HistoricalRecordListActivity.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/ToolbarActivity.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/adapter/HistoricalRecordsAdapter.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/adapter/HistoricalRecordsLayoutManager.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/BaseFragment.java" charset="windows-1252" />

@@ -4,13 +4,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.feragusper.buenosairesantesydespues.view.activity.SplashActivity">
+    tools:context="com.feragusper.buenosairesantesydespues.view.activity.SplashActivity"
+    android:background="@drawable/bkg_pattern">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/iv_splash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/splash"
-        android:background="@drawable/splash" />
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

@@ -21,7 +21,7 @@ import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordDet
  * <p>
  * Activity that shows details of a certain historicalRecord.
  */
-public class HistoricalRecordDetailsActivity extends BaseActivity implements HasComponent<HistoricalRecordComponent> {
+public class HistoricalRecordDetailsActivity extends ToolbarActivity implements HasComponent<HistoricalRecordComponent> {
 
     private static final String INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.INTENT_PARAM_HISTORICAL_RECORD_ID";
     private static final String INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.STATE_PARAM_HISTORICAL_RECORD_ID";
@@ -61,6 +61,7 @@ public class HistoricalRecordDetailsActivity extends BaseActivity implements Has
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void initializeToolBar() {
         super.initializeToolBar();

@@ -3,6 +3,12 @@ package com.feragusper.buenosairesantesydespues.view.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 
 import com.feragusper.buenosairesantesydespues.R;
 
@@ -10,6 +16,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.InjectView;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -19,34 +26,43 @@ import pl.droidsonroids.gif.GifImageView;
  * <p>
  * Activity that shows the splash of the application.
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     // Set the duration of the splash screen
     private static final long SPLASH_SCREEN_DELAY = 2500;
 
+    @InjectView(R.id.iv_logo)
+    ImageView logo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        try {
-            GifDrawable gifFromResource = new GifDrawable(getResources(), R.drawable.splash);
-            ((GifImageView) findViewById(R.id.iv_splash)).setImageDrawable(gifFromResource);
-            gifFromResource.setSpeed(new Float(0.5));
-        } catch (IOException e) {
-            Log.w(getClass().getSimpleName(), "An error ocured while trying to get the gif drawable", e);
-        }
 
-        TimerTask task = new TimerTask() {
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void run() {
-                // Start the next activity
+            public void onAnimationStart(Animation animation) {
+                // Do noting
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                logo.setVisibility(View.VISIBLE);
                 startActivity(HistoricalRecordListActivity.getCallingIntent(SplashActivity.this));
             }
-        };
 
-        // Simulate a long loading process on application startup.
-        Timer timer = new Timer();
-        timer.schedule(task, SPLASH_SCREEN_DELAY);
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // Do noting
+            }
+        });
+
+        logo.startAnimation(fadeIn);
+    }
+
+    @Override
+    protected int getContentViewResourceId() {
+        return R.layout.activity_splash;
     }
 
 }

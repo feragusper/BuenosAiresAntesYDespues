@@ -3,6 +3,8 @@ package com.feragusper.buenosairesantesydespues.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.Window;
 
 import com.feragusper.buenosairesantesydespues.R;
@@ -18,7 +20,7 @@ import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordLis
  *
  * Activity that shows a list of HistoricalRecords.
  */
-public class HistoricalRecordListActivity extends BaseActivity implements HasComponent<HistoricalRecordComponent>,
+public class HistoricalRecordListActivity extends ToolbarActivity implements HasComponent<HistoricalRecordComponent>,
         HistoricalRecordListFragment.HistoricalRecordListListener {
 
     public static Intent getCallingIntent(Context context) {
