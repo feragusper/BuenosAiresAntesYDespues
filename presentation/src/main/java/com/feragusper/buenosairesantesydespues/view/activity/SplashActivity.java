@@ -28,9 +28,6 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class SplashActivity extends BaseActivity {
 
-    // Set the duration of the splash screen
-    private static final long SPLASH_SCREEN_DELAY = 2500;
-
     @InjectView(R.id.iv_logo)
     ImageView logo;
 

@@ -19,7 +19,7 @@ import butterknife.InjectView;
  * <p>
  * Activity that shows the about of the applciation
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends ToolbarActivity {
 
     @InjectView(R.id.tv_app_version)
     TextView appVersion;

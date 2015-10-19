@@ -27,7 +27,7 @@ import javax.inject.Named;
 public class HistoricalRecordDetailsPresenter implements Presenter {
 
     /** id used to retrieve user details */
-    private int historicalRecordId;
+    private String historicalRecordId;
 
     private HistoricalRecordDetailsView viewDetailsView;
 
@@ -59,9 +59,10 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
 
     /**
      * Initializes the presenter by start retrieving user details.
+     * @param historicalRecordId The id of the Historical Record
      */
-    public void initialize(int userId) {
-        this.historicalRecordId = userId;
+    public void initialize(String historicalRecordId) {
+        this.historicalRecordId = historicalRecordId;
         this.loadHistoricalRecordDetails();
     }
 

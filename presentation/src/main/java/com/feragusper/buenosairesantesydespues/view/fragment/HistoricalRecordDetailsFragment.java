@@ -45,7 +45,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
     private static final String ARGUMENT_KEY_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.ARGUMENT_HISTORICAL_RECORD_ID";
 
-    private int historicalRecordId;
+    private String historicalRecordId;
 
     @Inject
     HistoricalRecordDetailsPresenter historicalRecordDetailsPresenter;
@@ -128,7 +128,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     private void initialize() {
         this.getComponent(HistoricalRecordComponent.class).inject(this);
         this.historicalRecordDetailsPresenter.setView(this);
-        this.historicalRecordId = getArguments().getInt(ARGUMENT_KEY_HISTORICAL_RECORD_ID);
+        this.historicalRecordId = getArguments().getString(ARGUMENT_KEY_HISTORICAL_RECORD_ID);
         this.historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
     }
 

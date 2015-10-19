@@ -17,9 +17,14 @@ import com.google.android.gms.analytics.Tracker;
  */
 public class AndroidApplication extends Application {
 
+    private static final int DISPATCH_PERIOD_IN_SECCOD = 30;
     private ApplicationComponent applicationComponent;
+
+    // Analytics
     private GoogleAnalytics analytics;
     private Tracker tracker;
+    private static final String TRACKER_ID_PROD = "UA-12804695-23";
+    private static final String TRACKER_ID_DEBUG = "UA-69017801-1";
 
     @Override
     public void onCreate() {
@@ -32,14 +37,11 @@ public class AndroidApplication extends Application {
     private void initializeAnalytics() {
         analytics = GoogleAnalytics.getInstance(this);
         analytics.enableAutoActivityReports(this);
-        analytics.setLocalDispatchPeriod(1800);
+        analytics.setLocalDispatchPeriod(DISPATCH_PERIOD_IN_SECCOD);
 
-        tracker = analytics.newTracker("UA-12804695-23");
+        tracker = analytics.newTracker(AndroidApplication.TRACKER_ID_PROD);
         tracker.enableExceptionReporting(true);
-        tracker.enableAdvertisingIdCollection(true);
         tracker.enableAutoActivityTracking(true);
-        tracker.setScreenName("Testing");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void initializeInjector() {

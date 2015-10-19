@@ -41,8 +41,8 @@ allprojects {
     }
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
-        androidVersionCode = 3
-        androidVersionName = '0.1.0.' + getVersionName()
+        androidVersionCode = 4
+        androidVersionName = '1.0.0.' + getVersionName()
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         testApplicationId = 'com.feragusper.buenosairesantesydespues.presentation.test'
     }
