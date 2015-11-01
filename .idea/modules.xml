@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Buenos_Aires_Antes_y_Despues.iml" filepath="$PROJECT_DIR$/Buenos_Aires_Antes_y_Despues.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BuenosAiresAntesYDespues.iml" filepath="$PROJECT_DIR$/BuenosAiresAntesYDespues.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
       <module fileurl="file://$PROJECT_DIR$/data-test/data-test.iml" filepath="$PROJECT_DIR$/data-test/data-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />

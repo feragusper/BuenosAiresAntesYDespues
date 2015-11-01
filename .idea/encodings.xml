@@ -1,54 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
-    <file url="file://$PROJECT_DIR$/LICENSE" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/README.md" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/buildsystem" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/buildsystem/release.keystore" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/data-test/build.gradle" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/data/.gitignore" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/data/build.gradle" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/data/src" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/data/src/main/java/com/feragusper/buenosairesantesydespues/cache/FileManager_Factory.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/data/src/main/java/com/feragusper/buenosairesantesydespues/cache/serializer/JsonSerializer_Factory.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/data/src/main/java/com/feragusper/buenosairesantesydespues/entity/mapper/UserEntityDataMapper_Factory.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/data/src/main/java/com/feragusper/buenosairesantesydespues/executor/JobExecutor_Factory.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/domain/build.gradle" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/domain/src" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/AndroidApplication.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/UIThread.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/HasComponent.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/PerActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/components/ActivityComponent.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/components/ApplicationComponent.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/components/HistoricalRecordComponent.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/modules/ActivityModule.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/modules/ApplicationModule.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/di/modules/HistoricalRecordModule.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/exception/ErrorMessageFactory.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/mapper/HistoricalRecordModelDataMapper.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/model/HistoricalRecordModel.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/navigation/Navigator.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/presenter/HistoricalRecordDetailsPresenter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/presenter/HistoricalRecordListPresenter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/presenter/Presenter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/HistoricalRecordDetailsView.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/LoadDataView.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/BaseActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/HistoricalRecordDetailsActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/HistoricalRecordListActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/activity/ToolbarActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/adapter/HistoricalRecordsAdapter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/adapter/HistoricalRecordsLayoutManager.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/BaseFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/HistoricalRecordDetailsFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/java/com/feragusper/buenosairesantesydespues/view/fragment/HistoricalRecordListFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/activity_historical_record_details.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/activity_historical_record_list.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/fragment_historical_record_list.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/historical_record_item.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/view_progress.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/presentation/src/main/res/layout/view_retry.xml" charset="windows-1252" />
+  <component name="Encoding">
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
