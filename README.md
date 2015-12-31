@@ -6,8 +6,8 @@ If you want to collaborate sending us old photos or your own before and after to
 
 Screenshots
 -----------------
-![List](/etc/list.png?raw=true "Optional Title")
-![Detail](/etc/detail.png?raw=true "Optional Title")
+![List](/etc/list.png?raw=true)
+![Detail](/etc/detail.png?raw=true)
 
 Support
 -----------------
