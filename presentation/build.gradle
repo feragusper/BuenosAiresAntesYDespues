@@ -43,6 +43,19 @@ android {
         disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
     }
 
+    afterEvaluate { project ->
+        def propsFile = rootProject.file('buildsystem/release.keystore.properties')
+        def configName = 'release'
+
+        if (propsFile.exists() && android.signingConfigs.hasProperty(configName)) {
+            def props = new Properties()
+            props.load(new FileInputStream(propsFile))
+            android.signingConfigs[configName].storePassword = props['storePassword']
+            android.signingConfigs[configName].keyAlias = props['keyAlias']
+            android.signingConfigs[configName].keyPassword = props['keyPassword']
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('../buildsystem/debug.keystore')
@@ -52,9 +65,6 @@ android {
         }
         release {
             storeFile file('../buildsystem/release.keystore')
-            storePassword 'buenosairesantesydespues'
-            keyAlias 'baad'
-            keyPassword 'buenosairesantesydespues'
         }
     }
 
