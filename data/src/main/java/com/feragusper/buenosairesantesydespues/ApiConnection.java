@@ -3,6 +3,7 @@ package com.feragusper.buenosairesantesydespues;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
@@ -65,6 +66,7 @@ public class ApiConnection implements Callable<String> {
 
     private OkHttpClient createClient() {
         final OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.networkInterceptors().add(new StethoInterceptor());
         okHttpClient.setReadTimeout(10000, TimeUnit.MILLISECONDS);
         okHttpClient.setConnectTimeout(15000, TimeUnit.MILLISECONDS);
 

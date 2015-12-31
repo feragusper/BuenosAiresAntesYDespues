@@ -1,7 +1,7 @@
 package com.feragusper.buenosairesantesydespues.net;
 
-import android.net.ConnectivityManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
@@ -13,7 +13,6 @@ import com.feragusper.buenosairesantesydespues.exception.NetworkConnectionExcept
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;

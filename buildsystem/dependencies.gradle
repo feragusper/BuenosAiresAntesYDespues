@@ -22,15 +22,10 @@ ext {
     okHttpVersion = '2.3.0'
     androidAnnotationsVersion = '20.0.0'
     picassoVersion = '2.5.2'
-
-    //Testing
-    robolectricVersion = '2.4'
-    jUnitVersion = '4.11'
-    mockitoVersion = '1.9.5'
-    dexmakerVersion = '1.0'
-    espressoVersion = '2.0'
-    testingSupportLibVersion = '0.1'
-
+    sethoVersion = '1.2.0'
+    sethoOkHttpVersion = '1.2.0'
+    appCompatVersion = '22.2.1'
+    playServicesVersion = '7.8.0'
 
     presentationDependencies = [
             daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -41,14 +36,9 @@ ext {
             rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             picasso        : "com.squareup.picasso:picasso:${picassoVersion}",
-    ]
-
-    presentationTestDependencies = [
-            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
-            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
-            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
-            espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+            setho          : "com.facebook.stetho:stetho:${sethoVersion}",
+            appCompat      : "com.android.support:appcompat-v7:${appCompatVersion}",
+            playServices   : "com.google.android.gms:play-services:${playServicesVersion}",
     ]
 
     domainDependencies = [
@@ -56,11 +46,6 @@ ext {
             dagger         : "com.google.dagger:dagger:${daggerVersion}",
             javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
-    ]
-
-    domainTestDependencies = [
-            junit  : "junit:junit:${jUnitVersion}",
-            mockito: "org.mockito:mockito-core:${mockitoVersion}",
     ]
 
     dataDependencies = [
@@ -71,12 +56,7 @@ ext {
             rxJava            : "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation   : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}"
-    ]
-
-    dataTestDependencies = [
-            junit      : "junit:junit:${jUnitVersion}",
-            mockito    : "org.mockito:mockito-core:${mockitoVersion}",
-            robolectric: "org.robolectric:robolectric:${robolectricVersion}",
+            androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
+            sethoOkHttp       : "com.facebook.stetho:stetho-okhttp:${sethoOkHttpVersion}",
     ]
 }

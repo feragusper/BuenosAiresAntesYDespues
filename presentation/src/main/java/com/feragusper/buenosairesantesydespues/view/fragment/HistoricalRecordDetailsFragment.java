@@ -4,18 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.di.components.HistoricalRecordComponent;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
-import com.feragusper.buenosairesantesydespues.navigation.Navigator;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordDetailsPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordDetailsView;
 import com.feragusper.buenosairesantesydespues.view.widget.SlideImageView;
@@ -27,8 +23,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 

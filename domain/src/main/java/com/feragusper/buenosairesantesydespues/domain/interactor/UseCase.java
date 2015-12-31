@@ -3,8 +3,8 @@ package com.feragusper.buenosairesantesydespues.domain.interactor;
 import com.feragusper.buenosairesantesydespues.domain.executor.PostExecutionThread;
 import com.feragusper.buenosairesantesydespues.domain.executor.ThreadExecutor;
 
-import rx.Subscriber;
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;

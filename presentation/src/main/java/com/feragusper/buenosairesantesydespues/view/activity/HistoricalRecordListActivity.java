@@ -3,9 +3,6 @@ package com.feragusper.buenosairesantesydespues.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Slide;
-import android.view.Gravity;
-import android.view.Window;
 
 import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.di.HasComponent;

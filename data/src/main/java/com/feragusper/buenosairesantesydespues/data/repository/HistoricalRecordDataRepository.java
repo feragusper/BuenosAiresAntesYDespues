@@ -1,9 +1,9 @@
 package com.feragusper.buenosairesantesydespues.data.repository;
 
+import com.feragusper.buenosairesantesydespues.datasource.HistoricalRecordDataStore;
 import com.feragusper.buenosairesantesydespues.datasource.HistoricalRecordDataStoreFactory;
 import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.repository.HistoricalRecordRepository;
-import com.feragusper.buenosairesantesydespues.datasource.HistoricalRecordDataStore;
 import com.feragusper.buenosairesantesydespues.entity.mapper.HistoricalRecordEntityDataMapper;
 
 import java.util.List;

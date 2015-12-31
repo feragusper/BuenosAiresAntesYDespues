@@ -2,11 +2,11 @@ package com.feragusper.buenosairesantesydespues;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.feragusper.buenosairesantesydespues.di.components.ApplicationComponent;
 import com.feragusper.buenosairesantesydespues.di.components.DaggerApplicationComponent;
 import com.feragusper.buenosairesantesydespues.di.modules.ApplicationModule;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 /**
@@ -32,6 +32,7 @@ public class AndroidApplication extends Application {
 
         initializeInjector();
         initializeAnalytics();
+        Stetho.initializeWithDefaults(this);
     }
 
     private void initializeAnalytics() {

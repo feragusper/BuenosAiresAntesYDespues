@@ -75,7 +75,6 @@ android {
 
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
-    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
     compile project(':domain')
     compile project(':data')
@@ -87,15 +86,9 @@ dependencies {
     compile presentationDependencies.rxJava
     compile presentationDependencies.rxAndroid
     compile presentationDependencies.picasso
+    compile presentationDependencies.setho
+    compile presentationDependencies.appCompat
+    compile presentationDependencies.playServices
+
     provided presentationDependencies.javaxAnnotation
-
-    androidTestCompile presentationTestDependencies.mockito
-    androidTestCompile presentationTestDependencies.dexmaker
-    androidTestCompile presentationTestDependencies.dexmakerMockito
-    androidTestCompile presentationTestDependencies.espresso
-    androidTestCompile presentationTestDependencies.testingSupportLib
-
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.google.android.gms:play-services:7.8.0'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
 }

@@ -3,19 +3,10 @@ package com.feragusper.buenosairesantesydespues.view.activity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.feragusper.buenosairesantesydespues.AndroidApplication;
-import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.di.components.ApplicationComponent;
 import com.feragusper.buenosairesantesydespues.di.modules.ActivityModule;
 import com.feragusper.buenosairesantesydespues.navigation.Navigator;
@@ -23,7 +14,6 @@ import com.feragusper.buenosairesantesydespues.navigation.Navigator;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * @author Fernando.Perez
