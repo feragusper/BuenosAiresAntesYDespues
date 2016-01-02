@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'testfairy'
 apply plugin: 'com.neenbedankt.android-apt'
+apply from: '../buildsystem/extension.gradle'
 
 android {
+
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
@@ -15,6 +17,7 @@ android {
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
         archivesBaseName = "BAAD-$versionName"
+        signingConfig signingConfigs.debug
     }
 
     compileOptions {
@@ -52,26 +55,19 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
             debuggable false
         }
-        debug {
-            signingConfig signingConfigs.debug
-        }
-    }
-
-    testfairyConfig {
-        apiKey "dd03ac43033035aad3d11fdaec75d5024f9cf7e5"
     }
 }
 
 dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
 
+    apt presentationDependencies.daggerCompiler
+
     compile project(':domain')
     compile project(':data')
 
-    apt presentationDependencies.daggerCompiler
     compile presentationDependencies.dagger
     compile presentationDependencies.butterKnife
     compile presentationDependencies.recyclerView
