@@ -17,6 +17,7 @@ local.properties
 .project
   
 # Android Studio
+/buildsystem/extension.gradle
 .idea
 .gradle
 /*/local.properties
