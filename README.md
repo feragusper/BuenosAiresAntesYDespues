@@ -35,10 +35,13 @@ This project follows architecture guidelines that are based on [Fernando Ceja's 
 
 Libraries and tools included
 -----------------
-- Support libraries
+- Support Libraries
+- Play Services
 - RecyclerViews
 - [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
-- [Retrofit 2](http://square.github.io/retrofit/)
+- [OkHTTP](http://square.github.io/okhttp/)
+- [Gson](https://github.com/google/gson/)
+- [Setho](http://facebook.github.io/stetho/)
 - [Dagger 2](http://google.github.io/dagger/)
 - [Butterknife](https://github.com/JakeWharton/butterknife)
 - [Picasso](http://square.github.io/picasso/)

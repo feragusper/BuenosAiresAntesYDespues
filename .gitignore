@@ -17,7 +17,6 @@ local.properties
 .project
   
 # Android Studio
-/buildsystem/release.keystore.properties
 .idea
 .gradle
 /*/local.properties
