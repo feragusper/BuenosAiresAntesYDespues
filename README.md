@@ -2,7 +2,13 @@
 
 A journey through time between Buenos Aires yesterday and today. The essence of this project is based on a selection of old photos of the Federal Capital, from which we seek to imitate, at present, the curious eye of that time; the same location and angle of the original record.
 Most of the old photos are the General Archive of the Nation and the Facebook group "Old Pictures of Buenos Aires". The current took them Gaston de la Llana, mentor of the project, web designer and amateur photographer.
-If you want to collaborate sending us old photos or your own before and after to send us fotos@bsasantesydespues.com.ar 
+If you want to collaborate sending us old photos or your own before and after to send us fotos@bsasantesydespues.com.ar
+
+Follow Us
+-----------------
+ - [Google Play] (https://play.google.com/store/apps/details?id=com.feragusper.buenosairesantesydespues) 
+ - [Web] (http://bsasantesydespues.com.ar)
+ - [FB] (https://www.facebook.com/bsasantesydespues)
 
 Screenshots
 -----------------
