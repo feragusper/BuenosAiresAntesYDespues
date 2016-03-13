@@ -98,9 +98,11 @@ public class SlideImageView extends RelativeLayout {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_MOVE:
-                    image2.getLayoutParams().width = x;
-                    slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
-                    sliderContainer.requestLayout();
+                    if (x >= 0 && x <= image1.getWidth()) {
+                        image2.getLayoutParams().width = x;
+                        slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
+                        sliderContainer.requestLayout();
+                    }
                     break;
                 case MotionEvent.ACTION_DOWN:
                     // Disallow ScrollView to intercept touch events.

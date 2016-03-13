@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.feragusper.buenosairesantesydespues.R;
 
 import butterknife.InjectView;
+import butterknife.Optional;
 
 /**
  * @author Fernando.Perez
@@ -20,6 +21,7 @@ import butterknife.InjectView;
  */
 public abstract class ToolbarActivity extends BaseActivity {
 
+    @Optional
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 

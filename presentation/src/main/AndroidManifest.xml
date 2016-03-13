@@ -20,8 +20,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".view.activity.SplashActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait" >
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,11 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.HistoricalRecordListActivity"
-            android:screenOrientation="portrait" />
+            android:name=".view.activity.HistoricalRecordListActivity" />
         <activity
-            android:name=".view.activity.HistoricalRecordDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:name=".view.activity.HistoricalRecordDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"

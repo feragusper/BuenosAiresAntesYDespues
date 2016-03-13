@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.Optional;
 
 /**
  * @author Fernando.Perez
@@ -46,14 +47,19 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
     @InjectView(R.id.siv_before_after)
     SlideImageView slideImageView;
+    @Optional
     @InjectView(R.id.tv_historical_record_address)
     TextView address;
+    @Optional
     @InjectView(R.id.tv_historical_record_description)
     TextView description;
+    @Optional
     @InjectView(R.id.tv_historical_record_year_neighborhood)
     TextView yearAndNeighborhood;
+    @Optional
     @InjectView(R.id.iv_historical_record_share)
     View ivHistoricalRecordShare;
+    @Optional
     @InjectView(R.id.tv_credits)
     TextView credits;
 
@@ -120,45 +126,58 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     }
 
     private void initialize() {
-        this.getComponent(HistoricalRecordComponent.class).inject(this);
-        this.historicalRecordDetailsPresenter.setView(this);
-        this.historicalRecordId = getArguments().getString(ARGUMENT_KEY_HISTORICAL_RECORD_ID);
-        this.historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
+        if (historicalRecordDetailsPresenter == null) {
+            this.getComponent(HistoricalRecordComponent.class).inject(this);
+            historicalRecordDetailsPresenter.setView(this);
+            historicalRecordId = getArguments().getString(ARGUMENT_KEY_HISTORICAL_RECORD_ID);
+        }
+        historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void renderHistoricalRecord(final HistoricalRecordModel historicalRecord) {
         if (historicalRecord != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(historicalRecord.getTitle());
+            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(historicalRecord.getTitle());
+            }
 
             slideImageView.setImageUrls(historicalRecord.getImageURLAfter(), historicalRecord.getImageURLBefore());
-            address.setText(historicalRecord.getAddress());
 
-            if (historicalRecord.getDescription() != null && !historicalRecord.getDescription().isEmpty()) {
+            if (address != null) {
+                address.setText(historicalRecord.getAddress());
+            }
+
+            if (description != null && historicalRecord.getDescription() != null && !historicalRecord.getDescription().isEmpty()) {
                 description.setText(historicalRecord.getDescription());
                 description.setVisibility(View.VISIBLE);
             }
 
-            credits.setText(historicalRecord.getCredits());
+            if (credits != null) {
+                credits.setText(historicalRecord.getCredits());
+            }
 
-            if ((historicalRecord.getYear() != null && !historicalRecord.getYear().isEmpty()) || (historicalRecord.getNeighborhood() != null && !historicalRecord.getNeighborhood().isEmpty())) {
+            if (yearAndNeighborhood != null && ((historicalRecord.getYear() != null && !historicalRecord.getYear().isEmpty()) || (historicalRecord.getNeighborhood() != null && !historicalRecord.getNeighborhood().isEmpty()))) {
                 yearAndNeighborhood.setText(historicalRecord.getYear() + " - " + historicalRecord.getNeighborhood());
                 yearAndNeighborhood.setVisibility(View.VISIBLE);
             }
 
-            final LatLng latLng = new LatLng(historicalRecord.getLat(), historicalRecord.getLng());
-            mMap.addMarker(new MarkerOptions().position(latLng).title(historicalRecord.getAddress()).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_off)));
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(14.0f).build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            mMap.moveCamera(cameraUpdate);
+            if (mMap != null) {
+                final LatLng latLng = new LatLng(historicalRecord.getLat(), historicalRecord.getLng());
+                mMap.addMarker(new MarkerOptions().position(latLng).title(historicalRecord.getAddress()).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_off)));
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(14.0f).build();
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+                mMap.moveCamera(cameraUpdate);
+            }
 
-            ivHistoricalRecordShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    navigateToShare(historicalRecord);
-                }
-            });
+            if (ivHistoricalRecordShare != null) {
+                ivHistoricalRecordShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        navigateToShare(historicalRecord);
+                    }
+                });
+            }
 
         }
     }

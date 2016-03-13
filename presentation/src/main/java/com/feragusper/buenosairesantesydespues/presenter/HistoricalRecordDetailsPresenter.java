@@ -33,6 +33,7 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
 
     private final UseCase getUserDetailsUseCase;
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
+    private HistoricalRecord historicalRecord;
 
     @Inject
     public HistoricalRecordDetailsPresenter(@Named("historicalRecordDetails") UseCase getUserDetailsUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
@@ -102,26 +103,32 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
     }
 
     private void getUserDetails() {
-        this.getUserDetailsUseCase.execute(new HistoricalRecordDetailsSubscriber());
+        hideViewLoading();
+        if (historicalRecord == null) {
+            getUserDetailsUseCase.execute(new HistoricalRecordDetailsSubscriber());
+        } else {
+            showUserDetailsInView(historicalRecord);
+        }
     }
 
     private final class HistoricalRecordDetailsSubscriber extends DefaultSubscriber<HistoricalRecord> {
 
         @Override
         public void onCompleted() {
-            HistoricalRecordDetailsPresenter.this.hideViewLoading();
+            hideViewLoading();
         }
 
         @Override
         public void onError(Throwable e) {
-            HistoricalRecordDetailsPresenter.this.hideViewLoading();
-            HistoricalRecordDetailsPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-            HistoricalRecordDetailsPresenter.this.showViewRetry();
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            showViewRetry();
         }
 
         @Override
         public void onNext(HistoricalRecord historicalRecord) {
-            HistoricalRecordDetailsPresenter.this.showUserDetailsInView(historicalRecord);
+            HistoricalRecordDetailsPresenter.this.historicalRecord = historicalRecord;
+            showUserDetailsInView(historicalRecord);
         }
     }
 }
