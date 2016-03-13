@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.feragusper.buenosairesantesydespues.AndroidApplication;
 import com.feragusper.buenosairesantesydespues.di.components.ApplicationComponent;
@@ -28,10 +30,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        onBeforeSetContentView();
         super.onCreate(savedInstanceState);
         this.getApplicationComponent().inject(this);
         setContentView(getContentViewResourceId());
         ButterKnife.inject(this);
+    }
+
+    protected void onBeforeSetContentView() {
+        // Do nothing by default
     }
 
     @Override

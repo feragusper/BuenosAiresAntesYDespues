@@ -33,6 +33,7 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
     private final UseCase getHistoricalRecordListUseCase;
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
+    private Collection<HistoricalRecord> historicalRecords;
 
     @Inject
     public HistoricalRecordListPresenter(@Named("historicalRecordList") UseCase getHistoricalRecordListUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
@@ -54,20 +55,20 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
     @Override
     public void destroy() {
-        this.getHistoricalRecordListUseCase.unsubscribe();
+        getHistoricalRecordListUseCase.unsubscribe();
     }
 
     /**
      * Initializes the presenter by start retrieving the historicalRecord list.
      */
     public void initialize() {
-        this.loadUserList();
+        this.loadHistoricalRecordList();
     }
 
     /**
      * Loads all historicalRecords.
      */
-    private void loadUserList() {
+    private void loadHistoricalRecordList() {
         this.hideViewRetry();
         this.showViewLoading();
         this.getHistoricalRecordList();
@@ -106,26 +107,32 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     }
 
     private void getHistoricalRecordList() {
-        this.getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
+        if (historicalRecords == null) {
+            this.getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
+        } else {
+            hideViewLoading();
+            showHistoricalRecordsCollectionInView(historicalRecords);
+        }
     }
 
     private final class HistoricalRecordListSubscriber extends DefaultSubscriber<List<HistoricalRecord>> {
 
         @Override
         public void onCompleted() {
-            HistoricalRecordListPresenter.this.hideViewLoading();
+            hideViewLoading();
         }
 
         @Override
         public void onError(Throwable e) {
-            HistoricalRecordListPresenter.this.hideViewLoading();
-            HistoricalRecordListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-            HistoricalRecordListPresenter.this.showViewRetry();
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            showViewRetry();
         }
 
         @Override
         public void onNext(List<HistoricalRecord> historicalRecords) {
-            HistoricalRecordListPresenter.this.showHistoricalRecordsCollectionInView(historicalRecords);
+            HistoricalRecordListPresenter.this.historicalRecords = historicalRecords;
+            showHistoricalRecordsCollectionInView(historicalRecords);
         }
     }
 }

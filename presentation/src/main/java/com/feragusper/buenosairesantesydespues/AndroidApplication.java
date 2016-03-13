@@ -32,7 +32,10 @@ public class AndroidApplication extends Application {
 
         initializeInjector();
         initializeAnalytics();
-        Stetho.initializeWithDefaults(this);
+
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
     private void initializeAnalytics() {

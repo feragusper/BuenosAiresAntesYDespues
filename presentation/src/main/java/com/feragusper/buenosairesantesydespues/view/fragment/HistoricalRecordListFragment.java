@@ -1,8 +1,10 @@
 package com.feragusper.buenosairesantesydespues.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,6 @@ import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordListPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordListView;
 import com.feragusper.buenosairesantesydespues.view.adapter.HistoricalRecordsAdapter;
-import com.feragusper.buenosairesantesydespues.view.adapter.HistoricalRecordsLayoutManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,7 +56,6 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     Button bt_retry;
 
     private HistoricalRecordsAdapter historicalRecordsAdapter;
-    private HistoricalRecordsLayoutManager historicalRecordsLayoutManager;
 
     private HistoricalRecordListListener historicalRecordListListener;
 
@@ -67,7 +67,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof HistoricalRecordListListener) {
-            this.historicalRecordListListener = (HistoricalRecordListListener) activity;
+            historicalRecordListListener = (HistoricalRecordListListener) activity;
         }
     }
 
@@ -85,26 +85,26 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.initialize();
-        this.loadHistoricalRecordList();
+        initialize();
+        loadHistoricalRecordList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        this.historicalRecordListPresenter.resume();
+        historicalRecordListPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        this.historicalRecordListPresenter.pause();
+        historicalRecordListPresenter.pause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.historicalRecordListPresenter.destroy();
+        historicalRecordListPresenter.destroy();
     }
 
     @Override
@@ -114,83 +114,85 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     private void initialize() {
-        this.getComponent(HistoricalRecordComponent.class).inject(this);
-        this.historicalRecordListPresenter.setView(this);
+        if (historicalRecordListPresenter == null) {
+            getComponent(HistoricalRecordComponent.class).inject(this);
+            historicalRecordListPresenter.setView(this);
+        }
     }
 
     private void setupUI() {
-        this.historicalRecordsLayoutManager = new HistoricalRecordsLayoutManager(getActivity());
-        this.rv_historicalRecords.setLayoutManager(historicalRecordsLayoutManager);
+        rv_historicalRecords.setLayoutManager(new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.historical_record_list_columns)));
 
-        this.historicalRecordsAdapter = new HistoricalRecordsAdapter(getActivity(), new ArrayList<HistoricalRecordModel>());
-        this.historicalRecordsAdapter.setOnItemClickListener(onItemClickListener);
-        this.rv_historicalRecords.setAdapter(historicalRecordsAdapter);
+        historicalRecordsAdapter = new HistoricalRecordsAdapter(getActivity(), new ArrayList<HistoricalRecordModel>());
+        historicalRecordsAdapter.setOnItemClickListener(onItemClickListener);
+        rv_historicalRecords.setAdapter(historicalRecordsAdapter);
     }
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+        rl_progress.setVisibility(View.VISIBLE);
+        getActivity().setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        rl_progress.setVisibility(View.GONE);
+        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        rl_retry.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+        rl_retry.setVisibility(View.GONE);
     }
 
     @Override
     public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection) {
         if (historicalRecordModelCollection != null) {
-            this.historicalRecordsAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
+            historicalRecordsAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
         }
     }
 
     @Override
     public void viewHistoricalRecord(HistoricalRecordModel historicalRecordModel) {
-        if (this.historicalRecordListListener != null) {
-            this.historicalRecordListListener.onHistoricalRecordClicked(historicalRecordModel);
+        if (historicalRecordListListener != null) {
+            historicalRecordListListener.onHistoricalRecordClicked(historicalRecordModel);
         }
     }
 
     @Override
     public void showError(String message) {
-        this.showToastMessage(message);
+        showToastMessage(message);
     }
 
+    @SuppressLint("Override")
     @Override
     public Context getContext() {
-        return this.getActivity().getApplicationContext();
+        return getActivity().getApplicationContext();
     }
 
     /**
      * Loads all historicalRecords.
      */
     private void loadHistoricalRecordList() {
-        this.historicalRecordListPresenter.initialize();
+        historicalRecordListPresenter.initialize();
     }
 
     @OnClick(R.id.bt_retry)
     void onButtonRetryClick() {
-        HistoricalRecordListFragment.this.loadHistoricalRecordList();
+        loadHistoricalRecordList();
     }
 
     private HistoricalRecordsAdapter.OnItemClickListener onItemClickListener =
             new HistoricalRecordsAdapter.OnItemClickListener() {
                 @Override
                 public void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel) {
-                    if (HistoricalRecordListFragment.this.historicalRecordListPresenter != null && historicalRecordModel != null) {
-                        HistoricalRecordListFragment.this.historicalRecordListPresenter.onHistoricalRecordClicked(historicalRecordModel);
+                    if (historicalRecordListPresenter != null && historicalRecordModel != null) {
+                        historicalRecordListPresenter.onHistoricalRecordClicked(historicalRecordModel);
                     }
                 }
             };
