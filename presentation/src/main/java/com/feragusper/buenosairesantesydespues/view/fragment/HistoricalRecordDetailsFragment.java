@@ -92,7 +92,10 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMap = ((SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        final SupportMapFragment supportMapFragment = (SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
+        if (supportMapFragment != null) {
+            mMap = supportMapFragment.getMap();
+        }
     }
 
     @Override
