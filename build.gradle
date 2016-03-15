@@ -43,7 +43,7 @@ allprojects {
     }
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
-        androidVersionCode = 7
+        androidVersionCode = 8
         androidVersionName = '1.1.1.' + getVersionName()
     }
 }
