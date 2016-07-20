@@ -15,9 +15,13 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Release files
+buildsystem/extension.gradle
+buildsystem/playstore_deploy_keys.json
+buildsystem/release.keystore
   
 # Android Studio
-/buildsystem/extension.gradle
 .idea
 .gradle
 /*/local.properties
