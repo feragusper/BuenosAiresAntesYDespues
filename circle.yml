@@ -3,7 +3,7 @@ dependencies:
     - echo 'y' | android update sdk --filter build-tools-23.0.0 --no-ui --all
 
 deployment:
-  debug: # just a label; label names are completely up to you
+  playstore: # just a label; label names are completely up to you
     branch: master
     commands:
       - ./gradlew testfairyRelease

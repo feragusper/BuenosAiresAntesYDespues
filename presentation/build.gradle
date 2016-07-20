@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'testfairy'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.triplet.play'
 apply from: '../buildsystem/extension.gradle'
 
 android {

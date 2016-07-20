@@ -1,1 +1,21 @@
-// Add all your extended configuration here. Useful to set private keys and protect data. Changes will be ignored by GIT.
+android {
+    signingConfigs {
+        release {
+            storeFile file('../buildsystem/release.keystore')
+            storePassword 'buenosairesantesydespues'
+            keyAlias 'baad'
+            keyPassword 'buenosairesantesydespues'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    play {
+        serviceAccountEmail = 'fernancho@gmail.com'
+        pk12File = file('../buildsystem/playstore_deploy_keys.json')
+    }
+}
