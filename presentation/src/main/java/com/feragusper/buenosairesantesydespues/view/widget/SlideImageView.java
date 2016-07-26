@@ -58,7 +58,7 @@ public class SlideImageView extends RelativeLayout {
         init();
     }
 
-    public void setImageUrls(final String url1, final String url2) {
+    public void setImageUrls(final String url1, final String url2, final ImageLoadCallback imageLoadCallback) {
         Picasso.with(getContext()).load(url1).placeholder(R.drawable.loading).fit().into(image1, new Callback() {
             @Override
             public void onSuccess() {
@@ -68,6 +68,7 @@ public class SlideImageView extends RelativeLayout {
                         slider.setX(getResources().getDimension(R.dimen.iv_slide_image_overlay_default_width) - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
                         slider.requestLayout();
                         slider.setVisibility(View.VISIBLE);
+                        imageLoadCallback.onImageLoadSuccess();
                     }
 
                     @Override

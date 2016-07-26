@@ -27,14 +27,8 @@ import butterknife.InjectView;
 public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRecordsAdapter.HistoricalRecordViewHolder> {
 
     private final Context context;
-
-    public interface OnItemClickListener {
-        void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel);
-    }
-
-    private List<HistoricalRecordModel> historicalRecordsCollection;
     private final LayoutInflater layoutInflater;
-
+    private List<HistoricalRecordModel> historicalRecordsCollection;
     private OnItemClickListener onItemClickListener;
 
     public HistoricalRecordsAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
@@ -61,7 +55,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
     public void onBindViewHolder(HistoricalRecordViewHolder holder, final int position) {
         final HistoricalRecordModel historicalRecordModel = this.historicalRecordsCollection.get(position);
         holder.textViewTitle.setText(historicalRecordModel.getTitle());
-        Picasso.with(context).load(historicalRecordModel.getThumbnail()).into(holder.avatar);
+        Picasso.with(context).load(historicalRecordModel.getThumbnail()).placeholder(R.drawable.loading).into(holder.avatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +85,10 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
         if (usersCollection == null) {
             throw new IllegalArgumentException("The list cannot be null");
         }
+    }
+
+    public interface OnItemClickListener {
+        void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel);
     }
 
     static class HistoricalRecordViewHolder extends RecyclerView.ViewHolder {

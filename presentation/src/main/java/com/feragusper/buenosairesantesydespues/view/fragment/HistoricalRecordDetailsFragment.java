@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.feragusper.buenosairesantesydespues.R;
@@ -14,6 +15,7 @@ import com.feragusper.buenosairesantesydespues.di.components.HistoricalRecordCom
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordDetailsPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordDetailsView;
+import com.feragusper.buenosairesantesydespues.view.widget.ImageLoadCallback;
 import com.feragusper.buenosairesantesydespues.view.widget.SlideImageView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,17 +38,16 @@ import butterknife.Optional;
  * <p>
  * Fragment that shows details of a certain historical record.
  */
-public class HistoricalRecordDetailsFragment extends BaseFragment implements HistoricalRecordDetailsView {
+public class HistoricalRecordDetailsFragment extends BaseFragment implements HistoricalRecordDetailsView, ImageLoadCallback {
 
+    //region Properties
     private static final String ARGUMENT_KEY_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.ARGUMENT_HISTORICAL_RECORD_ID";
-
-    private String historicalRecordId;
-
     @Inject
     HistoricalRecordDetailsPresenter historicalRecordDetailsPresenter;
-
     @InjectView(R.id.siv_before_after)
     SlideImageView slideImageView;
+    @InjectView(R.id.rl_progress)
+    RelativeLayout rl_progress;
     @Optional
     @InjectView(R.id.tv_historical_record_address)
     TextView address;
@@ -62,13 +63,11 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     @Optional
     @InjectView(R.id.tv_credits)
     TextView credits;
-
+    private String historicalRecordId;
     private GoogleMap mMap;
+    //endregion
 
-    public HistoricalRecordDetailsFragment() {
-        super();
-    }
-
+    //region Public Static Implementation
     public static HistoricalRecordDetailsFragment newInstance(String historicalRecordId) {
         HistoricalRecordDetailsFragment historicalRecordDetailsFragment = new HistoricalRecordDetailsFragment();
 
@@ -78,7 +77,9 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
         return historicalRecordDetailsFragment;
     }
+    //endregion
 
+    //region Fragment Implementation
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -127,16 +128,9 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         super.onDestroy();
         this.historicalRecordDetailsPresenter.destroy();
     }
+    //endregion
 
-    private void initialize() {
-        if (historicalRecordDetailsPresenter == null) {
-            this.getComponent(HistoricalRecordComponent.class).inject(this);
-            historicalRecordDetailsPresenter.setView(this);
-            historicalRecordId = getArguments().getString(ARGUMENT_KEY_HISTORICAL_RECORD_ID);
-        }
-        historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
-    }
-
+    //region HistoricalRecordDetailsView Implementatino
     @SuppressWarnings("ConstantConditions")
     @Override
     public void renderHistoricalRecord(final HistoricalRecordModel historicalRecord) {
@@ -145,7 +139,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(historicalRecord.getTitle());
             }
 
-            slideImageView.setImageUrls(historicalRecord.getImageURLAfter(), historicalRecord.getImageURLBefore());
+            slideImageView.setImageUrls(historicalRecord.getImageURLAfter(), historicalRecord.getImageURLBefore(), this);
 
             if (address != null) {
                 address.setText(historicalRecord.getAddress());
@@ -184,16 +178,18 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
         }
     }
+    //endregion
 
+    //region LoadDataView Implementation
     @Override
     public void showLoading() {
-        // TODO Show a loading
+        rl_progress.setVisibility(View.VISIBLE);
         this.getActivity().setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
-        // TODO Hide the loading
+        rl_progress.setVisibility(View.GONE);
         this.getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
@@ -216,6 +212,17 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     public Context getContext() {
         return getActivity().getApplicationContext();
     }
+    //endregion
+
+    //region Private Implementation
+    private void initialize() {
+        if (historicalRecordDetailsPresenter == null) {
+            this.getComponent(HistoricalRecordComponent.class).inject(this);
+            historicalRecordDetailsPresenter.setView(this);
+            historicalRecordId = getArguments().getString(ARGUMENT_KEY_HISTORICAL_RECORD_ID);
+        }
+        historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
+    }
 
     private void navigateToShare(HistoricalRecordModel historicalRecord) {
         Intent sendIntent = new Intent();
@@ -225,4 +232,10 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         sendIntent.setType("text/plain");
         getActivity().startActivity(sendIntent);
     }
+
+    @Override
+    public void onImageLoadSuccess() {
+        historicalRecordDetailsPresenter.onImageLoadSuccess();
+    }
+    //endregion
 }

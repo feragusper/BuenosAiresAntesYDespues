@@ -28,12 +28,11 @@ def getVersionName = { ->
 buildscript {
     repositories {
         jcenter()
-        maven { url 'https://www.testfairy.com/maven' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
-        classpath 'com.testfairy.plugins.gradle:testfairy:1.+'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
     }
 }
 
@@ -43,7 +42,7 @@ allprojects {
     }
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
-        androidVersionCode = 7
+        androidVersionCode = 8
         androidVersionName = '1.1.1.' + getVersionName()
     }
 }

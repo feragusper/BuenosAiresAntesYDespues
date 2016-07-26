@@ -73,7 +73,7 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
     private void loadHistoricalRecordDetails() {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getUserDetails();
+        this.getHistoricalRecordDetails();
     }
 
     private void showViewLoading() {
@@ -102,8 +102,7 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
         this.viewDetailsView.renderHistoricalRecord(historicalRecordModel);
     }
 
-    private void getUserDetails() {
-        hideViewLoading();
+    private void getHistoricalRecordDetails() {
         if (historicalRecord == null) {
             getUserDetailsUseCase.execute(new HistoricalRecordDetailsSubscriber());
         } else {
@@ -111,11 +110,14 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
         }
     }
 
+    public void onImageLoadSuccess() {
+        hideViewLoading();
+    }
+
     private final class HistoricalRecordDetailsSubscriber extends DefaultSubscriber<HistoricalRecord> {
 
         @Override
         public void onCompleted() {
-            hideViewLoading();
         }
 
         @Override

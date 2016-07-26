@@ -25,33 +25,29 @@ import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordDet
  */
 public class HistoricalRecordDetailsActivity extends ToolbarActivity implements HasComponent<HistoricalRecordComponent> {
 
+    //region Properties
     private static final String INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.INTENT_PARAM_HISTORICAL_RECORD_ID";
     private static final String INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID = "com.feragusper.buenosairesantesydespues.STATE_PARAM_HISTORICAL_RECORD_ID";
 
     private String historicalRecordId;
     private HistoricalRecordComponent historicalRecordComponent;
+    //endregion
 
+    //region Public Static Implementation
     public static Intent getCallingIntent(Context context, String historicalRecordId) {
         Intent callingIntent = new Intent(context, HistoricalRecordDetailsActivity.class);
         callingIntent.putExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID, historicalRecordId);
 
         return callingIntent;
     }
+    //endregion
 
+    //region Activity Implementation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.initializeActivity(savedInstanceState);
         this.initializeInjector();
-    }
-
-    @Override
-    protected void onBeforeSetContentView() {
-        //noinspection deprecation
-        if (getWindowManager().getDefaultDisplay().getWidth() > getWindowManager().getDefaultDisplay().getHeight()) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
     }
 
     @Override
@@ -71,7 +67,25 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
 
         return super.onOptionsItemSelected(item);
     }
+    //endregion
 
+    //region BaseActivity Implementation
+    @Override
+    protected void onBeforeSetContentView() {
+        //noinspection deprecation
+        if (getWindowManager().getDefaultDisplay().getWidth() > getWindowManager().getDefaultDisplay().getHeight()) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+    @Override
+    protected int getContentViewResourceId() {
+        return R.layout.activity_historical_record_details;
+    }
+    //endregion
+
+    //region ToolbarActivity Implementation
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void initializeToolBar() {
@@ -84,15 +98,16 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
             getSupportActionBar().setHomeAsUpIndicator(upArrow);
         }
     }
+    //endregion
 
+    //region HasComponent Implementation
     @Override
-    protected int getContentViewResourceId() {
-        return R.layout.activity_historical_record_details;
+    public HistoricalRecordComponent getComponent() {
+        return historicalRecordComponent;
     }
+    //endregion
 
-    /**
-     * Initializes this activity.
-     */
+    //region Private Implementation
     private void initializeActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             this.historicalRecordId = getIntent().getStringExtra(INTENT_EXTRA_PARAM_HISTORICAL_RECORD_ID);
@@ -109,9 +124,6 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
                 .historicalRecordModule(new HistoricalRecordModule(this.historicalRecordId))
                 .build();
     }
+    //endregion
 
-    @Override
-    public HistoricalRecordComponent getComponent() {
-        return historicalRecordComponent;
-    }
 }

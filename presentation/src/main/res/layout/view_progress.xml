@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="gone"
-    >
+    android:background="@android:color/black">
 
-  <ProgressBar
-      style="@style/AppTheme.ProgressBar"
-      android:layout_centerInParent="true"
-      />
+    <ProgressBar
+        style="@style/AppTheme.ProgressBar"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
