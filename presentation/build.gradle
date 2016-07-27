@@ -54,6 +54,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
             debuggable false
         }
