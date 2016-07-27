@@ -1,4 +1,11 @@
-<com.feragusper.buenosairesantesydespues.view.widget.SlideImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/siv_before_after"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+
+    <com.feragusper.buenosairesantesydespues.view.widget.SlideImageView
+        android:id="@+id/siv_before_after"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/view_progress" />
+</RelativeLayout>
