@@ -1,4 +1,7 @@
 /buildsystem/release.keystore
+presentation/google-services.json
+presentation/src/main/res/values/google_maps_api.xml
+
 # Windows thumbnail db
 Thumbs.db
 
