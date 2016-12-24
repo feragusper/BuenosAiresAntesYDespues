@@ -14,7 +14,7 @@ deployment:
   playstore:
     branch: master
     commands:
-      - ./gradlew publishRelease
+      - ./gradlew publishApkRelease
 
 machine:
   java:
