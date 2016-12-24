@@ -3,14 +3,15 @@ dependencies:
      - echo y | android list sdk
      - echo y | android update sdk --no-ui --all --filter "tools"
      - echo y | android update sdk --no-ui --all --filter "platform-tools"
-     - echo y | android update sdk --no-ui --all --filter "build-tools-24.0.0"
+     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.0"
      - echo y | android update sdk --no-ui --all --filter "android-24"
 
 deployment:
-  playstore: # just a label
+  playstore:
     branch: master
     commands:
       - ./gradlew publishRelease
+
 machine:
   java:
     version: oraclejdk8
