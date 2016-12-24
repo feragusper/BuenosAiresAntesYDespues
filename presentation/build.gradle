@@ -79,7 +79,12 @@ dependencies {
     compile presentationDependencies.picasso
     compile presentationDependencies.setho
     compile presentationDependencies.appCompat
-    compile presentationDependencies.playServices
+    compile presentationDependencies.playServicesAnalytics
+    compile presentationDependencies.playServicesMaps
+    compile presentationDependencies.firebaseMessaging
+    compile presentationDependencies.firebaseCore
 
     provided presentationDependencies.javaxAnnotation
 }
+
+apply plugin: 'com.google.gms.google-services'

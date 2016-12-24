@@ -20,6 +20,7 @@ import com.feragusper.buenosairesantesydespues.view.widget.SlideImageView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -95,7 +96,12 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
         final SupportMapFragment supportMapFragment = (SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
         if (supportMapFragment != null) {
-            mMap = supportMapFragment.getMap();
+            supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    mMap = googleMap;
+                }
+            });
         }
     }
 
