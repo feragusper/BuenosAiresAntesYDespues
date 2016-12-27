@@ -5,14 +5,10 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.view.View;
 
 import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.view.activity.AboutActivity;
 import com.feragusper.buenosairesantesydespues.view.activity.HistoricalRecordDetailsActivity;
-import com.feragusper.buenosairesantesydespues.view.activity.TransitionHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,15 +31,13 @@ public class Navigator {
     /**
      * Goes to the historical record details screen.
      *
-     * @param activity            A Context needed to open the destiny activity.
+     * @param activity           A Context needed to open the destiny activity.
      * @param historicalRecordId The id of the historical record
      */
     public void navigateToHistoricalRecordDetails(Activity activity, String historicalRecordId) {
         if (activity != null) {
             Intent intentToLaunch = HistoricalRecordDetailsActivity.getCallingIntent(activity, historicalRecordId);
-            final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true);
-            ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs);
-            activity.startActivity(intentToLaunch, transitionActivityOptions.toBundle());
+            activity.startActivity(intentToLaunch);
         }
     }
 

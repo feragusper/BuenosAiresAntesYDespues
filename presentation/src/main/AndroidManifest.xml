@@ -31,7 +31,6 @@
 
         <activity
             android:name=".view.activity.HistoricalRecordListActivity"
-            android:allowTaskReparenting="true"
             android:launchMode="singleInstance" />
 
         <activity android:name=".view.activity.HistoricalRecordDetailsActivity" />
@@ -55,9 +54,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notification" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@mipmap/ic_launcher" />
 
     </application>
 
