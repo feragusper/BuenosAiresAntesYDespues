@@ -1,7 +1,3 @@
-/buildsystem/release.keystore
-presentation/google-services.json
-presentation/src/main/res/values/google_maps_api.xml
-
 # Windows thumbnail db
 Thumbs.db
 
@@ -20,9 +16,9 @@ local.properties
 .project
 
 # Release files
-buildsystem/extension.gradle
 buildsystem/playstore_deploy_keys.json
 buildsystem/release.keystore
+presentation/src/main/res/values/google_maps_api.xml
   
 # Android Studio
 .idea
