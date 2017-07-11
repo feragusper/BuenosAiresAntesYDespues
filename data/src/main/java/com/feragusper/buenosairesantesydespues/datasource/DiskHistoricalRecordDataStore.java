@@ -1,7 +1,7 @@
 package com.feragusper.buenosairesantesydespues.datasource;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.cache.HistoricalRecordCache;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 
 import java.util.List;
 

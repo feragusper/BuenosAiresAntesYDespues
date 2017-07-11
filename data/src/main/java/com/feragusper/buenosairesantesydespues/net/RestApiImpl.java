@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.feragusper.buenosairesantesydespues.ApiConnection;
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.entity.mapper.HistoricalRecordEntityJsonMapper;
 import com.feragusper.buenosairesantesydespues.exception.NetworkConnectionException;
 
@@ -53,7 +53,7 @@ public class RestApiImpl implements RestApi {
                     try {
                         String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
                         if (responseHistoricalRecordEntities != null) {
-                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).getJSONObject("feed").getJSONArray("entry").toString()));
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).getJSONArray("posts").toString()));
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());
@@ -78,7 +78,7 @@ public class RestApiImpl implements RestApi {
                     try {
                         String responseHistoricalRecordEntity = getHistoricalRecordEntityFromApi(historicalRecordId);
                         if (responseHistoricalRecordEntity != null) {
-                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(new JSONObject(responseHistoricalRecordEntity).getJSONObject("entry").toString()));
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(new JSONObject(responseHistoricalRecordEntity).getJSONObject("post").toString()));
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());
@@ -95,7 +95,7 @@ public class RestApiImpl implements RestApi {
     }
 
     private String getHistoricalRecordEntityFromApi(String historicalRecordId) throws MalformedURLException {
-        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BASE + "/" + historicalRecordId + API_PARAM_GET_HISTORICAL_RECORD_BASE_JSON).requestSyncCall();
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BY_ID + historicalRecordId).requestSyncCall();
     }
 
     private String getHistoricalRecordEntitiesFromApi() throws MalformedURLException {

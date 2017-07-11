@@ -5,8 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.feragusper.buenosairesantesydespues.AndroidApplication;
 import com.feragusper.buenosairesantesydespues.di.components.ApplicationComponent;
