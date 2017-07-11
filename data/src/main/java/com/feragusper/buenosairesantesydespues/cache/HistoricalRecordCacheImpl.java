@@ -2,9 +2,9 @@ package com.feragusper.buenosairesantesydespues.cache;
 
 import android.content.Context;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.cache.serializer.JsonSerializer;
 import com.feragusper.buenosairesantesydespues.domain.executor.ThreadExecutor;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.exception.HistoricalRecordNotFoundException;
 
 import java.io.File;

@@ -1,6 +1,6 @@
 package com.feragusper.buenosairesantesydespues.cache;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 
 import rx.Observable;
 
@@ -12,7 +12,7 @@ import rx.Observable;
  */
 public interface HistoricalRecordCache {
     /**
-     * Gets an {@link rx.Observable} which will emit a {@link HistoricalRecordEntity}.
+     * Gets an {@link rx.Observable} which will emit a {@link SpreadsheetHistoricalRecordEntity}.
      *
      * @param userId The user id to retrieve data.
      */

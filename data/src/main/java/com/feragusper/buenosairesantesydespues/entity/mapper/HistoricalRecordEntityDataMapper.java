@@ -1,7 +1,9 @@
 package com.feragusper.buenosairesantesydespues.entity.mapper;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import android.util.Log;
+
 import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,27 +17,21 @@ import javax.inject.Singleton;
  * @author Fernando.Perez
  * @since 0.1
  * <p>
- * Mapper class used to transform {@link HistoricalRecordEntity} (in the data layer) to {@link HistoricalRecord} in the
+ * Mapper class used to transform {@link SpreadsheetHistoricalRecordEntity} (in the data layer) to {@link HistoricalRecord} in the
  * domain layer.
  */
 @Singleton
 public class HistoricalRecordEntityDataMapper {
-
-    private static final String BASE_URL = "http://bsasantesydespues.com.ar";
-    private static final String IMAGE_URL = BASE_URL + "/fotos/";
-    private static final String BEFORE_IMAGE = "/antes.jpg";
-    private static final String AFTER_IMAGE = "/ahora.jpg";
-    private static final String THUMNAIL_IMAGE = "/th.jpg";
 
     @Inject
     public HistoricalRecordEntityDataMapper() {
     }
 
     /**
-     * Transform a {@link HistoricalRecordEntity} into an {@link HistoricalRecord}.
+     * Transform a {@link SpreadsheetHistoricalRecordEntity} into an {@link HistoricalRecord}.
      *
      * @param historicalRecordEntity Object to be transformed.
-     * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
+     * @return {@link HistoricalRecord} if valid {@link SpreadsheetHistoricalRecordEntity} otherwise null.
      */
     public HistoricalRecord transform(HistoricalRecordEntity historicalRecordEntity) {
         HistoricalRecord historicalRecord = null;
@@ -45,42 +41,48 @@ public class HistoricalRecordEntityDataMapper {
 
             historicalRecord.setTitle(historicalRecordEntity.getTitle());
             historicalRecord.setDescription(historicalRecordEntity.getDescription());
-            historicalRecord.setCredits(historicalRecordEntity.getCredits().replace(" - ", "\n"));
+            historicalRecord.setCredits(historicalRecordEntity.getCreditsNow().replace(" - ", "\n"));
 
             final String[] latLng = historicalRecordEntity.getGeo().split(",");
 
             historicalRecord.setLat(Double.valueOf(latLng[0]));
             historicalRecord.setLng(Double.valueOf(latLng[1]));
 
-            historicalRecord.setYear(historicalRecordEntity.getYear());
+            historicalRecord.setYear(historicalRecordEntity.getYearBefore());
             historicalRecord.setNeighborhood(historicalRecordEntity.getNeighborhood());
-            historicalRecord.setImageURLBefore(IMAGE_URL + historicalRecordEntity.getFolder() + BEFORE_IMAGE);
-            historicalRecord.setImageURLAfter(IMAGE_URL + historicalRecordEntity.getFolder() + AFTER_IMAGE);
-            historicalRecord.setThumbnail(IMAGE_URL + historicalRecordEntity.getFolder() + THUMNAIL_IMAGE);
+            historicalRecord.setImageURLBefore(historicalRecordEntity.getImageURLBefore());
+            historicalRecord.setImageURLAfter(historicalRecordEntity.getImageURLAfter());
+            historicalRecord.setThumbnail(historicalRecordEntity.getImageURLThumbnail());
             historicalRecord.setAddress(historicalRecordEntity.getAddress());
-            historicalRecord.setShareURL(BASE_URL + "/#" + historicalRecordEntity.getId());
+            historicalRecord.setShareURL(historicalRecordEntity.getShareURL());
         }
 
         return historicalRecord;
     }
 
     /**
-     * Transform a List of {@link HistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
+     * Transform a List of {@link SpreadsheetHistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
      *
      * @param historicalRecordEntityCollection Object Collection to be transformed.
-     * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
+     * @return {@link HistoricalRecord} if valid {@link SpreadsheetHistoricalRecordEntity} otherwise null.
      */
     public List<HistoricalRecord> transform(Collection<HistoricalRecordEntity> historicalRecordEntityCollection) {
         List<HistoricalRecord> historicalRecordList = new ArrayList<>();
-        HistoricalRecord historicalRecord;
+
+        HistoricalRecord historicalRecord = null;
         for (HistoricalRecordEntity historicalRecordEntity : historicalRecordEntityCollection) {
-            historicalRecord = transform(historicalRecordEntity);
+            try {
+                historicalRecord = transform(historicalRecordEntity);
+            } catch (Exception e) {
+                Log.e(this.getClass().getSimpleName(), "There was an error trying to transform Historical Record with id " + historicalRecord.getHistoricalRecordId(), e);
+            }
             if (historicalRecord != null) {
                 historicalRecordList.add(historicalRecord);
             }
         }
 
         Collections.reverse(historicalRecordList);
+
 
         return historicalRecordList;
     }

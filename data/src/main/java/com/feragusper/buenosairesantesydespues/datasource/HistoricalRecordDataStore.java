@@ -1,6 +1,6 @@
 package com.feragusper.buenosairesantesydespues.datasource;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 
 import java.util.List;
 
@@ -14,12 +14,12 @@ import rx.Observable;
  */
 public interface HistoricalRecordDataStore {
     /**
-     * Get an {@link rx.Observable} which will emit a List of {@link HistoricalRecordEntity}.
+     * Get an {@link rx.Observable} which will emit a List of {@link SpreadsheetHistoricalRecordEntity}.
      */
     Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList();
 
     /**
-     * Get an {@link rx.Observable} which will emit a {@link HistoricalRecordEntity} by its id.
+     * Get an {@link rx.Observable} which will emit a {@link SpreadsheetHistoricalRecordEntity} by its id.
      *
      * @param historicalRecordId The id to retrieve user data.
      */
