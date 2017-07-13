@@ -12,7 +12,7 @@ import rx.Observable;
  */
 public interface HistoricalRecordCache {
     /**
-     * Gets an {@link rx.Observable} which will emit a {@link SpreadsheetHistoricalRecordEntity}.
+     * Gets an {@link rx.Observable} which will emit a {@link HistoricalRecordEntity}.
      *
      * @param userId The user id to retrieve data.
      */
