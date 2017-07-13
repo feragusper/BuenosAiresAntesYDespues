@@ -26,10 +26,10 @@ public class HistoricalRecordEntityJsonMapper {
     }
 
     /**
-     * Transform from valid json string to {@link SpreadsheetHistoricalRecordEntity}.
+     * Transform from valid json string to {@link HistoricalRecordEntity}.
      *
      * @param historicalRecordJsonResponse A json representing a user profile.
-     * @return {@link SpreadsheetHistoricalRecordEntity}.
+     * @return {@link HistoricalRecordEntity}.
      * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
      */
     public HistoricalRecordEntity transformHistoricalRecordEntity(String historicalRecordJsonResponse) throws JsonSyntaxException {
@@ -38,10 +38,10 @@ public class HistoricalRecordEntityJsonMapper {
     }
 
     /**
-     * Transform from valid json string to List of {@link SpreadsheetHistoricalRecordEntity}.
+     * Transform from valid json string to List of {@link HistoricalRecordEntity}.
      *
      * @param historicalRecordListJsonResponse A json representing a collection of users.
-     * @return List of {@link SpreadsheetHistoricalRecordEntity}.
+     * @return List of {@link HistoricalRecordEntity}.
      * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
      */
     public List<HistoricalRecordEntity> transformUserEntityCollection(String historicalRecordListJsonResponse) throws JsonSyntaxException {

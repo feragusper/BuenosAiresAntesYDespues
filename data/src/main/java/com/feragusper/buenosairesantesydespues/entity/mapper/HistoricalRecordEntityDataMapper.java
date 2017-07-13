@@ -17,7 +17,7 @@ import javax.inject.Singleton;
  * @author Fernando.Perez
  * @since 0.1
  * <p>
- * Mapper class used to transform {@link SpreadsheetHistoricalRecordEntity} (in the data layer) to {@link HistoricalRecord} in the
+ * Mapper class used to transform {@link HistoricalRecordEntity} (in the data layer) to {@link HistoricalRecord} in the
  * domain layer.
  */
 @Singleton
@@ -28,10 +28,10 @@ public class HistoricalRecordEntityDataMapper {
     }
 
     /**
-     * Transform a {@link SpreadsheetHistoricalRecordEntity} into an {@link HistoricalRecord}.
+     * Transform a {@link HistoricalRecordEntity} into an {@link HistoricalRecord}.
      *
      * @param historicalRecordEntity Object to be transformed.
-     * @return {@link HistoricalRecord} if valid {@link SpreadsheetHistoricalRecordEntity} otherwise null.
+     * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
      */
     public HistoricalRecord transform(HistoricalRecordEntity historicalRecordEntity) {
         HistoricalRecord historicalRecord = null;
@@ -61,10 +61,10 @@ public class HistoricalRecordEntityDataMapper {
     }
 
     /**
-     * Transform a List of {@link SpreadsheetHistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
+     * Transform a List of {@link HistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
      *
      * @param historicalRecordEntityCollection Object Collection to be transformed.
-     * @return {@link HistoricalRecord} if valid {@link SpreadsheetHistoricalRecordEntity} otherwise null.
+     * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
      */
     public List<HistoricalRecord> transform(Collection<HistoricalRecordEntity> historicalRecordEntityCollection) {
         List<HistoricalRecord> historicalRecordList = new ArrayList<>();
@@ -80,9 +80,6 @@ public class HistoricalRecordEntityDataMapper {
                 historicalRecordList.add(historicalRecord);
             }
         }
-
-        Collections.reverse(historicalRecordList);
-
 
         return historicalRecordList;
     }

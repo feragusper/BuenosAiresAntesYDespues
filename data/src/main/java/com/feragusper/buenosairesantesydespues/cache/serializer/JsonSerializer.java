@@ -24,7 +24,7 @@ public class JsonSerializer {
     /**
      * Serialize an object to Json.
      *
-     * @param historicalRecordEntity {@link SpreadsheetHistoricalRecordEntity} to serialize.
+     * @param historicalRecordEntity {@link HistoricalRecordEntity} to serialize.
      */
     public String serialize(HistoricalRecordEntity historicalRecordEntity) {
         String jsonString = gson.toJson(historicalRecordEntity, HistoricalRecordEntity.class);
@@ -35,7 +35,7 @@ public class JsonSerializer {
      * Deserialize a json representation of an object.
      *
      * @param jsonString A json string to deserialize.
-     * @return {@link SpreadsheetHistoricalRecordEntity}
+     * @return {@link HistoricalRecordEntity}
      */
     public HistoricalRecordEntity deserialize(String jsonString) {
         HistoricalRecordEntity historicalRecordEntity = gson.fromJson(jsonString, HistoricalRecordEntity.class);

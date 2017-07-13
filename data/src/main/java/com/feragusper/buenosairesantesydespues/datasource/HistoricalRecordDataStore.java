@@ -14,12 +14,12 @@ import rx.Observable;
  */
 public interface HistoricalRecordDataStore {
     /**
-     * Get an {@link rx.Observable} which will emit a List of {@link SpreadsheetHistoricalRecordEntity}.
+     * Get an {@link rx.Observable} which will emit a List of {@link HistoricalRecordEntity}.
      */
     Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList();
 
     /**
-     * Get an {@link rx.Observable} which will emit a {@link SpreadsheetHistoricalRecordEntity} by its id.
+     * Get an {@link rx.Observable} which will emit a {@link HistoricalRecordEntity} by its id.
      *
      * @param historicalRecordId The id to retrieve user data.
      */
