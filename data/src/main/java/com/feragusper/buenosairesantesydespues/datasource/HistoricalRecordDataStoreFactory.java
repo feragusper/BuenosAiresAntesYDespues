@@ -53,6 +53,6 @@ public class HistoricalRecordDataStoreFactory {
         HistoricalRecordEntityJsonMapper historicalRecordEntityJsonMapper = new HistoricalRecordEntityJsonMapper();
         RestApi restApi = new RestApiImpl(this.context, historicalRecordEntityJsonMapper);
 
-        return new CloudHistoricalRecordDataStore(restApi, this.historicalRecordCache);
+        return new CloudDataStore(restApi, this.historicalRecordCache);
     }
 }

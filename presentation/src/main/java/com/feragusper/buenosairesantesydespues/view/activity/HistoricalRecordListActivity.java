@@ -14,7 +14,7 @@ import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordLis
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Activity that shows a list of HistoricalRecords.
  */
 public class HistoricalRecordListActivity extends ToolbarActivity implements HasComponent<HistoricalRecordComponent>,
