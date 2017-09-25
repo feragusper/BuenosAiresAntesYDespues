@@ -31,4 +31,5 @@ public class GetHistoricalRecordDetailsUseCase extends UseCase {
     protected Observable buildUseCaseObservable() {
         return this.historicalRecordRepository.getHistoricalRecord(this.historicalRecordId);
     }
+
 }

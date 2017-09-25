@@ -34,7 +34,7 @@ public class HistoricalRecordModule {
     @Provides
     @PerActivity
     @Named("historicalRecordList")
-    UseCase provideGetHistoricalRecordListUseCase(GetHistoricalRecordListUseCase getHistoricalRecordListUseCase) {
+    GetHistoricalRecordListUseCase provideGetHistoricalRecordListUseCase(GetHistoricalRecordListUseCase getHistoricalRecordListUseCase) {
         return getHistoricalRecordListUseCase;
     }
 

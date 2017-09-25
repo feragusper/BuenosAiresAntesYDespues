@@ -31,6 +31,7 @@ public class HistoricalRecordDataRepository implements HistoricalRecordRepositor
      * @param dataStoreFactory                 A factory to construct different data source implementations.
      * @param historicalRecordEntityDataMapper {@link HistoricalRecordEntityDataMapper}.
      */
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public HistoricalRecordDataRepository(HistoricalRecordDataStoreFactory dataStoreFactory,
                                           HistoricalRecordEntityDataMapper historicalRecordEntityDataMapper) {
@@ -40,10 +41,9 @@ public class HistoricalRecordDataRepository implements HistoricalRecordRepositor
 
     @SuppressWarnings("Convert2MethodRef")
     @Override
-    public Observable<List<HistoricalRecord>> getHistoricalRecords() {
-        //we always get all users from the cloud
+    public Observable<List<HistoricalRecord>> getHistoricalRecords(int page, int count) {
         final HistoricalRecordDataStore historicalRecordDataStore = this.historicalRecordDataStoreFactory.createCloudDataStore();
-        return historicalRecordDataStore.getHistoricalRecordEntityList().map(historicalRecordEntities -> this.historicalRecordEntityDataMapper.transform(historicalRecordEntities));
+        return historicalRecordDataStore.getHistoricalRecordEntityList(page, count).map(historicalRecordEntities -> this.historicalRecordEntityDataMapper.transform(historicalRecordEntities));
     }
 
     @SuppressWarnings("Convert2MethodRef")

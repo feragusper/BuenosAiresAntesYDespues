@@ -12,6 +12,7 @@ import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
 
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private List<HistoricalRecordModel> historicalRecordsCollection;
+    private List<HistoricalRecordModel> historicalRecordsCollection = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public HistoricalRecordsAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
@@ -45,10 +46,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
 
     @Override
     public HistoricalRecordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.layoutInflater.inflate(R.layout.historical_record_item, parent, false);
-        HistoricalRecordViewHolder userViewHolder = new HistoricalRecordViewHolder(view);
-
-        return userViewHolder;
+        return new HistoricalRecordViewHolder(this.layoutInflater.inflate(R.layout.historical_record_item, parent, false));
     }
 
     @Override
@@ -72,17 +70,18 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
     }
 
     public void setHistoricalRecordsCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
-        this.validateUsersCollection(historicalRecordsCollection);
-        this.historicalRecordsCollection = (List<HistoricalRecordModel>) historicalRecordsCollection;
-        this.notifyDataSetChanged();
+        validateUsersCollection(historicalRecordsCollection);
+        this.historicalRecordsCollection.addAll(historicalRecordsCollection);
+        notifyDataSetChanged();
+//        notifyItemRangeInserted();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    private void validateUsersCollection(Collection<HistoricalRecordModel> usersCollection) {
-        if (usersCollection == null) {
+    private void validateUsersCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
+        if (historicalRecordsCollection == null) {
             throw new IllegalArgumentException("The list cannot be null");
         }
     }
@@ -98,7 +97,7 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
         @InjectView(R.id.avatar)
         ImageView avatar;
 
-        public HistoricalRecordViewHolder(View itemView) {
+        HistoricalRecordViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
         }

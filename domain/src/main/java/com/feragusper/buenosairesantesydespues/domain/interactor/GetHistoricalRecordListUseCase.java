@@ -17,7 +17,9 @@ import rx.Observable;
  */
 public class GetHistoricalRecordListUseCase extends UseCase {
 
+    private static final int ITEMS_PER_PAGE = 20;
     private final HistoricalRecordRepository historicalRecordRepository;
+    private int page;
 
     @Inject
     public GetHistoricalRecordListUseCase(HistoricalRecordRepository historicalRecordRepository, ThreadExecutor threadExecutor,
@@ -28,6 +30,10 @@ public class GetHistoricalRecordListUseCase extends UseCase {
 
     @Override
     public Observable buildUseCaseObservable() {
-        return this.historicalRecordRepository.getHistoricalRecords();
+        return this.historicalRecordRepository.getHistoricalRecords(page, ITEMS_PER_PAGE);
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

@@ -7,12 +7,15 @@ import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.exception.DefaultErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.exception.ErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.interactor.DefaultSubscriber;
+import com.feragusper.buenosairesantesydespues.domain.interactor.GetHistoricalRecordDetailsUseCase;
+import com.feragusper.buenosairesantesydespues.domain.interactor.GetHistoricalRecordListUseCase;
 import com.feragusper.buenosairesantesydespues.domain.interactor.UseCase;
 import com.feragusper.buenosairesantesydespues.exception.ErrorMessageFactory;
 import com.feragusper.buenosairesantesydespues.mapper.HistoricalRecordModelDataMapper;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordListView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,12 +34,14 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
     private HistoricalRecordListView viewListView;
 
-    private final UseCase getHistoricalRecordListUseCase;
+    private final GetHistoricalRecordListUseCase getHistoricalRecordListUseCase;
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
-    private Collection<HistoricalRecord> historicalRecords;
+    private Collection<HistoricalRecord> historicalRecords = new ArrayList<>();
+    private int page;
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
-    public HistoricalRecordListPresenter(@Named("historicalRecordList") UseCase getHistoricalRecordListUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
+    public HistoricalRecordListPresenter(@Named("historicalRecordList") GetHistoricalRecordListUseCase getHistoricalRecordListUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
         this.getHistoricalRecordListUseCase = getHistoricalRecordListUseCase;
         this.historicalRecordModelDataMapper = historicalRecordModelDataMapper;
     }
@@ -95,24 +100,26 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
-        String errorMessage = ErrorMessageFactory.create(this.viewListView.getContext(),
-                errorBundle.getException());
-        this.viewListView.showError(errorMessage);
+        viewListView.showError(ErrorMessageFactory.create(this.viewListView.getContext(), errorBundle.getException()));
     }
 
     private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
-        final Collection<HistoricalRecordModel> historicalRecordModelsCollection =
-                this.historicalRecordModelDataMapper.transform(historicalRecordsCollection);
-        this.viewListView.renderHistoricalRecordList(historicalRecordModelsCollection);
+        viewListView.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordsCollection), page);
     }
 
     private void getHistoricalRecordList() {
-        if (historicalRecords == null) {
+        if (historicalRecords.isEmpty()) {
             this.getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
         } else {
             hideViewLoading();
             showHistoricalRecordsCollectionInView(historicalRecords);
         }
+    }
+
+    public void onLoadMore(int page) {
+        this.page = page;
+        getHistoricalRecordListUseCase.setPage(page);
+        getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
     }
 
     private final class HistoricalRecordListSubscriber extends DefaultSubscriber<List<HistoricalRecord>> {
@@ -131,7 +138,7 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
 
         @Override
         public void onNext(List<HistoricalRecord> historicalRecords) {
-            HistoricalRecordListPresenter.this.historicalRecords = historicalRecords;
+            HistoricalRecordListPresenter.this.historicalRecords.addAll(historicalRecords);
             showHistoricalRecordsCollectionInView(historicalRecords);
         }
     }

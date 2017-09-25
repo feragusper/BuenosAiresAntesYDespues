@@ -79,6 +79,7 @@ dependencies {
     compile presentationDependencies.picasso
     compile presentationDependencies.setho
     compile presentationDependencies.appCompat
+    compile presentationDependencies.design
     compile presentationDependencies.playServicesAnalytics
     compile presentationDependencies.playServicesMaps
     compile presentationDependencies.firebaseMessaging

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordListPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordListView;
 import com.feragusper.buenosairesantesydespues.view.adapter.HistoricalRecordsAdapter;
+import com.feragusper.buenosairesantesydespues.view.widget.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +38,8 @@ import butterknife.OnClick;
  * Fragment that shows details of a certain historical record.
  */
 public class HistoricalRecordListFragment extends BaseFragment implements HistoricalRecordListView {
+
+    private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
     /**
      * Interface for listening historicalRecord list events.
@@ -54,6 +59,8 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     RelativeLayout rl_retry;
     @InjectView(R.id.bt_retry)
     Button bt_retry;
+    @InjectView(R.id.coordinatorLayout)
+    CoordinatorLayout cl_coordinatorLayout;
 
     private HistoricalRecordsAdapter historicalRecordsAdapter;
 
@@ -64,7 +71,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         if (activity instanceof HistoricalRecordListListener) {
             historicalRecordListListener = (HistoricalRecordListListener) activity;
@@ -121,23 +128,31 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     private void setupUI() {
-        rv_historicalRecords.setLayoutManager(new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.historical_record_list_columns)));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.historical_record_list_columns));
+        rv_historicalRecords.setLayoutManager(gridLayoutManager);
 
         historicalRecordsAdapter = new HistoricalRecordsAdapter(getActivity(), new ArrayList<HistoricalRecordModel>());
         historicalRecordsAdapter.setOnItemClickListener(onItemClickListener);
         rv_historicalRecords.setAdapter(historicalRecordsAdapter);
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                historicalRecordListPresenter.onLoadMore(page);
+            }
+        };
+        rv_historicalRecords.setOnScrollListener(endlessRecyclerViewScrollListener);
     }
 
     @Override
     public void showLoading() {
         rl_progress.setVisibility(View.VISIBLE);
-        getActivity().setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
         rl_progress.setVisibility(View.GONE);
-        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
@@ -151,10 +166,11 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     @Override
-    public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection) {
+    public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection, int page) {
         if (historicalRecordModelCollection != null) {
             historicalRecordsAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
         }
+//        endlessRecyclerViewScrollListener.setPage(page);
     }
 
     @Override
@@ -166,7 +182,16 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
 
     @Override
     public void showError(String message) {
-        showToastMessage(message);
+        Snackbar snackbar = Snackbar
+                .make(cl_coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        historicalRecordListPresenter.onLoadMore(endlessRecyclerViewScrollListener.getCurrentPage());
+                    }
+                });
+        snackbar.show();
+//        showToastMessage(message);
     }
 
     @SuppressLint("Override")

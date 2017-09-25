@@ -15,7 +15,7 @@ import rx.functions.Action1;
  * <p>
  * {@link HistoricalRecordDataStore} implementation based on connections to the api (Cloud).
  */
-public class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore {
+class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore {
 
     private final RestApi restApi;
     private final HistoricalRecordCache historicalRecordCache;
@@ -35,14 +35,14 @@ public class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore
      * @param restApi               The {@link RestApi} implementation to use.
      * @param historicalRecordCache A {@link HistoricalRecordCache} to cache data retrieved from the api.
      */
-    public CloudHistoricalRecordDataStore(RestApi restApi, HistoricalRecordCache historicalRecordCache) {
+    CloudHistoricalRecordDataStore(RestApi restApi, HistoricalRecordCache historicalRecordCache) {
         this.restApi = restApi;
         this.historicalRecordCache = historicalRecordCache;
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList() {
-        return this.restApi.getHistoricalRecordEntityList().doOnNext(saveToCacheAction);
+    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList(int page, int count) {
+        return this.restApi.getHistoricalRecordEntityList(page, count).doOnNext(saveToCacheAction);
     }
 
     @Override

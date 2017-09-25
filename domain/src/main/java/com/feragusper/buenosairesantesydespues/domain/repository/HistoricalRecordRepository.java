@@ -15,8 +15,10 @@ import rx.Observable;
 public interface HistoricalRecordRepository {
     /**
      * Get an {@link Observable} which will emit a List of {@link HistoricalRecord}.
+     * @param offset
+     * @param limit
      */
-    Observable<List<HistoricalRecord>> getHistoricalRecords();
+    Observable<List<HistoricalRecord>> getHistoricalRecords(int offset, int limit);
 
     /**
      * Get an {@link Observable} which will emit a {@link HistoricalRecord}.

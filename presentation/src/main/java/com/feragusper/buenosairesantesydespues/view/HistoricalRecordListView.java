@@ -16,8 +16,9 @@ public interface HistoricalRecordListView extends LoadDataView {
      * Render a HistoricalRecord list in the UI.
      *
      * @param historicalRecordModelCollection The collection of {@link HistoricalRecordModel} that will be shown.
+     * @param page
      */
-    void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection);
+    void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection, int page);
 
     /**
      * View a {@link HistoricalRecordModel} profile/details.

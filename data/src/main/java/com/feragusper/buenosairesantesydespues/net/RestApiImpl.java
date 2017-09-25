@@ -44,14 +44,14 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList() {
+    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList(int page, int count) {
         return Observable.create(new Observable.OnSubscribe<List<HistoricalRecordEntity>>() {
             @Override
             public void call(Subscriber<? super List<HistoricalRecordEntity>> subscriber) {
 
                 if (isThereInternetConnection()) {
                     try {
-                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
+                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi(page, count);
                         if (responseHistoricalRecordEntities != null) {
                             subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).getJSONArray("posts").toString()));
                             subscriber.onCompleted();
@@ -98,8 +98,8 @@ public class RestApiImpl implements RestApi {
         return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BY_ID + historicalRecordId).requestSyncCall();
     }
 
-    private String getHistoricalRecordEntitiesFromApi() throws MalformedURLException {
-        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST).requestSyncCall();
+    private String getHistoricalRecordEntitiesFromApi(int page, int count) throws MalformedURLException {
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST + count + API_URL_GET_HISTORICAL_RECORD_PARAM_PAGE + page).requestSyncCall();
     }
 
     /**
