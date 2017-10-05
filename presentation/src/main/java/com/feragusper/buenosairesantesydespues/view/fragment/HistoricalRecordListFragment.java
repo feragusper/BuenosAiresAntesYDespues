@@ -1,7 +1,6 @@
 package com.feragusper.buenosairesantesydespues.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,7 +18,7 @@ import com.feragusper.buenosairesantesydespues.di.components.HistoricalRecordCom
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.presenter.HistoricalRecordListPresenter;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordListView;
-import com.feragusper.buenosairesantesydespues.view.adapter.HistoricalRecordsAdapter;
+import com.feragusper.buenosairesantesydespues.view.adapter.HistoricalRecordListAdapter;
 import com.feragusper.buenosairesantesydespues.view.widget.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout cl_coordinatorLayout;
 
-    private HistoricalRecordsAdapter historicalRecordsAdapter;
+    private HistoricalRecordListAdapter historicalRecordListAdapter;
 
     private HistoricalRecordListListener historicalRecordListListener;
 
@@ -131,9 +130,9 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.historical_record_list_columns));
         rv_historicalRecords.setLayoutManager(gridLayoutManager);
 
-        historicalRecordsAdapter = new HistoricalRecordsAdapter(getActivity(), new ArrayList<HistoricalRecordModel>());
-        historicalRecordsAdapter.setOnItemClickListener(onItemClickListener);
-        rv_historicalRecords.setAdapter(historicalRecordsAdapter);
+        historicalRecordListAdapter = new HistoricalRecordListAdapter(getActivity(), new ArrayList<HistoricalRecordModel>());
+        historicalRecordListAdapter.setOnItemClickListener(onItemClickListener);
+        rv_historicalRecords.setAdapter(historicalRecordListAdapter);
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -168,7 +167,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @Override
     public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection, int page) {
         if (historicalRecordModelCollection != null) {
-            historicalRecordsAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
+            historicalRecordListAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
         }
 //        endlessRecyclerViewScrollListener.setPage(page);
     }
@@ -212,8 +211,8 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
         loadHistoricalRecordList();
     }
 
-    private HistoricalRecordsAdapter.OnItemClickListener onItemClickListener =
-            new HistoricalRecordsAdapter.OnItemClickListener() {
+    private HistoricalRecordListAdapter.OnItemClickListener onItemClickListener =
+            new HistoricalRecordListAdapter.OnItemClickListener() {
                 @Override
                 public void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel) {
                     if (historicalRecordListPresenter != null && historicalRecordModel != null) {

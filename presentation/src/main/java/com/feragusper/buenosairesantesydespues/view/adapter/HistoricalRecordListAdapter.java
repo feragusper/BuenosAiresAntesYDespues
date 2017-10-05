@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.feragusper.buenosairesantesydespues.R;
@@ -25,14 +26,16 @@ import butterknife.InjectView;
  * <p>
  * Adaptar that manages a collection of {@link HistoricalRecordModel}.
  */
-public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRecordsAdapter.HistoricalRecordViewHolder> {
+public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
     private final LayoutInflater layoutInflater;
     private List<HistoricalRecordModel> historicalRecordsCollection = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
-    public HistoricalRecordsAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
+    public HistoricalRecordListAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
         this.context = context;
         this.validateUsersCollection(historicalRecordsCollection);
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -41,32 +44,48 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
 
     @Override
     public int getItemCount() {
-        return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() : 0;
+        return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() + 1 : 0;
     }
 
     @Override
-    public HistoricalRecordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new HistoricalRecordViewHolder(this.layoutInflater.inflate(R.layout.historical_record_item, parent, false));
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder view = null;
+        if (viewType == VIEW_TYPE_ITEM) {
+            view = new HistoricalRecordViewHolder(layoutInflater.inflate(R.layout.historical_record_item, parent, false));
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            view = new LoadingViewHolder(layoutInflater.inflate(R.layout.layout_loading_item, parent, false));
+        }
+
+        return view;
     }
 
     @Override
-    public void onBindViewHolder(HistoricalRecordViewHolder holder, final int position) {
-        final HistoricalRecordModel historicalRecordModel = this.historicalRecordsCollection.get(position);
-        holder.textViewTitle.setText(historicalRecordModel.getTitle());
-        Picasso.with(context).load(historicalRecordModel.getThumbnail()).placeholder(R.drawable.loading).into(holder.avatar);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (HistoricalRecordsAdapter.this.onItemClickListener != null) {
-                    HistoricalRecordsAdapter.this.onItemClickListener.onHistoricalRecordItemClicked(historicalRecordModel);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof HistoricalRecordViewHolder) {
+            final HistoricalRecordModel historicalRecordModel = this.historicalRecordsCollection.get(position);
+            ((HistoricalRecordViewHolder) holder).textViewTitle.setText(historicalRecordModel.getTitle());
+            Picasso.with(context).load(historicalRecordModel.getThumbnail()).placeholder(R.drawable.loading).into(((HistoricalRecordViewHolder) holder).avatar);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (HistoricalRecordListAdapter.this.onItemClickListener != null) {
+                        HistoricalRecordListAdapter.this.onItemClickListener.onHistoricalRecordItemClicked(historicalRecordModel);
+                    }
                 }
-            }
-        });
+            });
+        } else if (holder instanceof LoadingViewHolder) {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+            loadingViewHolder.progressBar.setIndeterminate(true);
+        }
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    @Override public int getItemViewType(int position) {
+        return position >= historicalRecordsCollection.size() || historicalRecordsCollection.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public void setHistoricalRecordsCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
@@ -100,6 +119,14 @@ public class HistoricalRecordsAdapter extends RecyclerView.Adapter<HistoricalRec
         HistoricalRecordViewHolder(View itemView) {
             super(itemView);
             ButterKnife.inject(this, itemView);
+        }
+    }
+
+    static class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+        public LoadingViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }
     }
 }
