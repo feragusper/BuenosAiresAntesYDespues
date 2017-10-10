@@ -24,10 +24,10 @@ ext {
     picassoVersion = '2.5.2'
     sethoVersion = '1.2.0'
     sethoOkHttpVersion = '1.2.0'
-    appCompatVersion = '23.0.1'
-    designVersion = '23.0.1'
-    playServicesVersion = '11.0.4'
-    firebaseVersion = '11.0.4'
+    appCompatVersion = '22.2.1'
+    designVersion = '22.2.1'
+    playServicesVersion = '9.8.0'
+    firebaseVersion = '9.8.0'
 
     presentationDependencies = [
             daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
