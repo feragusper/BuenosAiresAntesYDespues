@@ -14,9 +14,9 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
 
-        <include layout="@layout/view_progress" />
+        <include layout="@layout/view_empty" />
 
-        <include layout="@layout/view_retry" />
+        <include layout="@layout/view_progress" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

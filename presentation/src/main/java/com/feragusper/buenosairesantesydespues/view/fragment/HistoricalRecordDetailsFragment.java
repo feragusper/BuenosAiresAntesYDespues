@@ -200,16 +200,6 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     }
 
     @Override
-    public void showRetry() {
-        // TODO Show a retry
-    }
-
-    @Override
-    public void hideRetry() {
-        // TODO Hide the retry
-    }
-
-    @Override
     public void showError(String message) {
         this.showToastMessage(message);
     }

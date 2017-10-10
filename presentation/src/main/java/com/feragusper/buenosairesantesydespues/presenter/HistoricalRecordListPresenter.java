@@ -73,8 +73,7 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     /**
      * Loads all historicalRecords.
      */
-    private void loadHistoricalRecordList() {
-        this.hideViewRetry();
+    public void loadHistoricalRecordList() {
         this.showViewLoading();
         this.getHistoricalRecordList();
     }
@@ -84,23 +83,15 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     }
 
     private void showViewLoading() {
-        this.viewListView.showLoading();
+        viewListView.showLoading();
     }
 
     private void hideViewLoading() {
-        this.viewListView.hideLoading();
-    }
-
-    private void showViewRetry() {
-        this.viewListView.showRetry();
-    }
-
-    private void hideViewRetry() {
-        this.viewListView.hideRetry();
+        viewListView.hideLoading();
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
-        viewListView.showError(ErrorMessageFactory.create(this.viewListView.getContext(), errorBundle.getException()));
+        viewListView.showError(ErrorMessageFactory.create(viewListView.getContext(), errorBundle.getException()));
     }
 
     private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
@@ -127,13 +118,18 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         @Override
         public void onCompleted() {
             hideViewLoading();
+            if (!historicalRecords.isEmpty()) {
+                viewListView.hideEmptyListView();
+            }
         }
 
         @Override
         public void onError(Throwable e) {
             hideViewLoading();
             showErrorMessage(new DefaultErrorBundle((Exception) e));
-            showViewRetry();
+            if (historicalRecords.isEmpty()) {
+                viewListView.displayEmptyListView();
+            }
         }
 
         @Override

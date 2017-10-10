@@ -26,8 +26,8 @@ ext {
     sethoOkHttpVersion = '1.2.0'
     appCompatVersion = '23.0.1'
     designVersion = '23.0.1'
-    playServicesVersion = '9.8.0'
-    firebaseVersion = '9.8.0'
+    playServicesVersion = '11.0.4'
+    firebaseVersion = '11.0.4'
 
     presentationDependencies = [
             daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",

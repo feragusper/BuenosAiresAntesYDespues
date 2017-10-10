@@ -32,8 +32,9 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
     private final LayoutInflater layoutInflater;
     private List<HistoricalRecordModel> historicalRecordsCollection = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
+    public static final int VIEW_TYPE_ITEM = 0;
+    public static final int VIEW_TYPE_LOADING = 1;
+    private boolean hasError;
 
     public HistoricalRecordListAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
         this.context = context;
@@ -43,7 +44,7 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public int getItemCount() {
+    public int  getItemCount() {
         return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() + 1 : 0;
     }
 
@@ -76,6 +77,9 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
+            if (hasError) {
+                loadingViewHolder.progressBar.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -105,6 +109,10 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
+    public void setHasError(boolean hasError) {
+        this.hasError = hasError;
+    }
+
     public interface OnItemClickListener {
         void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel);
     }
@@ -122,9 +130,9 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    static class LoadingViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-        public LoadingViewHolder(View itemView) {
+    private static class LoadingViewHolder extends RecyclerView.ViewHolder {
+        ProgressBar progressBar;
+        LoadingViewHolder(View itemView) {
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }

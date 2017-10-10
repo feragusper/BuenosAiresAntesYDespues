@@ -35,6 +35,7 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
     private HistoricalRecord historicalRecord;
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public HistoricalRecordDetailsPresenter(@Named("historicalRecordDetails") UseCase getUserDetailsUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
         this.getUserDetailsUseCase = getUserDetailsUseCase;
@@ -71,7 +72,6 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
      * Loads user details.
      */
     private void loadHistoricalRecordDetails() {
-        this.hideViewRetry();
         this.showViewLoading();
         this.getHistoricalRecordDetails();
     }
@@ -82,14 +82,6 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
 
     private void hideViewLoading() {
         this.viewDetailsView.hideLoading();
-    }
-
-    private void showViewRetry() {
-        this.viewDetailsView.showRetry();
-    }
-
-    private void hideViewRetry() {
-        this.viewDetailsView.hideRetry();
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
@@ -124,7 +116,6 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
         public void onError(Throwable e) {
             hideViewLoading();
             showErrorMessage(new DefaultErrorBundle((Exception) e));
-            showViewRetry();
         }
 
         @Override

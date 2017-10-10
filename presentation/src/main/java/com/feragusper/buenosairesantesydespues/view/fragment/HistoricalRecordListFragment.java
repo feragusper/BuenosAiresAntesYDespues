@@ -2,9 +2,11 @@ package com.feragusper.buenosairesantesydespues.view.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,11 +55,9 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @InjectView(R.id.rv_historicalRecords)
     RecyclerView rv_historicalRecords;
     @InjectView(R.id.rl_progress)
-    RelativeLayout rl_progress;
-    @InjectView(R.id.rl_retry)
-    RelativeLayout rl_retry;
-    @InjectView(R.id.bt_retry)
-    Button bt_retry;
+    View rl_progress;
+    @InjectView(R.id.ll_empty_view)
+    View ll_empty_view;
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout cl_coordinatorLayout;
 
@@ -127,12 +127,13 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     private void setupUI() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.historical_record_list_columns));
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.historical_record_list_columns));
         rv_historicalRecords.setLayoutManager(gridLayoutManager);
 
         historicalRecordListAdapter = new HistoricalRecordListAdapter(getActivity(), new ArrayList<HistoricalRecordModel>());
         historicalRecordListAdapter.setOnItemClickListener(onItemClickListener);
         rv_historicalRecords.setAdapter(historicalRecordListAdapter);
+        rv_historicalRecords.setItemAnimator(new DefaultItemAnimator());
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -141,6 +142,19 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
                 historicalRecordListPresenter.onLoadMore(page);
             }
         };
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (historicalRecordListAdapter.getItemViewType(position)) {
+                    case HistoricalRecordListAdapter.VIEW_TYPE_ITEM:
+                        return 1;
+                    case HistoricalRecordListAdapter.VIEW_TYPE_LOADING:
+                        return getResources().getInteger(R.integer.historical_record_list_columns);
+                    default:
+                        return -1;
+                }
+            }
+        });
         rv_historicalRecords.setOnScrollListener(endlessRecyclerViewScrollListener);
     }
 
@@ -152,16 +166,6 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @Override
     public void hideLoading() {
         rl_progress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showRetry() {
-        rl_retry.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideRetry() {
-        rl_retry.setVisibility(View.GONE);
     }
 
     @Override
@@ -180,17 +184,35 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     @Override
+    public void displayEmptyListView() {
+        ll_empty_view.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyListView() {
+        ll_empty_view.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showError(String message) {
         Snackbar snackbar = Snackbar
                 .make(cl_coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("RETRY", new View.OnClickListener() {
+                .setAction(R.string.btn_text_retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        historicalRecordListPresenter.onLoadMore(endlessRecyclerViewScrollListener.getCurrentPage());
+                        historicalRecordListAdapter.setHasError(false);
+                        historicalRecordListAdapter.notifyDataSetChanged();
+                        int currentPage = endlessRecyclerViewScrollListener.getCurrentPage();
+                        if (currentPage == 1) {
+                            historicalRecordListPresenter.loadHistoricalRecordList();
+                        } else {
+                            historicalRecordListPresenter.onLoadMore(currentPage);
+                        }
                     }
-                });
+                })
+                .setActionTextColor(Color.YELLOW);
         snackbar.show();
-//        showToastMessage(message);
+        historicalRecordListAdapter.setHasError(true);
     }
 
     @SuppressLint("Override")
@@ -204,11 +226,6 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
      */
     private void loadHistoricalRecordList() {
         historicalRecordListPresenter.initialize();
-    }
-
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        loadHistoricalRecordList();
     }
 
     private HistoricalRecordListAdapter.OnItemClickListener onItemClickListener =

@@ -26,4 +26,8 @@ public interface HistoricalRecordListView extends LoadDataView {
      * @param historicalRecordModel The historicalRecord that will be shown.
      */
     void viewHistoricalRecord(HistoricalRecordModel historicalRecordModel);
+
+    void displayEmptyListView();
+
+    void hideEmptyListView();
 }
