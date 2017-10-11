@@ -56,6 +56,44 @@ public class HistoricalRecordCacheImpl implements HistoricalRecordCache {
         this.threadExecutor = executor;
     }
 
+    /**
+     * {@link Runnable} class for writing to disk.
+     */
+    private static class CacheWriter implements Runnable {
+        private final FileManager fileManager;
+        private final File fileToWrite;
+        private final String fileContent;
+
+        CacheWriter(FileManager fileManager, File fileToWrite, String fileContent) {
+            this.fileManager = fileManager;
+            this.fileToWrite = fileToWrite;
+            this.fileContent = fileContent;
+        }
+
+        @Override
+        public void run() {
+            this.fileManager.writeToFile(fileToWrite, fileContent);
+        }
+    }
+
+    /**
+     * {@link Runnable} class for evicting all the cached files
+     */
+    private static class CacheEvictor implements Runnable {
+        private final FileManager fileManager;
+        private final File cacheDir;
+
+        CacheEvictor(FileManager fileManager, File cacheDir) {
+            this.fileManager = fileManager;
+            this.cacheDir = cacheDir;
+        }
+
+        @Override
+        public void run() {
+            this.fileManager.clearDirectory(this.cacheDir);
+        }
+    }
+
     @Override
     public synchronized Observable<HistoricalRecordEntity> get(final String historicalRecordId) {
         return Observable.create(new Observable.OnSubscribe<HistoricalRecordEntity>() {
@@ -114,25 +152,6 @@ public class HistoricalRecordCacheImpl implements HistoricalRecordCache {
     }
 
     /**
-     * Build a file, used to be inserted in the disk cache.
-     *
-     * @param historicalRecordId The id historical record to build the file.
-     * @return A valid file.
-     */
-    private File buildFile(String historicalRecordId) {
-        return new File(this.cacheDir.getPath() + File.separator + DEFAULT_FILE_NAME + historicalRecordId);
-    }
-
-    /**
-     * Set in millis, the last time the cache was accessed.
-     */
-    private void setLastCacheUpdateTimeMillis() {
-        long currentMillis = System.currentTimeMillis();
-        this.fileManager.writeToPreferences(this.context, SETTINGS_FILE_NAME,
-                SETTINGS_KEY_LAST_CACHE_UPDATE, currentMillis);
-    }
-
-    /**
      * Get in millis, the last time the cache was accessed.
      */
     private long getLastCacheUpdateTimeMillis() {
@@ -150,40 +169,21 @@ public class HistoricalRecordCacheImpl implements HistoricalRecordCache {
     }
 
     /**
-     * {@link Runnable} class for writing to disk.
+     * Set in millis, the last time the cache was accessed.
      */
-    private static class CacheWriter implements Runnable {
-        private final FileManager fileManager;
-        private final File fileToWrite;
-        private final String fileContent;
-
-        CacheWriter(FileManager fileManager, File fileToWrite, String fileContent) {
-            this.fileManager = fileManager;
-            this.fileToWrite = fileToWrite;
-            this.fileContent = fileContent;
-        }
-
-        @Override
-        public void run() {
-            this.fileManager.writeToFile(fileToWrite, fileContent);
-        }
+    private void setLastCacheUpdateTimeMillis() {
+        long currentMillis = System.currentTimeMillis();
+        this.fileManager.writeToPreferences(this.context, SETTINGS_FILE_NAME,
+                SETTINGS_KEY_LAST_CACHE_UPDATE, currentMillis);
     }
 
     /**
-     * {@link Runnable} class for evicting all the cached files
+     * Build a file, used to be inserted in the disk cache.
+     *
+     * @param historicalRecordId The id historical record to build the file.
+     * @return A valid file.
      */
-    private static class CacheEvictor implements Runnable {
-        private final FileManager fileManager;
-        private final File cacheDir;
-
-        CacheEvictor(FileManager fileManager, File cacheDir) {
-            this.fileManager = fileManager;
-            this.cacheDir = cacheDir;
-        }
-
-        @Override
-        public void run() {
-            this.fileManager.clearDirectory(this.cacheDir);
-        }
+    private File buildFile(String historicalRecordId) {
+        return new File(this.cacheDir.getPath() + File.separator + DEFAULT_FILE_NAME + historicalRecordId);
     }
 }

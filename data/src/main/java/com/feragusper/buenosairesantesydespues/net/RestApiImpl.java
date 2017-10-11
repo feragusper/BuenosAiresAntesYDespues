@@ -98,10 +98,6 @@ public class RestApiImpl implements RestApi {
         return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BY_ID + historicalRecordId).requestSyncCall();
     }
 
-    private String getHistoricalRecordEntitiesFromApi(int page, int count) throws MalformedURLException {
-        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST + count + API_URL_GET_HISTORICAL_RECORD_PARAM_PAGE + page).requestSyncCall();
-    }
-
     /**
      * Checks if the device has any active internet connection.
      *
@@ -115,5 +111,9 @@ public class RestApiImpl implements RestApi {
         isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
 
         return isConnected;
+    }
+
+    private String getHistoricalRecordEntitiesFromApi(int page, int count) throws MalformedURLException {
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST + count + API_URL_GET_HISTORICAL_RECORD_PARAM_PAGE + page).requestSyncCall();
     }
 }

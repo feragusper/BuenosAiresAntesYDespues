@@ -64,6 +64,76 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
         super();
     }
 
+    /**
+     * Interface for listening historicalRecord list events.
+     */
+    public interface HistoricalRecordListListener {
+        void onHistoricalRecordClicked(final HistoricalRecordModel historicalRecordModel);
+    }
+
+    @Override
+    public void showLoading() {
+        rl_progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        rl_progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String message) {
+        Snackbar snackbar = Snackbar
+                .make(cl_coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.btn_text_retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        historicalRecordListAdapter.setHasError(false);
+                        historicalRecordListAdapter.notifyDataSetChanged();
+                        int currentPage = endlessRecyclerViewScrollListener.getCurrentPage();
+                        if (currentPage == 1) {
+                            historicalRecordListPresenter.loadHistoricalRecordList();
+                        } else {
+                            historicalRecordListPresenter.onLoadMore(currentPage);
+                        }
+                    }
+                })
+                .setActionTextColor(Color.YELLOW);
+        snackbar.show();
+        historicalRecordListAdapter.setHasError(true);
+    }
+
+    @Override
+    public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection, int page) {
+        if (historicalRecordModelCollection != null) {
+            historicalRecordListAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
+        }
+//        endlessRecyclerViewScrollListener.setPage(page);
+    }
+
+    @Override
+    public void viewHistoricalRecord(HistoricalRecordModel historicalRecordModel) {
+        if (historicalRecordListListener != null) {
+            historicalRecordListListener.onHistoricalRecordClicked(historicalRecordModel);
+        }
+    }
+
+    @Override
+    public void displayEmptyListView() {
+        ll_empty_view.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyListView() {
+        ll_empty_view.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("Override")
+    @Override
+    public Context getContext() {
+        return getActivity().getApplicationContext();
+    }
+
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
@@ -103,15 +173,15 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        historicalRecordListPresenter.destroy();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        historicalRecordListPresenter.destroy();
     }
 
     private void initialize() {
@@ -119,6 +189,13 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
             getComponent(HistoricalRecordComponent.class).inject(this);
             historicalRecordListPresenter.setView(this);
         }
+    }
+
+    /**
+     * Loads all historicalRecords.
+     */
+    private void loadHistoricalRecordList() {
+        historicalRecordListPresenter.initialize();
     }
 
     private void setupUI() {
@@ -151,83 +228,6 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
             }
         });
         rv_historicalRecords.setOnScrollListener(endlessRecyclerViewScrollListener);
-    }
-
-    @Override
-    public void showLoading() {
-        rl_progress.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoading() {
-        rl_progress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection, int page) {
-        if (historicalRecordModelCollection != null) {
-            historicalRecordListAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
-        }
-//        endlessRecyclerViewScrollListener.setPage(page);
-    }
-
-    @Override
-    public void viewHistoricalRecord(HistoricalRecordModel historicalRecordModel) {
-        if (historicalRecordListListener != null) {
-            historicalRecordListListener.onHistoricalRecordClicked(historicalRecordModel);
-        }
-    }
-
-    @Override
-    public void displayEmptyListView() {
-        ll_empty_view.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideEmptyListView() {
-        ll_empty_view.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showError(String message) {
-        Snackbar snackbar = Snackbar
-                .make(cl_coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.btn_text_retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        historicalRecordListAdapter.setHasError(false);
-                        historicalRecordListAdapter.notifyDataSetChanged();
-                        int currentPage = endlessRecyclerViewScrollListener.getCurrentPage();
-                        if (currentPage == 1) {
-                            historicalRecordListPresenter.loadHistoricalRecordList();
-                        } else {
-                            historicalRecordListPresenter.onLoadMore(currentPage);
-                        }
-                    }
-                })
-                .setActionTextColor(Color.YELLOW);
-        snackbar.show();
-        historicalRecordListAdapter.setHasError(true);
-    }
-
-    @SuppressLint("Override")
-    @Override
-    public Context getContext() {
-        return getActivity().getApplicationContext();
-    }
-
-    /**
-     * Loads all historicalRecords.
-     */
-    private void loadHistoricalRecordList() {
-        historicalRecordListPresenter.initialize();
-    }
-
-    /**
-     * Interface for listening historicalRecord list events.
-     */
-    public interface HistoricalRecordListListener {
-        void onHistoricalRecordClicked(final HistoricalRecordModel historicalRecordModel);
     }
 
 }

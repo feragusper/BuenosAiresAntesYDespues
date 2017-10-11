@@ -43,9 +43,36 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         this.historicalRecordsCollection = (List<HistoricalRecordModel>) historicalRecordsCollection;
     }
 
-    @Override
-    public int getItemCount() {
-        return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() + 1 : 0;
+    private void validateUsersCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
+        if (historicalRecordsCollection == null) {
+            throw new IllegalArgumentException("The list cannot be null");
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel);
+    }
+
+    static class HistoricalRecordViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.title)
+        TextView textViewTitle;
+
+        @InjectView(R.id.avatar)
+        ImageView avatar;
+
+        HistoricalRecordViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.inject(this, itemView);
+        }
+    }
+
+    private static class LoadingViewHolder extends RecyclerView.ViewHolder {
+        ProgressBar progressBar;
+
+        LoadingViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
+        }
     }
 
     @Override
@@ -84,13 +111,18 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position >= historicalRecordsCollection.size() || historicalRecordsCollection.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return position >= historicalRecordsCollection.size() || historicalRecordsCollection.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    public int getItemCount() {
+        return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() + 1 : 0;
     }
 
     public void setHistoricalRecordsCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
@@ -104,39 +136,7 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         this.onItemClickListener = onItemClickListener;
     }
 
-    private void validateUsersCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
-        if (historicalRecordsCollection == null) {
-            throw new IllegalArgumentException("The list cannot be null");
-        }
-    }
-
     public void setHasError(boolean hasError) {
         this.hasError = hasError;
-    }
-
-    public interface OnItemClickListener {
-        void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel);
-    }
-
-    static class HistoricalRecordViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(R.id.title)
-        TextView textViewTitle;
-
-        @InjectView(R.id.avatar)
-        ImageView avatar;
-
-        HistoricalRecordViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.inject(this, itemView);
-        }
-    }
-
-    private static class LoadingViewHolder extends RecyclerView.ViewHolder {
-        ProgressBar progressBar;
-
-        LoadingViewHolder(View itemView) {
-            super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
-        }
     }
 }

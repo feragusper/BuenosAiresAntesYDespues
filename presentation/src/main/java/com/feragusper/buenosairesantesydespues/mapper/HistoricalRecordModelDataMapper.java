@@ -25,6 +25,27 @@ public class HistoricalRecordModelDataMapper {
     }
 
     /**
+     * Transform a Collection of {@link HistoricalRecord} into a Collection of {@link HistoricalRecordModel}.
+     *
+     * @param historicalRecordsCollection Objects to be transformed.
+     * @return List of {@link HistoricalRecordModel}.
+     */
+    public Collection<HistoricalRecordModel> transform(Collection<HistoricalRecord> historicalRecordsCollection) {
+        Collection<HistoricalRecordModel> historicalRecordModelsCollection;
+
+        if (historicalRecordsCollection != null && !historicalRecordsCollection.isEmpty()) {
+            historicalRecordModelsCollection = new ArrayList<>();
+            for (HistoricalRecord historicalRecord : historicalRecordsCollection) {
+                historicalRecordModelsCollection.add(transform(historicalRecord));
+            }
+        } else {
+            historicalRecordModelsCollection = Collections.emptyList();
+        }
+
+        return historicalRecordModelsCollection;
+    }
+
+    /**
      * Transform a {@link HistoricalRecord} into an {@link HistoricalRecordModel}.
      *
      * @param historicalRecord Object to be transformed.
@@ -49,26 +70,5 @@ public class HistoricalRecordModelDataMapper {
         historicalRecordModel.setShareURL(historicalRecord.getShareURL());
 
         return historicalRecordModel;
-    }
-
-    /**
-     * Transform a Collection of {@link HistoricalRecord} into a Collection of {@link HistoricalRecordModel}.
-     *
-     * @param historicalRecordsCollection Objects to be transformed.
-     * @return List of {@link HistoricalRecordModel}.
-     */
-    public Collection<HistoricalRecordModel> transform(Collection<HistoricalRecord> historicalRecordsCollection) {
-        Collection<HistoricalRecordModel> historicalRecordModelsCollection;
-
-        if (historicalRecordsCollection != null && !historicalRecordsCollection.isEmpty()) {
-            historicalRecordModelsCollection = new ArrayList<>();
-            for (HistoricalRecord historicalRecord : historicalRecordsCollection) {
-                historicalRecordModelsCollection.add(transform(historicalRecord));
-            }
-        } else {
-            historicalRecordModelsCollection = Collections.emptyList();
-        }
-
-        return historicalRecordModelsCollection;
     }
 }

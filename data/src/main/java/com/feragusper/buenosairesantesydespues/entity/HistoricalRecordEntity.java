@@ -68,14 +68,6 @@ public class HistoricalRecordEntity {
         return getAttachmentWithKey(AttachmentEntity.KEY_BEFORE).getFullImageURL();
     }
 
-    public String getImageURLAfter() {
-        return getAttachmentWithKey(AttachmentEntity.KEY_AFTER).getFullImageURL();
-    }
-
-    public String getImageURLThumbnail() {
-        return getAttachmentWithKey(AttachmentEntity.KEY_BEFORE).getThumbnailImageURL();
-    }
-
     private AttachmentEntity getAttachmentWithKey(String key) {
         for (AttachmentEntity attachment : attachments) {
             if (attachment.isImageKey(key)) {
@@ -84,6 +76,14 @@ public class HistoricalRecordEntity {
         }
 
         return null;
+    }
+
+    public String getImageURLAfter() {
+        return getAttachmentWithKey(AttachmentEntity.KEY_AFTER).getFullImageURL();
+    }
+
+    public String getImageURLThumbnail() {
+        return getAttachmentWithKey(AttachmentEntity.KEY_BEFORE).getThumbnailImageURL();
     }
 
     public String getShareURL() {

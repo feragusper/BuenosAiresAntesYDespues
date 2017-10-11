@@ -37,6 +37,11 @@ public class ApiConnection implements Callable<String> {
         return new ApiConnection(url);
     }
 
+    @Override
+    public String call() throws Exception {
+        return requestSyncCall();
+    }
+
     /**
      * Do a request to an api synchronously.
      * It should not be executed in the main thread of the application.
@@ -71,10 +76,5 @@ public class ApiConnection implements Callable<String> {
         okHttpClient.setConnectTimeout(15000, TimeUnit.MILLISECONDS);
 
         return okHttpClient;
-    }
-
-    @Override
-    public String call() throws Exception {
-        return requestSyncCall();
     }
 }

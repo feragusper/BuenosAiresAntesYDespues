@@ -42,6 +42,25 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
         this.historicalRecordModelDataMapper = historicalRecordModelDataMapper;
     }
 
+    private final class HistoricalRecordDetailsSubscriber extends DefaultSubscriber<HistoricalRecord> {
+
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+        }
+
+        @Override
+        public void onNext(HistoricalRecord historicalRecord) {
+            HistoricalRecordDetailsPresenter.this.historicalRecord = historicalRecord;
+            showUserDetailsInView(historicalRecord);
+        }
+    }
+
     public void setView(@NonNull HistoricalRecordDetailsView view) {
         this.viewDetailsView = view;
     }
@@ -81,20 +100,6 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
         this.viewDetailsView.showLoading();
     }
 
-    private void hideViewLoading() {
-        this.viewDetailsView.hideLoading();
-    }
-
-    private void showErrorMessage(ErrorBundle errorBundle) {
-        String errorMessage = ErrorMessageFactory.create(this.viewDetailsView.getContext(), errorBundle.getException());
-        this.viewDetailsView.showError(errorMessage);
-    }
-
-    private void showUserDetailsInView(HistoricalRecord historicalRecord) {
-        final HistoricalRecordModel historicalRecordModel = this.historicalRecordModelDataMapper.transform(historicalRecord);
-        this.viewDetailsView.renderHistoricalRecord(historicalRecordModel);
-    }
-
     private void getHistoricalRecordDetails() {
         if (historicalRecord == null) {
             getUserDetailsUseCase.execute(new HistoricalRecordDetailsSubscriber());
@@ -103,26 +108,21 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
         }
     }
 
+    private void showUserDetailsInView(HistoricalRecord historicalRecord) {
+        final HistoricalRecordModel historicalRecordModel = this.historicalRecordModelDataMapper.transform(historicalRecord);
+        this.viewDetailsView.renderHistoricalRecord(historicalRecordModel);
+    }
+
+    private void showErrorMessage(ErrorBundle errorBundle) {
+        String errorMessage = ErrorMessageFactory.create(this.viewDetailsView.getContext(), errorBundle.getException());
+        this.viewDetailsView.showError(errorMessage);
+    }
+
     public void onImageLoadSuccess() {
         hideViewLoading();
     }
 
-    private final class HistoricalRecordDetailsSubscriber extends DefaultSubscriber<HistoricalRecord> {
-
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            hideViewLoading();
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
-        }
-
-        @Override
-        public void onNext(HistoricalRecord historicalRecord) {
-            HistoricalRecordDetailsPresenter.this.historicalRecord = historicalRecord;
-            showUserDetailsInView(historicalRecord);
-        }
+    private void hideViewLoading() {
+        this.viewDetailsView.hideLoading();
     }
 }

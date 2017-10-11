@@ -43,6 +43,32 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         this.historicalRecordModelDataMapper = historicalRecordModelDataMapper;
     }
 
+    private final class HistoricalRecordListSubscriber extends DefaultSubscriber<List<HistoricalRecord>> {
+
+        @Override
+        public void onCompleted() {
+            hideViewLoading();
+            if (!historicalRecords.isEmpty()) {
+                viewListView.hideEmptyListView();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            if (historicalRecords.isEmpty()) {
+                viewListView.displayEmptyListView();
+            }
+        }
+
+        @Override
+        public void onNext(List<HistoricalRecord> historicalRecords) {
+            HistoricalRecordListPresenter.this.historicalRecords.addAll(historicalRecords);
+            showHistoricalRecordsCollectionInView(historicalRecords);
+        }
+    }
+
     public void setView(@NonNull HistoricalRecordListView view) {
         this.viewListView = view;
     }
@@ -75,24 +101,8 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         this.getHistoricalRecordList();
     }
 
-    public void onHistoricalRecordClicked(HistoricalRecordModel historicalRecordModel) {
-        this.viewListView.viewHistoricalRecord(historicalRecordModel);
-    }
-
     private void showViewLoading() {
         viewListView.showLoading();
-    }
-
-    private void hideViewLoading() {
-        viewListView.hideLoading();
-    }
-
-    private void showErrorMessage(ErrorBundle errorBundle) {
-        viewListView.showError(ErrorMessageFactory.create(viewListView.getContext(), errorBundle.getException()));
-    }
-
-    private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
-        viewListView.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordsCollection), page);
     }
 
     private void getHistoricalRecordList() {
@@ -104,35 +114,25 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         }
     }
 
+    private void hideViewLoading() {
+        viewListView.hideLoading();
+    }
+
+    private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
+        viewListView.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordsCollection), page);
+    }
+
+    public void onHistoricalRecordClicked(HistoricalRecordModel historicalRecordModel) {
+        this.viewListView.viewHistoricalRecord(historicalRecordModel);
+    }
+
+    private void showErrorMessage(ErrorBundle errorBundle) {
+        viewListView.showError(ErrorMessageFactory.create(viewListView.getContext(), errorBundle.getException()));
+    }
+
     public void onLoadMore(int page) {
         this.page = page;
         getHistoricalRecordListUseCase.setPage(page);
         getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
-    }
-
-    private final class HistoricalRecordListSubscriber extends DefaultSubscriber<List<HistoricalRecord>> {
-
-        @Override
-        public void onCompleted() {
-            hideViewLoading();
-            if (!historicalRecords.isEmpty()) {
-                viewListView.hideEmptyListView();
-            }
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            hideViewLoading();
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
-            if (historicalRecords.isEmpty()) {
-                viewListView.displayEmptyListView();
-            }
-        }
-
-        @Override
-        public void onNext(List<HistoricalRecord> historicalRecords) {
-            HistoricalRecordListPresenter.this.historicalRecords.addAll(historicalRecords);
-            showHistoricalRecordsCollectionInView(historicalRecords);
-        }
     }
 }

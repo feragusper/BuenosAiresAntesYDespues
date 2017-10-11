@@ -34,11 +34,6 @@ public abstract class UseCase {
     }
 
     /**
-     * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
-     */
-    protected abstract Observable buildUseCaseObservable();
-
-    /**
      * Executes the current use case.
      *
      * @param UseCaseSubscriber The guy who will be listen to the observable build with {@link #buildUseCaseObservable()}.
@@ -50,6 +45,11 @@ public abstract class UseCase {
                 .observeOn(postExecutionThread.getScheduler())
                 .subscribe(UseCaseSubscriber);
     }
+
+    /**
+     * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
+     */
+    protected abstract Observable buildUseCaseObservable();
 
     /**
      * Unsubscribes from current {@link Subscription}.

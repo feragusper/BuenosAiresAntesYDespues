@@ -39,13 +39,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Do nothing by default
     }
 
+    /**
+     * Get the Main Application component for dependency injection.
+     *
+     * @return {@link ApplicationComponent}
+     */
+    protected ApplicationComponent getApplicationComponent() {
+        return ((AndroidApplication) getApplication()).getApplicationComponent();
+    }
+
+    protected abstract int getContentViewResourceId();
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.reset(this);
     }
-
-    protected abstract int getContentViewResourceId();
 
     /**
      * Adds a {@link Fragment} to this activity's layout.
@@ -57,15 +66,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
         fragmentTransaction.add(containerViewId, fragment);
         fragmentTransaction.commit();
-    }
-
-    /**
-     * Get the Main Application component for dependency injection.
-     *
-     * @return {@link ApplicationComponent}
-     */
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AndroidApplication) getApplication()).getApplicationComponent();
     }
 
     /**

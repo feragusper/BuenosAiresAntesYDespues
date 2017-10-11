@@ -42,6 +42,13 @@ public class SlideImageView extends RelativeLayout {
         init();
     }
 
+    private void init() {
+        inflate(getContext(), R.layout.view_slide_image_view, this);
+        ButterKnife.inject(this, this);
+        image2.setOnTouchListener(new BeforeAfterSliderTouchListener());
+        image1.setOnTouchListener(new BeforeAfterSliderTouchListener());
+    }
+
     public SlideImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -56,40 +63,6 @@ public class SlideImageView extends RelativeLayout {
     public SlideImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
-    }
-
-    public void setImageUrls(final String url1, final String url2, final ImageLoadCallback imageLoadCallback) {
-        Picasso.with(getContext()).load(url1).placeholder(R.drawable.loading).fit().into(image1, new Callback() {
-            @Override
-            public void onSuccess() {
-                Picasso.with(getContext()).load(url2).resize(image1.getWidth(), image1.getHeight()).into(image2, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        slider.setX(getResources().getDimension(R.dimen.iv_slide_image_overlay_default_width) - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
-                        slider.requestLayout();
-                        slider.setVisibility(View.VISIBLE);
-                        imageLoadCallback.onImageLoadSuccess();
-                    }
-
-                    @Override
-                    public void onError() {
-                        Log.e(this.getClass().getSimpleName(), "There was an error trying to load image url2 = " + url2);
-                    }
-                });
-            }
-
-            @Override
-            public void onError() {
-                Log.e(this.getClass().getSimpleName(), "There was an error trying to load image url1 = " + url1);
-            }
-        });
-    }
-
-    private void init() {
-        inflate(getContext(), R.layout.view_slide_image_view, this);
-        ButterKnife.inject(this, this);
-        image2.setOnTouchListener(new BeforeAfterSliderTouchListener());
-        image1.setOnTouchListener(new BeforeAfterSliderTouchListener());
     }
 
     private class BeforeAfterSliderTouchListener implements View.OnTouchListener {
@@ -118,5 +91,32 @@ public class SlideImageView extends RelativeLayout {
 
             return true;
         }
+    }
+
+    public void setImageUrls(final String url1, final String url2, final ImageLoadCallback imageLoadCallback) {
+        Picasso.with(getContext()).load(url1).placeholder(R.drawable.loading).fit().into(image1, new Callback() {
+            @Override
+            public void onSuccess() {
+                Picasso.with(getContext()).load(url2).resize(image1.getWidth(), image1.getHeight()).into(image2, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        slider.setX(getResources().getDimension(R.dimen.iv_slide_image_overlay_default_width) - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
+                        slider.requestLayout();
+                        slider.setVisibility(View.VISIBLE);
+                        imageLoadCallback.onImageLoadSuccess();
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e(this.getClass().getSimpleName(), "There was an error trying to load image url2 = " + url2);
+                    }
+                });
+            }
+
+            @Override
+            public void onError() {
+                Log.e(this.getClass().getSimpleName(), "There was an error trying to load image url1 = " + url1);
+            }
+        });
     }
 }

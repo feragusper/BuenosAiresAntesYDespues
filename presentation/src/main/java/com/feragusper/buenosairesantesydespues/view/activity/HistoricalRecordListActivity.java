@@ -32,16 +32,16 @@ public class HistoricalRecordListActivity extends ToolbarActivity implements Has
         this.initializeInjector();
     }
 
-    @Override
-    protected int getContentViewResourceId() {
-        return R.layout.activity_historical_record_list;
-    }
-
     private void initializeInjector() {
         this.historicalRecordComponent = DaggerHistoricalRecordComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
                 .build();
+    }
+
+    @Override
+    protected int getContentViewResourceId() {
+        return R.layout.activity_historical_record_list;
     }
 
     @Override

@@ -80,62 +80,6 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     }
     //endregion
 
-    //region Fragment Implementation
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View fragmentView = inflater.inflate(R.layout.fragment_historical_record_details, container, false);
-        ButterKnife.inject(this, fragmentView);
-
-        return fragmentView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        final SupportMapFragment supportMapFragment = (SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
-        if (supportMapFragment != null) {
-            supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    mMap = googleMap;
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.initialize();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        this.historicalRecordDetailsPresenter.resume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        this.historicalRecordDetailsPresenter.pause();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.historicalRecordDetailsPresenter.destroy();
-    }
-    //endregion
-
     //region HistoricalRecordDetailsView Implementatino
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -184,31 +128,77 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
         }
     }
-    //endregion
 
-    //region LoadDataView Implementation
-    @Override
-    public void showLoading() {
-        rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
-    }
-
-    @Override
-    public void hideLoading() {
-        rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
-    }
-
-    @Override
-    public void showError(String message) {
-        this.showToastMessage(message);
+    private void navigateToShare(HistoricalRecordModel historicalRecord) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getContext().getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.share_subject, historicalRecord.getTitle()));
+        sendIntent.setType("text/plain");
+        getActivity().startActivity(sendIntent);
     }
 
     @Override
     public Context getContext() {
         return getActivity().getApplicationContext();
     }
+
+    //region Fragment Implementation
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View fragmentView = inflater.inflate(R.layout.fragment_historical_record_details, container, false);
+        ButterKnife.inject(this, fragmentView);
+
+        return fragmentView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final SupportMapFragment supportMapFragment = (SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
+        if (supportMapFragment != null) {
+            supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    mMap = googleMap;
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.initialize();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.historicalRecordDetailsPresenter.resume();
+    }
     //endregion
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.historicalRecordDetailsPresenter.pause();
+    }
+    //endregion
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.historicalRecordDetailsPresenter.destroy();
+    }
 
     //region Private Implementation
     private void initialize() {
@@ -220,13 +210,23 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
         historicalRecordDetailsPresenter.initialize(this.historicalRecordId);
     }
 
-    private void navigateToShare(HistoricalRecordModel historicalRecord) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, getContext().getString(R.string.share_body, historicalRecord.getAddress(), historicalRecord.getShareURL()));
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.share_subject, historicalRecord.getTitle()));
-        sendIntent.setType("text/plain");
-        getActivity().startActivity(sendIntent);
+    //region LoadDataView Implementation
+    @Override
+    public void showLoading() {
+        rl_progress.setVisibility(View.VISIBLE);
+        this.getActivity().setProgressBarIndeterminateVisibility(true);
+    }
+    //endregion
+
+    @Override
+    public void hideLoading() {
+        rl_progress.setVisibility(View.GONE);
+        this.getActivity().setProgressBarIndeterminateVisibility(false);
+    }
+
+    @Override
+    public void showError(String message) {
+        this.showToastMessage(message);
     }
 
     @Override

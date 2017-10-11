@@ -37,6 +37,12 @@ public class AndroidApplication extends Application {
         }
     }
 
+    private void initializeInjector() {
+        this.applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+    }
+
     private void initializeAnalytics() {
         analytics = GoogleAnalytics.getInstance(this);
         analytics.enableAutoActivityReports(this);
@@ -45,12 +51,6 @@ public class AndroidApplication extends Application {
         tracker = analytics.newTracker(AndroidApplication.TRACKER_ID_PROD);
         tracker.enableExceptionReporting(true);
         tracker.enableAutoActivityTracking(true);
-    }
-
-    private void initializeInjector() {
-        this.applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
     }
 
     public ApplicationComponent getApplicationComponent() {
