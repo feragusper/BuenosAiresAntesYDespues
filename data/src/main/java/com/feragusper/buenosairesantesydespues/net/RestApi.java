@@ -25,6 +25,7 @@ public interface RestApi {
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a List of {@link 2HistoricalRecordEntity}.
+     *
      * @param page
      * @param count
      */

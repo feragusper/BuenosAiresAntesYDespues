@@ -12,8 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.feragusper.buenosairesantesydespues.R;
 import com.feragusper.buenosairesantesydespues.di.components.HistoricalRecordComponent;
@@ -30,7 +28,6 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
  * @author Fernando.Perez
@@ -40,18 +37,8 @@ import butterknife.OnClick;
  */
 public class HistoricalRecordListFragment extends BaseFragment implements HistoricalRecordListView {
 
-    private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
-
-    /**
-     * Interface for listening historicalRecord list events.
-     */
-    public interface HistoricalRecordListListener {
-        void onHistoricalRecordClicked(final HistoricalRecordModel historicalRecordModel);
-    }
-
     @Inject
     HistoricalRecordListPresenter historicalRecordListPresenter;
-
     @InjectView(R.id.rv_historicalRecords)
     RecyclerView rv_historicalRecords;
     @InjectView(R.id.rl_progress)
@@ -60,10 +47,18 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     View ll_empty_view;
     @InjectView(R.id.coordinatorLayout)
     CoordinatorLayout cl_coordinatorLayout;
-
+    private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
     private HistoricalRecordListAdapter historicalRecordListAdapter;
-
     private HistoricalRecordListListener historicalRecordListListener;
+    private HistoricalRecordListAdapter.OnItemClickListener onItemClickListener =
+            new HistoricalRecordListAdapter.OnItemClickListener() {
+                @Override
+                public void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel) {
+                    if (historicalRecordListPresenter != null && historicalRecordModel != null) {
+                        historicalRecordListPresenter.onHistoricalRecordClicked(historicalRecordModel);
+                    }
+                }
+            };
 
     public HistoricalRecordListFragment() {
         super();
@@ -228,14 +223,11 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
         historicalRecordListPresenter.initialize();
     }
 
-    private HistoricalRecordListAdapter.OnItemClickListener onItemClickListener =
-            new HistoricalRecordListAdapter.OnItemClickListener() {
-                @Override
-                public void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel) {
-                    if (historicalRecordListPresenter != null && historicalRecordModel != null) {
-                        historicalRecordListPresenter.onHistoricalRecordClicked(historicalRecordModel);
-                    }
-                }
-            };
+    /**
+     * Interface for listening historicalRecord list events.
+     */
+    public interface HistoricalRecordListListener {
+        void onHistoricalRecordClicked(final HistoricalRecordModel historicalRecordModel);
+    }
 
 }

@@ -11,7 +11,7 @@ import rx.Observable;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * This class is an implementation of {@link UseCase} that represents a use case for
  * retrieving data related to an specific {@link com.feragusper.buenosairesantesydespues.domain.HistoricalRecord}.
  */

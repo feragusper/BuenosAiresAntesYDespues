@@ -7,9 +7,7 @@ import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.exception.DefaultErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.exception.ErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.interactor.DefaultSubscriber;
-import com.feragusper.buenosairesantesydespues.domain.interactor.GetHistoricalRecordDetailsUseCase;
 import com.feragusper.buenosairesantesydespues.domain.interactor.GetHistoricalRecordListUseCase;
-import com.feragusper.buenosairesantesydespues.domain.interactor.UseCase;
 import com.feragusper.buenosairesantesydespues.exception.ErrorMessageFactory;
 import com.feragusper.buenosairesantesydespues.mapper.HistoricalRecordModelDataMapper;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
@@ -32,10 +30,9 @@ import javax.inject.Named;
 @PerActivity
 public class HistoricalRecordListPresenter extends DefaultSubscriber<List<HistoricalRecord>> implements Presenter {
 
-    private HistoricalRecordListView viewListView;
-
     private final GetHistoricalRecordListUseCase getHistoricalRecordListUseCase;
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
+    private HistoricalRecordListView viewListView;
     private Collection<HistoricalRecord> historicalRecords = new ArrayList<>();
     private int page;
 

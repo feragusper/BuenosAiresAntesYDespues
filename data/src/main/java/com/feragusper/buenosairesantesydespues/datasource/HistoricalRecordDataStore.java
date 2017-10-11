@@ -15,6 +15,7 @@ import rx.Observable;
 public interface HistoricalRecordDataStore {
     /**
      * Get an {@link rx.Observable} which will emit a List of {@link HistoricalRecordEntity}.
+     *
      * @param offset
      * @param limit
      */

@@ -18,13 +18,12 @@ import com.google.android.gms.analytics.Tracker;
 public class AndroidApplication extends Application {
 
     private static final int DISPATCH_PERIOD_IN_SECCOD = 30;
+    private static final String TRACKER_ID_PROD = "UA-69017801-2";
+    private static final String TRACKER_ID_DEBUG = "UA-69017801-1";
     private ApplicationComponent applicationComponent;
-
     // Analytics
     private GoogleAnalytics analytics;
     private Tracker tracker;
-    private static final String TRACKER_ID_PROD = "UA-69017801-2";
-    private static final String TRACKER_ID_DEBUG = "UA-69017801-1";
 
     @Override
     public void onCreate() {

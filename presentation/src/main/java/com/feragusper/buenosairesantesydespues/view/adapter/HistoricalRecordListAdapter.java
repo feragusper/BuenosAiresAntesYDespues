@@ -28,12 +28,12 @@ import butterknife.InjectView;
  */
 public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int VIEW_TYPE_ITEM = 0;
+    public static final int VIEW_TYPE_LOADING = 1;
     private final Context context;
     private final LayoutInflater layoutInflater;
     private List<HistoricalRecordModel> historicalRecordsCollection = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
-    public static final int VIEW_TYPE_ITEM = 0;
-    public static final int VIEW_TYPE_LOADING = 1;
     private boolean hasError;
 
     public HistoricalRecordListAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
@@ -44,7 +44,7 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public int  getItemCount() {
+    public int getItemCount() {
         return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() + 1 : 0;
     }
 
@@ -88,7 +88,8 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         return position;
     }
 
-    @Override public int getItemViewType(int position) {
+    @Override
+    public int getItemViewType(int position) {
         return position >= historicalRecordsCollection.size() || historicalRecordsCollection.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
@@ -132,6 +133,7 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private static class LoadingViewHolder extends RecyclerView.ViewHolder {
         ProgressBar progressBar;
+
         LoadingViewHolder(View itemView) {
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);

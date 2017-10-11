@@ -5,12 +5,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.feragusper.buenosairesantesydespues.BuildConfig;
 import com.feragusper.buenosairesantesydespues.R;
-
-import javax.inject.Inject;
 
 import butterknife.InjectView;
 
@@ -36,11 +35,15 @@ public class SplashActivity extends BaseActivity {
             }
         }, 2000);
 
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            mVersionName.setText(getString(R.string.versionName, pInfo.versionName + " " + BuildConfig.BUILD_TYPE));
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(this.getClass().getSimpleName(), "An error has occurred while trying to get the versionName", e);
+        if (BuildConfig.BUILD_TYPE.equals("debug")) {
+            try {
+                PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+                mVersionName.setText(getString(R.string.versionName, pInfo.versionName + " " + BuildConfig.BUILD_TYPE));
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(this.getClass().getSimpleName(), "An error has occurred while trying to get the versionName", e);
+            }
+
+            mVersionName.setVisibility(View.VISIBLE);
         }
     }
 

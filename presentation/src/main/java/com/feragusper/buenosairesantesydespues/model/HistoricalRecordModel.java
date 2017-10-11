@@ -16,22 +16,16 @@ public class HistoricalRecordModel {
     private double lng;
     private String shareURL;
     private String thumbnail;
+    private String title;
+    private String credits;
+    private String folder;
+    private String description;
+    private String year;
+    private String neighborhood;
 
     public HistoricalRecordModel(String historicalRecordId) {
         this.historicalRecordId = historicalRecordId;
     }
-
-    private String title;
-
-    private String credits;
-
-    private String folder;
-
-    private String description;
-
-    private String year;
-
-    private String neighborhood;
 
     public String getTitle() {
         return title;
@@ -69,24 +63,16 @@ public class HistoricalRecordModel {
         return historicalRecordId;
     }
 
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
-    }
-
     public String getImageURLBefore() {
         return imageURLBefore;
     }
 
-    public String getImageURLAfter() {
-        return imageURLAfter;
-    }
-
     public void setImageURLBefore(String imageURLBefore) {
         this.imageURLBefore = imageURLBefore;
+    }
+
+    public String getImageURLAfter() {
+        return imageURLAfter;
     }
 
     public void setImageURLAfter(String imageURLAfter) {
@@ -97,8 +83,16 @@ public class HistoricalRecordModel {
         return neighborhood;
     }
 
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
     public String getYear() {
         return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getAddress() {
@@ -113,6 +107,10 @@ public class HistoricalRecordModel {
         return lat;
     }
 
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
     public double getLng() {
         return lng;
     }
@@ -121,16 +119,12 @@ public class HistoricalRecordModel {
         this.lng = lng;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public String getShareURL() {
+        return shareURL;
     }
 
     public void setShareURL(String shareURL) {
         this.shareURL = shareURL;
-    }
-
-    public String getShareURL() {
-        return shareURL;
     }
 
     public String getThumbnail() {

@@ -19,20 +19,20 @@ import javax.inject.Named;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
 @PerActivity
 public class HistoricalRecordDetailsPresenter implements Presenter {
 
-    /** id used to retrieve user details */
-    private String historicalRecordId;
-
-    private HistoricalRecordDetailsView viewDetailsView;
-
     private final UseCase getUserDetailsUseCase;
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
+    /**
+     * id used to retrieve user details
+     */
+    private String historicalRecordId;
+    private HistoricalRecordDetailsView viewDetailsView;
     private HistoricalRecord historicalRecord;
 
     @SuppressWarnings("WeakerAccess")
@@ -61,6 +61,7 @@ public class HistoricalRecordDetailsPresenter implements Presenter {
 
     /**
      * Initializes the presenter by start retrieving user details.
+     *
      * @param historicalRecordId The id of the Historical Record
      */
     public void initialize(String historicalRecordId) {

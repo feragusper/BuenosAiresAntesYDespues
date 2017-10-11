@@ -7,7 +7,6 @@ import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,7 +73,11 @@ public class HistoricalRecordEntityDataMapper {
             try {
                 historicalRecord = transform(historicalRecordEntity);
             } catch (Exception e) {
-                Log.e(this.getClass().getSimpleName(), "There was an error trying to transform Historical Record with id " + historicalRecord.getHistoricalRecordId(), e);
+                if (historicalRecord != null) {
+                    Log.e(this.getClass().getSimpleName(), "There was an error trying to transform Historical Record with id " + (historicalRecord.getHistoricalRecordId()), e);
+                } else {
+                    Log.e(this.getClass().getSimpleName(), "There was an error trying to transform some Historical Record. Can't do a transform a null reference ", e);
+                }
             }
             if (historicalRecord != null) {
                 historicalRecordList.add(historicalRecord);

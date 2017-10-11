@@ -16,7 +16,7 @@ import dagger.Provides;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Dagger module that provides historicalRecord related collaborators.
  */
 @Module

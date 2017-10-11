@@ -9,12 +9,13 @@ import rx.Observable;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Interface that represents a Repository for getting {@link HistoricalRecord} related data.
  */
 public interface HistoricalRecordRepository {
     /**
      * Get an {@link Observable} which will emit a List of {@link HistoricalRecord}.
+     *
      * @param offset
      * @param limit
      */

@@ -15,7 +15,7 @@ import dagger.Component;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * A component whose lifetime is the life of the application.
  */
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
