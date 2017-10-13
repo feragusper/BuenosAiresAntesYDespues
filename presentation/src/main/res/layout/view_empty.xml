@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="gone"
     android:background="@android:color/black">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_error"
         tools:ignore="ContentDescription" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/oops_por_alguna_razon_no_pudimos_cargar_resultados"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_margin="20dp"
+        android:gravity="center"/>
 </LinearLayout>
