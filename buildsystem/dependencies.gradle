@@ -25,6 +25,7 @@ ext {
     sethoVersion = '1.2.0'
     sethoOkHttpVersion = '1.2.0'
     appCompatVersion = '22.2.1'
+    designVersion = '22.2.1'
     playServicesVersion = '9.8.0'
     firebaseVersion = '9.8.0'
 
@@ -39,6 +40,7 @@ ext {
             picasso                 : "com.squareup.picasso:picasso:${picassoVersion}",
             setho                   : "com.facebook.stetho:stetho:${sethoVersion}",
             appCompat               : "com.android.support:appcompat-v7:${appCompatVersion}",
+            design                  : "com.android.support:design:${designVersion}",
             playServicesAnalytics   : "com.google.android.gms:play-services-analytics:${playServicesVersion}",
             playServicesMaps        : "com.google.android.gms:play-services-maps:${playServicesVersion}",
             firebaseCore            : "com.google.firebase:firebase-core:${firebaseVersion}",

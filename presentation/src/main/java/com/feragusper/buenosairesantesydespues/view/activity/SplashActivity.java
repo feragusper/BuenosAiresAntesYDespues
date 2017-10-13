@@ -1,9 +1,17 @@
 package com.feragusper.buenosairesantesydespues.view.activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
+import com.feragusper.buenosairesantesydespues.BuildConfig;
 import com.feragusper.buenosairesantesydespues.R;
+
+import butterknife.InjectView;
 
 /**
  * @author Fernando.Perez
@@ -12,6 +20,9 @@ import com.feragusper.buenosairesantesydespues.R;
  * Activity that shows the splash of the application.
  */
 public class SplashActivity extends BaseActivity {
+
+    @InjectView(R.id.tv_versionName)
+    TextView mVersionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +34,17 @@ public class SplashActivity extends BaseActivity {
                 startActivity(HistoricalRecordListActivity.getCallingIntent(SplashActivity.this));
             }
         }, 2000);
+
+        if (BuildConfig.BUILD_TYPE.equals("debug")) {
+            try {
+                PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+                mVersionName.setText(getString(R.string.versionName, pInfo.versionName + " " + BuildConfig.BUILD_TYPE));
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(this.getClass().getSimpleName(), "An error has occurred while trying to get the versionName", e);
+            }
+
+            mVersionName.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

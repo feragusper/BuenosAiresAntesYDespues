@@ -43,14 +43,6 @@ public class JobExecutor implements ThreadExecutor {
                 KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, this.workQueue, this.threadFactory);
     }
 
-    @Override
-    public void execute(Runnable runnable) {
-        if (runnable == null) {
-            throw new IllegalArgumentException("Runnable to execute cannot be null");
-        }
-        this.threadPoolExecutor.execute(runnable);
-    }
-
     private static class JobThreadFactory implements ThreadFactory {
         private static final String THREAD_NAME = "android_";
         private int counter = 0;
@@ -59,5 +51,13 @@ public class JobExecutor implements ThreadExecutor {
         public Thread newThread(Runnable runnable) {
             return new Thread(runnable, THREAD_NAME + counter);
         }
+    }
+
+    @Override
+    public void execute(Runnable runnable) {
+        if (runnable == null) {
+            throw new IllegalArgumentException("Runnable to execute cannot be null");
+        }
+        this.threadPoolExecutor.execute(runnable);
     }
 }

@@ -4,9 +4,9 @@
     <string name="btn_text_retry">Retry</string>
 
     <!--Exception Messages -->
-    <string name="exception_message_generic">There was an application error</string>
-    <string name="exception_message_no_connection">There is no internet connection</string>
-    <string name="exception_message_user_not_found">Cannot retrieve user data. Check your internet connection</string>
+    <string name="exception_message_generic">Ocurrió un error</string>
+    <string name="exception_message_no_connection">No hay conexión a Internet</string>
+    <string name="exception_message_historical_record_not_found">No pudimos traer resultados.</string>
 
     <!-- Share -->
     <string name="share_subject">Buenos Aires Antes y Despues - %1$s</string>
@@ -22,4 +22,6 @@
         La mayoría de las fotos antiguas son del Archivo General de la Nación y del grupo de Facebook <a href="https://www.facebook.com/groups/10915860738/?fref=nf">\"Fotos Antiguas de Buenos Aires\"</a>.
         Si queres colaborar enviandonos fotos antiguas o tus propios antes y después envianos <a href="mailto:afotos@bsasantesydespues.com.ar">afotos@bsasantesydespues.com.ar</a>\n\n
         ¡Gracias por sumarte a Buenos Aires antes y después!</string>
+    <string name="versionName">Version %1$s</string>
+    <string name="oops_por_alguna_razon_no_pudimos_cargar_resultados">Oops, por alguna razon no pudimos cargar resultados :(</string>
 </resources>

@@ -30,7 +30,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
         classpath 'com.google.gms:google-services:3.0.0'
@@ -44,7 +44,7 @@ allprojects {
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
         androidVersionCode = 13
-        androidVersionName = '1.3.0.' + getVersionName()
+        androidVersionName = '1.4.0.' + getVersionName()
     }
 }
 

@@ -10,24 +10,23 @@ import com.google.gson.annotations.SerializedName;
  */
 class AttachmentEntity {
 
-    protected static final String KEY_BEFORE = "antes";
-    public static final String KEY_AFTER = "ahora";
-
+    static final String KEY_AFTER = "ahora";
+    static final String KEY_BEFORE = "antes";
     @SerializedName("title")
     private String title;
 
     @SerializedName("images")
     private ImagesEntity images;
 
-    public boolean isImageKey(String key) {
+    boolean isImageKey(String key) {
         return title.contains(key);
     }
 
-    public String getFullImageURL() {
+    String getFullImageURL() {
         return images.getFullURL();
     }
 
-    public String getThumbnailImageURL() {
+    String getThumbnailImageURL() {
         return images.getThumbnailURL();
     }
 }
