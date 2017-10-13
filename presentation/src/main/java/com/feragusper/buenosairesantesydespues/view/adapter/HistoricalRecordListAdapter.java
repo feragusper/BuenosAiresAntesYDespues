@@ -35,18 +35,13 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
     private List<HistoricalRecordModel> historicalRecordsCollection = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private boolean hasError;
+    private boolean loadingViewEnabled = true;
 
     public HistoricalRecordListAdapter(Context context, Collection<HistoricalRecordModel> historicalRecordsCollection) {
         this.context = context;
         this.validateUsersCollection(historicalRecordsCollection);
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.historicalRecordsCollection = (List<HistoricalRecordModel>) historicalRecordsCollection;
-    }
-
-    private void validateUsersCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
-        if (historicalRecordsCollection == null) {
-            throw new IllegalArgumentException("The list cannot be null");
-        }
     }
 
     public interface OnItemClickListener {
@@ -72,6 +67,12 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         LoadingViewHolder(View itemView) {
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
+        }
+    }
+
+    private void validateUsersCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
+        if (historicalRecordsCollection == null) {
+            throw new IllegalArgumentException("The list cannot be null");
         }
     }
 
@@ -122,7 +123,7 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemCount() {
-        return (this.historicalRecordsCollection != null) ? this.historicalRecordsCollection.size() + 1 : 0;
+        return (loadingViewEnabled) ? historicalRecordsCollection.size() + 1 : historicalRecordsCollection.size();
     }
 
     public void setHistoricalRecordsCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
@@ -138,5 +139,9 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public void setHasError(boolean hasError) {
         this.hasError = hasError;
+    }
+
+    public void disableLoadingView() {
+        loadingViewEnabled = false;
     }
 }

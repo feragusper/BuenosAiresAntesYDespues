@@ -1,4 +1,4 @@
-package com.feragusper.buenosairesantesydespues.domain;
+package com.feragusper.buenosairesantesydespues.domain.model;
 
 /**
  * @author Fernando.Perez

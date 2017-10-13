@@ -2,8 +2,10 @@ package com.feragusper.buenosairesantesydespues.entity.mapper;
 
 import android.util.Log;
 
-import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,20 +25,22 @@ import javax.inject.Singleton;
 public class HistoricalRecordEntityDataMapper {
 
     @Inject
-    public HistoricalRecordEntityDataMapper() {
+    HistoricalRecordEntityDataMapper() {
     }
 
     /**
      * Transform a List of {@link HistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
      *
-     * @param historicalRecordEntityCollection Object Collection to be transformed.
+     * @param historicalRecordListPageEntity Object Collection to be transformed.
      * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
      */
-    public List<HistoricalRecord> transform(Collection<HistoricalRecordEntity> historicalRecordEntityCollection) {
-        List<HistoricalRecord> historicalRecordList = new ArrayList<>();
+    public HistoricalRecordListPage transform(HistoricalRecordListPageEntity historicalRecordListPageEntity) {
+        HistoricalRecordListPage historicalRecordListPage = new HistoricalRecordListPage();
 
         HistoricalRecord historicalRecord = null;
-        for (HistoricalRecordEntity historicalRecordEntity : historicalRecordEntityCollection) {
+        historicalRecordListPage.setCountTotal(historicalRecordListPageEntity.getCountTotal());
+        historicalRecordListPage.setPages(historicalRecordListPageEntity.getPages());
+        for (HistoricalRecordEntity historicalRecordEntity : historicalRecordListPageEntity.getHistoricalRecordList()) {
             try {
                 historicalRecord = transform(historicalRecordEntity);
             } catch (Exception e) {
@@ -47,11 +51,11 @@ public class HistoricalRecordEntityDataMapper {
                 }
             }
             if (historicalRecord != null) {
-                historicalRecordList.add(historicalRecord);
+                historicalRecordListPage.addHistoricalRecord(historicalRecord);
             }
         }
 
-        return historicalRecordList;
+        return historicalRecordListPage;
     }
 
     /**

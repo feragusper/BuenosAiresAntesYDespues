@@ -1,6 +1,7 @@
 package com.feragusper.buenosairesantesydespues.entity.mapper;
 
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -44,13 +45,9 @@ public class HistoricalRecordEntityJsonMapper {
      * @return List of {@link HistoricalRecordEntity}.
      * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
      */
-    public List<HistoricalRecordEntity> transformUserEntityCollection(String historicalRecordListJsonResponse) throws JsonSyntaxException {
+    public HistoricalRecordListPageEntity transformUserEntityCollection(String historicalRecordListJsonResponse) throws JsonSyntaxException {
+        Type type = new TypeToken<HistoricalRecordListPageEntity>() {}.getType();
 
-        List<HistoricalRecordEntity> historicalRecordEntityCollection;
-        Type type = new TypeToken<List<HistoricalRecordEntity>>() {
-        }.getType();
-        historicalRecordEntityCollection = this.gson.fromJson(historicalRecordListJsonResponse, type);
-
-        return historicalRecordEntityCollection;
+        return this.gson.fromJson(historicalRecordListJsonResponse, type);
     }
 }

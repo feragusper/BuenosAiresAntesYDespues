@@ -128,6 +128,11 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
         ll_empty_view.setVisibility(View.GONE);
     }
 
+    @Override
+    public void noMorePages() {
+        historicalRecordListAdapter.disableLoadingView();
+    }
+
     @SuppressLint("Override")
     @Override
     public Context getContext() {

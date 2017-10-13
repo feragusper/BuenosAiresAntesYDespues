@@ -1,6 +1,7 @@
 package com.feragusper.buenosairesantesydespues.net;
 
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface RestApi {
      * @param page
      * @param count
      */
-    Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList(int page, int count);
+    Observable<HistoricalRecordListPageEntity> getHistoricalRecordEntityList(int page, int count);
 
     Observable<HistoricalRecordEntity> getHistoricalRecordEntityById(String historicalRecordId);
 }

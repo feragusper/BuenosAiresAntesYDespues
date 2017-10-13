@@ -35,6 +35,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.inject(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.reset(this);
+    }
+
     protected void onBeforeSetContentView() {
         // Do nothing by default
     }
@@ -49,12 +55,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract int getContentViewResourceId();
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.reset(this);
-    }
 
     /**
      * Adds a {@link Fragment} to this activity's layout.

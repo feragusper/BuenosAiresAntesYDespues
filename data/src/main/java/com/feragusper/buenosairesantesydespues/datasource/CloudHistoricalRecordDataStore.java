@@ -1,7 +1,9 @@
 package com.feragusper.buenosairesantesydespues.datasource;
 
 import com.feragusper.buenosairesantesydespues.cache.HistoricalRecordCache;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 import com.feragusper.buenosairesantesydespues.net.RestApi;
 
 import java.util.List;
@@ -20,10 +22,10 @@ class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore {
     private final RestApi restApi;
     private final HistoricalRecordCache historicalRecordCache;
 
-    private final Action1<List<HistoricalRecordEntity>> saveToCacheAction =
-            historicalRecordList -> {
-                if (historicalRecordList != null) {
-                    for (HistoricalRecordEntity historicalRecordEntity : historicalRecordList) {
+    private final Action1<HistoricalRecordListPageEntity> saveToCacheAction =
+            historicalRecordListPageEntity -> {
+                if (historicalRecordListPageEntity != null) {
+                    for (HistoricalRecordEntity historicalRecordEntity : historicalRecordListPageEntity.getHistoricalRecordList()) {
                         CloudHistoricalRecordDataStore.this.historicalRecordCache.put(historicalRecordEntity);
                     }
                 }
@@ -41,7 +43,7 @@ class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore {
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList(int page, int count) {
+    public Observable<HistoricalRecordListPageEntity> getHistoricalRecordEntityList(int page, int count) {
         return this.restApi.getHistoricalRecordEntityList(page, count).doOnNext(saveToCacheAction);
     }
 

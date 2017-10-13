@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.feragusper.buenosairesantesydespues.ApiConnection;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 import com.feragusper.buenosairesantesydespues.entity.mapper.HistoricalRecordEntityJsonMapper;
 import com.feragusper.buenosairesantesydespues.exception.NetworkConnectionException;
 
@@ -44,16 +45,16 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList(int page, int count) {
-        return Observable.create(new Observable.OnSubscribe<List<HistoricalRecordEntity>>() {
+    public Observable<HistoricalRecordListPageEntity> getHistoricalRecordEntityList(int page, int count) {
+        return Observable.create(new Observable.OnSubscribe<HistoricalRecordListPageEntity>() {
             @Override
-            public void call(Subscriber<? super List<HistoricalRecordEntity>> subscriber) {
+            public void call(Subscriber<? super HistoricalRecordListPageEntity> subscriber) {
 
                 if (isThereInternetConnection()) {
                     try {
                         String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi(page, count);
                         if (responseHistoricalRecordEntities != null) {
-                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).getJSONArray("posts").toString()));
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).toString()));
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());

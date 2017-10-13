@@ -1,7 +1,7 @@
 package com.feragusper.buenosairesantesydespues.mapper;
 
 import com.feragusper.buenosairesantesydespues.di.PerActivity;
-import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 
 import java.util.ArrayList;
@@ -14,14 +14,14 @@ import javax.inject.Inject;
  * @author Fernando.Perez
  * @since 0.1
  * <p>
- * Mapper class used to transform {@link com.feragusper.buenosairesantesydespues.domain.HistoricalRecord} (in the domain layer) to {@link HistoricalRecordModel} in the
+ * Mapper class used to transform {@link HistoricalRecord} (in the domain layer) to {@link HistoricalRecordModel} in the
  * presentation layer.
  */
 @PerActivity
 public class HistoricalRecordModelDataMapper {
 
     @Inject
-    public HistoricalRecordModelDataMapper() {
+    HistoricalRecordModelDataMapper() {
     }
 
     /**

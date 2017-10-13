@@ -2,6 +2,7 @@ package com.feragusper.buenosairesantesydespues.datasource;
 
 import com.feragusper.buenosairesantesydespues.cache.HistoricalRecordCache;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ class DiskHistoricalRecordDataStore implements HistoricalRecordDataStore {
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList(int offset, int limit) {
+    public Observable<HistoricalRecordListPageEntity> getHistoricalRecordEntityList(int offset, int limit) {
         //TODO: implement simple cache for storing/retrieving collections of historical records.
         throw new UnsupportedOperationException("Operation is not available!!!");
     }

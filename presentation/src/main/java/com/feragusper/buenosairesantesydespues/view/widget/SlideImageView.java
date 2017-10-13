@@ -42,13 +42,6 @@ public class SlideImageView extends RelativeLayout {
         init();
     }
 
-    private void init() {
-        inflate(getContext(), R.layout.view_slide_image_view, this);
-        ButterKnife.inject(this, this);
-        image2.setOnTouchListener(new BeforeAfterSliderTouchListener());
-        image1.setOnTouchListener(new BeforeAfterSliderTouchListener());
-    }
-
     public SlideImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -91,6 +84,13 @@ public class SlideImageView extends RelativeLayout {
 
             return true;
         }
+    }
+
+    private void init() {
+        inflate(getContext(), R.layout.view_slide_image_view, this);
+        ButterKnife.inject(this, this);
+        image2.setOnTouchListener(new BeforeAfterSliderTouchListener());
+        image1.setOnTouchListener(new BeforeAfterSliderTouchListener());
     }
 
     public void setImageUrls(final String url1, final String url2, final ImageLoadCallback imageLoadCallback) {

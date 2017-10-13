@@ -1,8 +1,7 @@
 package com.feragusper.buenosairesantesydespues.domain.repository;
 
-import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
-
-import java.util.List;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
 
 import rx.Observable;
 
@@ -19,7 +18,7 @@ public interface HistoricalRecordRepository {
      * @param offset
      * @param limit
      */
-    Observable<List<HistoricalRecord>> getHistoricalRecords(int offset, int limit);
+    Observable<HistoricalRecordListPage> getHistoricalRecords(int offset, int limit);
 
     /**
      * Get an {@link Observable} which will emit a {@link HistoricalRecord}.
