@@ -38,7 +38,7 @@ import butterknife.InjectView;
 public class HistoricalRecordListFragment extends BaseFragment implements HistoricalRecordListView {
 
     @Inject
-    HistoricalRecordListPresenter historicalRecordListPresenter;
+    HistoricalRecordListPresenter presenter;
     @InjectView(R.id.rv_historicalRecords)
     RecyclerView rv_historicalRecords;
     @InjectView(R.id.rl_progress)
@@ -54,8 +54,8 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
             new HistoricalRecordListAdapter.OnItemClickListener() {
                 @Override
                 public void onHistoricalRecordItemClicked(HistoricalRecordModel historicalRecordModel) {
-                    if (historicalRecordListPresenter != null && historicalRecordModel != null) {
-                        historicalRecordListPresenter.onHistoricalRecordClicked(historicalRecordModel);
+                    if (presenter != null && historicalRecordModel != null) {
+                        presenter.onHistoricalRecordClicked(historicalRecordModel);
                     }
                 }
             };
@@ -92,9 +92,9 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
                         historicalRecordListAdapter.notifyDataSetChanged();
                         int currentPage = endlessRecyclerViewScrollListener.getCurrentPage();
                         if (currentPage == 1) {
-                            historicalRecordListPresenter.loadHistoricalRecordList();
+                            presenter.loadHistoricalRecordList();
                         } else {
-                            historicalRecordListPresenter.onLoadMore(currentPage);
+                            presenter.onLoadMore(currentPage);
                         }
                     }
                 })
@@ -106,9 +106,16 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @Override
     public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection, int page) {
         if (historicalRecordModelCollection != null) {
-            historicalRecordListAdapter.setHistoricalRecordsCollection(historicalRecordModelCollection);
+            historicalRecordListAdapter.addHistoricalRecordsCollection(historicalRecordModelCollection);
         }
-//        endlessRecyclerViewScrollListener.setPage(page);
+        endlessRecyclerViewScrollListener.setPage(page);
+    }
+
+    @Override
+    public void renderHistoricalRecordList(Collection<HistoricalRecordModel> historicalRecordModelCollection) {
+        if (historicalRecordModelCollection != null) {
+            historicalRecordListAdapter.addHistoricalRecordsCollection(historicalRecordModelCollection);
+        }
     }
 
     @Override
@@ -148,9 +155,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_historical_record_list, container, true);
         ButterKnife.inject(this, fragmentView);
         setupUI();
@@ -162,19 +167,23 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initialize();
-        loadHistoricalRecordList();
+        if (savedInstanceState == null) {
+            presenter.loadHistoricalRecordList();
+        } else {
+            presenter.reloadHistoricalRecordList();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        historicalRecordListPresenter.resume();
+        presenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        historicalRecordListPresenter.pause();
+        presenter.pause();
     }
 
     @Override
@@ -186,21 +195,14 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     @Override
     public void onDestroy() {
         super.onDestroy();
-        historicalRecordListPresenter.destroy();
+        presenter.destroy();
     }
 
     private void initialize() {
-        if (historicalRecordListPresenter == null) {
+        if (presenter == null) {
             getComponent(HistoricalRecordComponent.class).inject(this);
-            historicalRecordListPresenter.setView(this);
+            presenter.setView(this);
         }
-    }
-
-    /**
-     * Loads all historicalRecords.
-     */
-    private void loadHistoricalRecordList() {
-        historicalRecordListPresenter.initialize();
     }
 
     private void setupUI() {
@@ -216,7 +218,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                historicalRecordListPresenter.onLoadMore(page);
+                presenter.onLoadMore(page);
             }
         };
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

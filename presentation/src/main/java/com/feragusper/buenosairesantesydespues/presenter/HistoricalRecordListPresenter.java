@@ -66,7 +66,7 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         @Override
         public void onNext(HistoricalRecordListPage historicalRecordListPage) {
             historicalRecords.addAll(historicalRecordListPage.getHistoricalRecordList());
-            showHistoricalRecordsCollectionInView(historicalRecordListPage.getHistoricalRecordList());
+            view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordListPage.getHistoricalRecordList()));
             if (historicalRecordListPage.getCountTotal() <= historicalRecords.size()) {
                 view.noMorePages();
             }
@@ -91,39 +91,23 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     }
 
     /**
-     * Initializes the presenter by start retrieving the historicalRecord list.
-     */
-    public void initialize() {
-        this.loadHistoricalRecordList();
-    }
-
-    /**
      * Loads all historicalRecords.
      */
     public void loadHistoricalRecordList() {
-        this.showViewLoading();
-        this.getHistoricalRecordList();
+        showViewLoading();
+        getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
     }
 
     private void showViewLoading() {
         view.showLoading();
     }
 
-    private void getHistoricalRecordList() {
-        if (historicalRecords.isEmpty()) {
-            this.getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
-        } else {
-            hideViewLoading();
-            showHistoricalRecordsCollectionInView(historicalRecords);
-        }
+    public void reloadHistoricalRecordList() {
+        view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecords), page);
     }
 
     private void hideViewLoading() {
         view.hideLoading();
-    }
-
-    private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
-        view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordsCollection), page);
     }
 
     public void onHistoricalRecordClicked(HistoricalRecordModel historicalRecordModel) {
