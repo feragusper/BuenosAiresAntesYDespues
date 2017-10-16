@@ -104,7 +104,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
     public void setPage(int page) {
         currentPage = page;
-        previousTotalItemCount = mLayoutManager.getItemCount();
+//        previousTotalItemCount = mLayoutManager.getItemCount();
     }
 
     public int getCurrentPage() {

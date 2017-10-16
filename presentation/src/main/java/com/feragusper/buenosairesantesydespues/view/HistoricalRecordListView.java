@@ -32,4 +32,6 @@ public interface HistoricalRecordListView extends LoadDataView {
     void hideEmptyListView();
 
     void noMorePages();
+
+    void renderHistoricalRecordList(Collection<HistoricalRecordModel> transform);
 }

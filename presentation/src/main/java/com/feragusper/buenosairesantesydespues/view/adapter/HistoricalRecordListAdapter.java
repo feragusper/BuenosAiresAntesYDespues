@@ -126,11 +126,10 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
         return (loadingViewEnabled) ? historicalRecordsCollection.size() + 1 : historicalRecordsCollection.size();
     }
 
-    public void setHistoricalRecordsCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
+    public void addHistoricalRecordsCollection(Collection<HistoricalRecordModel> historicalRecordsCollection) {
         validateUsersCollection(historicalRecordsCollection);
         this.historicalRecordsCollection.addAll(historicalRecordsCollection);
         notifyDataSetChanged();
-//        notifyItemRangeInserted();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
