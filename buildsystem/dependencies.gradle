@@ -26,6 +26,7 @@ ext {
 
     sethoOkHttpVersion = '1.2.0'
     appCompatVersion = '22.2.1'
+    designVersion = '22.2.1'
     playServicesVersion = '9.8.0'
     firebaseVersion = '9.8.0'
 
@@ -39,20 +40,21 @@ ext {
     testingSupportLibVersion = '0.1'
 
     presentationDependencies = [
-            daggerCompiler       : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger               : "com.google.dagger:dagger:${daggerVersion}",
-            butterKnife          : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            recyclerView         : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
-            rxJava               : "io.reactivex:rxjava:${rxJavaVersion}",
-            rxAndroid            : "io.reactivex:rxandroid:${rxAndroidVersion}",
-            javaxAnnotation      : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            picasso              : "com.squareup.picasso:picasso:${picassoVersion}",
-            setho                : "com.facebook.stetho:stetho:${sethoVersion}",
-            appCompat            : "com.android.support:appcompat-v7:${appCompatVersion}",
-            playServicesAnalytics: "com.google.android.gms:play-services-analytics:${playServicesVersion}",
-            playServicesMaps     : "com.google.android.gms:play-services-maps:${playServicesVersion}",
-            firebaseCore         : "com.google.firebase:firebase-core:${firebaseVersion}",
-            firebaseMessaging    : "com.google.firebase:firebase-messaging:${firebaseVersion}"
+            daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger                  : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife             : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            recyclerView            : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            rxJava                  : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid               : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation         : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            picasso                 : "com.squareup.picasso:picasso:${picassoVersion}",
+            setho                   : "com.facebook.stetho:stetho:${sethoVersion}",
+            appCompat               : "com.android.support:appcompat-v7:${appCompatVersion}",
+            design                  : "com.android.support:design:${designVersion}",
+            playServicesAnalytics   : "com.google.android.gms:play-services-analytics:${playServicesVersion}",
+            playServicesMaps        : "com.google.android.gms:play-services-maps:${playServicesVersion}",
+            firebaseCore            : "com.google.firebase:firebase-core:${firebaseVersion}",
+            firebaseMessaging       : "com.google.firebase:firebase-messaging:${firebaseVersion}"
     ]
 
     domainDependencies = [

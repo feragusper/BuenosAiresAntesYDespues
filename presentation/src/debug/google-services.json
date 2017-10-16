@@ -1,0 +1,43 @@
+// Change the content of this file by the one generated with your keys. Firebase, Maps, Analytics, etc.
+{
+  "project_info": {
+    "project_number": "some_number",
+    "firebase_url": "some_url",
+    "project_id": "some_id",
+    "storage_bucket": "some_storage"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "some_id",
+        "android_client_info": {
+          "package_name": "com.feragusper.buenosairesantesydespues.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "some_id",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "some_key"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

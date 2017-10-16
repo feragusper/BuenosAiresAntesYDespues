@@ -5,8 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.feragusper.buenosairesantesydespues.AndroidApplication;
 import com.feragusper.buenosairesantesydespues.di.components.ApplicationComponent;
@@ -37,14 +35,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.inject(this);
     }
 
-    protected void onBeforeSetContentView() {
-        // Do nothing by default
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.reset(this);
+    }
+
+    protected void onBeforeSetContentView() {
+        // Do nothing by default
+    }
+
+    /**
+     * Get the Main Application component for dependency injection.
+     *
+     * @return {@link ApplicationComponent}
+     */
+    protected ApplicationComponent getApplicationComponent() {
+        return ((AndroidApplication) getApplication()).getApplicationComponent();
     }
 
     protected abstract int getContentViewResourceId();
@@ -59,15 +66,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
         fragmentTransaction.add(containerViewId, fragment);
         fragmentTransaction.commit();
-    }
-
-    /**
-     * Get the Main Application component for dependency injection.
-     *
-     * @return {@link ApplicationComponent}
-     */
-    protected ApplicationComponent getApplicationComponent() {
-        return ((AndroidApplication) getApplication()).getApplicationComponent();
     }
 
     /**

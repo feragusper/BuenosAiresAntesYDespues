@@ -6,7 +6,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.feragusper.buenosairesantesydespues.ApiConnection;
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 import com.feragusper.buenosairesantesydespues.entity.mapper.HistoricalRecordEntityJsonMapper;
 import com.feragusper.buenosairesantesydespues.exception.NetworkConnectionException;
 
@@ -44,16 +45,16 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList() {
-        return Observable.create(new Observable.OnSubscribe<List<HistoricalRecordEntity>>() {
+    public Observable<HistoricalRecordListPageEntity> getHistoricalRecordEntityList(int page, int count) {
+        return Observable.create(new Observable.OnSubscribe<HistoricalRecordListPageEntity>() {
             @Override
-            public void call(Subscriber<? super List<HistoricalRecordEntity>> subscriber) {
+            public void call(Subscriber<? super HistoricalRecordListPageEntity> subscriber) {
 
                 if (isThereInternetConnection()) {
                     try {
-                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi();
+                        String responseHistoricalRecordEntities = getHistoricalRecordEntitiesFromApi(page, count);
                         if (responseHistoricalRecordEntities != null) {
-                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).getJSONObject("feed").getJSONArray("entry").toString()));
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformUserEntityCollection(new JSONObject(responseHistoricalRecordEntities).toString()));
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());
@@ -78,7 +79,7 @@ public class RestApiImpl implements RestApi {
                     try {
                         String responseHistoricalRecordEntity = getHistoricalRecordEntityFromApi(historicalRecordId);
                         if (responseHistoricalRecordEntity != null) {
-                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(new JSONObject(responseHistoricalRecordEntity).getJSONObject("entry").toString()));
+                            subscriber.onNext(historicalRecordEntityJsonMapper.transformHistoricalRecordEntity(new JSONObject(responseHistoricalRecordEntity).getJSONObject("post").toString()));
                             subscriber.onCompleted();
                         } else {
                             subscriber.onError(new NetworkConnectionException());
@@ -95,11 +96,7 @@ public class RestApiImpl implements RestApi {
     }
 
     private String getHistoricalRecordEntityFromApi(String historicalRecordId) throws MalformedURLException {
-        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BASE + "/" + historicalRecordId + API_PARAM_GET_HISTORICAL_RECORD_BASE_JSON).requestSyncCall();
-    }
-
-    private String getHistoricalRecordEntitiesFromApi() throws MalformedURLException {
-        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST).requestSyncCall();
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_BY_ID + historicalRecordId).requestSyncCall();
     }
 
     /**
@@ -115,5 +112,9 @@ public class RestApiImpl implements RestApi {
         isConnected = (networkInfo != null && networkInfo.isConnectedOrConnecting());
 
         return isConnected;
+    }
+
+    private String getHistoricalRecordEntitiesFromApi(int page, int count) throws MalformedURLException {
+        return ApiConnection.createGET(API_URL_GET_HISTORICAL_RECORD_LIST + count + API_URL_GET_HISTORICAL_RECORD_PARAM_PAGE + page).requestSyncCall();
     }
 }

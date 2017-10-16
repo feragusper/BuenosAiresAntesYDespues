@@ -11,7 +11,7 @@ import dagger.Component;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * A scope {@link com.feragusper.buenosairesantesydespues.di.PerActivity} component.
  * Injects historicalRecord specific Fragments.
  */

@@ -1,7 +1,9 @@
 package com.feragusper.buenosairesantesydespues.datasource;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.cache.HistoricalRecordCache;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 import com.feragusper.buenosairesantesydespues.net.RestApi;
 
 import java.util.List;
@@ -15,16 +17,16 @@ import rx.functions.Action1;
  * <p>
  * {@link HistoricalRecordDataStore} implementation based on connections to the api (Cloud).
  */
-public class CloudDataStore implements HistoricalRecordDataStore {
+class CloudHistoricalRecordDataStore implements HistoricalRecordDataStore {
 
     private final RestApi restApi;
     private final HistoricalRecordCache historicalRecordCache;
 
-    private final Action1<List<HistoricalRecordEntity>> saveToCacheAction =
-            historicalRecordList -> {
-                if (historicalRecordList != null) {
-                    for (HistoricalRecordEntity historicalRecordEntity : historicalRecordList) {
-                        CloudDataStore.this.historicalRecordCache.put(historicalRecordEntity);
+    private final Action1<HistoricalRecordListPageEntity> saveToCacheAction =
+            historicalRecordListPageEntity -> {
+                if (historicalRecordListPageEntity != null) {
+                    for (HistoricalRecordEntity historicalRecordEntity : historicalRecordListPageEntity.getHistoricalRecordList()) {
+                        CloudHistoricalRecordDataStore.this.historicalRecordCache.put(historicalRecordEntity);
                     }
                 }
             };
@@ -35,14 +37,14 @@ public class CloudDataStore implements HistoricalRecordDataStore {
      * @param restApi               The {@link RestApi} implementation to use.
      * @param historicalRecordCache A {@link HistoricalRecordCache} to cache data retrieved from the api.
      */
-    public CloudDataStore(RestApi restApi, HistoricalRecordCache historicalRecordCache) {
+    CloudHistoricalRecordDataStore(RestApi restApi, HistoricalRecordCache historicalRecordCache) {
         this.restApi = restApi;
         this.historicalRecordCache = historicalRecordCache;
     }
 
     @Override
-    public Observable<List<HistoricalRecordEntity>> getHistoricalRecordEntityList() {
-        return this.restApi.getHistoricalRecordEntityList().doOnNext(saveToCacheAction);
+    public Observable<HistoricalRecordListPageEntity> getHistoricalRecordEntityList(int page, int count) {
+        return this.restApi.getHistoricalRecordEntityList(page, count).doOnNext(saveToCacheAction);
     }
 
     @Override

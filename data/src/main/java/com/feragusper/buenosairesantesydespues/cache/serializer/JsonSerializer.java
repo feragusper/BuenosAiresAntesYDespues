@@ -1,6 +1,6 @@
 package com.feragusper.buenosairesantesydespues.cache.serializer;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;
@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Class user as Serializer/Deserializer for user entities.
  */
 @Singleton
@@ -27,8 +27,7 @@ public class JsonSerializer {
      * @param historicalRecordEntity {@link HistoricalRecordEntity} to serialize.
      */
     public String serialize(HistoricalRecordEntity historicalRecordEntity) {
-        String jsonString = gson.toJson(historicalRecordEntity, HistoricalRecordEntity.class);
-        return jsonString;
+        return gson.toJson(historicalRecordEntity, HistoricalRecordEntity.class);
     }
 
     /**
@@ -38,7 +37,6 @@ public class JsonSerializer {
      * @return {@link HistoricalRecordEntity}
      */
     public HistoricalRecordEntity deserialize(String jsonString) {
-        HistoricalRecordEntity historicalRecordEntity = gson.fromJson(jsonString, HistoricalRecordEntity.class);
-        return historicalRecordEntity;
+        return gson.fromJson(jsonString, HistoricalRecordEntity.class);
     }
 }

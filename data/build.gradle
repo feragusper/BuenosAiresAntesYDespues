@@ -64,6 +64,7 @@ dependencies {
     compile dataDependencies.rxAndroid
     compile dataDependencies.androidAnnotations
     compile dataDependencies.sethoOkHttp
+    compile 'com.squareup.okhttp:logging-interceptor:+'
 
     testCompile testDependencies.junit
     testCompile testDependencies.mockito

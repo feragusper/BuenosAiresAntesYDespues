@@ -1,6 +1,6 @@
 package com.feragusper.buenosairesantesydespues.cache;
 
-import com.feragusper.buenosairesantesydespues.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 
 import rx.Observable;
 

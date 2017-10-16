@@ -20,11 +20,11 @@ import com.feragusper.buenosairesantesydespues.view.fragment.HistoricalRecordLis
 public class HistoricalRecordListActivity extends ToolbarActivity implements HasComponent<HistoricalRecordComponent>,
         HistoricalRecordListFragment.HistoricalRecordListListener {
 
+    private HistoricalRecordComponent historicalRecordComponent;
+
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, HistoricalRecordListActivity.class);
     }
-
-    private HistoricalRecordComponent historicalRecordComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +32,16 @@ public class HistoricalRecordListActivity extends ToolbarActivity implements Has
         this.initializeInjector();
     }
 
-    @Override
-    protected int getContentViewResourceId() {
-        return R.layout.activity_historical_record_list;
-    }
-
     private void initializeInjector() {
         this.historicalRecordComponent = DaggerHistoricalRecordComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
                 .build();
+    }
+
+    @Override
+    protected int getContentViewResourceId() {
+        return R.layout.activity_historical_record_list;
     }
 
     @Override
