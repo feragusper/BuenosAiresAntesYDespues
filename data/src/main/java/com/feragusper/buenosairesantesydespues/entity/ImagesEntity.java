@@ -16,11 +16,11 @@ class ImagesEntity {
     @SerializedName("full")
     private ImageEntity full;
 
-    public String getFullURL() {
+    String getFullURL() {
         return full.getUrl();
     }
 
-    public String getThumbnailURL() {
+    String getThumbnailURL() {
         return thumbnail.getUrl();
     }
 }

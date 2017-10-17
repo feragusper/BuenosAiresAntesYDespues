@@ -13,7 +13,7 @@ class ImageEntity {
     @SerializedName("url")
     private String url;
 
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 }

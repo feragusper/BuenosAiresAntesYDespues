@@ -32,7 +32,7 @@ class CustomFieldsEntity {
     @SerializedName("geo")
     private List<String> geo;
 
-    public String getCreditsNow() {
+    String getCreditsNow() {
         return creditsNow.get(0);
     }
 
@@ -40,23 +40,23 @@ class CustomFieldsEntity {
         return creditsBefore.get(0);
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description.get(0);
     }
 
-    public String getGeo() {
+    String getGeo() {
         return geo.get(0);
     }
 
-    public String getYearBefore() {
+    String getYearBefore() {
         return yearBefore.get(0);
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address.get(0);
     }
 
-    public String getNeighborhood() {
+    String getNeighborhood() {
         return neighborhood.get(0);
     }
 

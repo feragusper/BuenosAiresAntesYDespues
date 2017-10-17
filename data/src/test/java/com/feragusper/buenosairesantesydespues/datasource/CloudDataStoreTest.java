@@ -14,7 +14,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
- * Test Cases for {@link CloudDataStore}
+ * Test Cases for {@link CloudHistoricalRecordDataStore}
  *
  * @author Fernando.Perez
  * @since 0.6
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.verify;
 public class CloudDataStoreTest {
 
     //region Properties
-    private CloudDataStore cloudDataStore;
+    private CloudHistoricalRecordDataStore cloudDataStore;
 
     @Inject
-    RestApi mockRestApi;
+    private RestApi mockRestApi;
     //endregion
 
     //region Public Implementation
@@ -37,8 +37,8 @@ public class CloudDataStoreTest {
 
     @Test
     public void testGetAreaListFromApi() {
-        cloudDataStore.getHistoricalRecordEntityList();
-        verify(mockRestApi, times(1)).getHistoricalRecordEntityList();
+        cloudDataStore.getHistoricalRecordEntityList(1, 20);
+        verify(mockRestApi, times(1)).getHistoricalRecordEntityList(1, 20);
     }
     //endregion
 

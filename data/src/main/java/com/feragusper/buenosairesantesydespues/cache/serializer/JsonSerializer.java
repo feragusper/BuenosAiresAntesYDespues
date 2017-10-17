@@ -17,6 +17,7 @@ public class JsonSerializer {
 
     private final Gson gson = new Gson();
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public JsonSerializer() {
     }

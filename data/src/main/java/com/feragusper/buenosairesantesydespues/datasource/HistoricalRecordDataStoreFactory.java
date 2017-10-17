@@ -22,6 +22,7 @@ public class HistoricalRecordDataStoreFactory {
     private final Context context;
     private final HistoricalRecordCache historicalRecordCache;
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public HistoricalRecordDataStoreFactory(Context context, HistoricalRecordCache historicalRecordCache) {
         if (context == null || historicalRecordCache == null) {
@@ -53,6 +54,6 @@ public class HistoricalRecordDataStoreFactory {
         HistoricalRecordEntityJsonMapper historicalRecordEntityJsonMapper = new HistoricalRecordEntityJsonMapper();
         RestApi restApi = new RestApiImpl(this.context, historicalRecordEntityJsonMapper);
 
-        return new CloudDataStore(restApi, this.historicalRecordCache);
+        return new CloudHistoricalRecordDataStore(restApi, this.historicalRecordCache);
     }
 }
