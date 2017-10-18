@@ -8,13 +8,18 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Images Entity used in the data layer.
  */
-class ImagesEntity {
+public class ImagesEntity {
 
     @SerializedName("thumbnail")
     private ImageEntity thumbnail;
 
     @SerializedName("full")
     private ImageEntity full;
+
+    public ImagesEntity(ImageEntity full, ImageEntity thumbnail) {
+        this.full = full;
+        this.thumbnail = thumbnail;
+    }
 
     String getFullURL() {
         return full.getUrl();

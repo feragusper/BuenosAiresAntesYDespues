@@ -68,4 +68,5 @@ dependencies {
 
     testCompile testDependencies.junit
     testCompile testDependencies.mockito
+    testApt "com.google.dagger:dagger-compiler:2.0"
 }

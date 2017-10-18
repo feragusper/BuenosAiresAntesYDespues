@@ -1,17 +1,18 @@
 package com.feragusper.buenosairesantesydespues.di.components;
 
-import com.feragusper.buenosairesantesydespues.datasource.CloudDataStoreTest;
+import com.feragusper.buenosairesantesydespues.datasource.CloudHistoricalRecordDataStoreTest;
 import com.feragusper.buenosairesantesydespues.di.modules.DataStoreModule;
 
 import dagger.Component;
 
 /**
  * @author Fernando.Perez
- * @since 0.6
+ * @since 1.4
  */
+@SuppressWarnings("WeakerAccess")
 @Component(modules = DataStoreModule.class)
 public interface DataStoreComponent {
 
-    void inject(CloudDataStoreTest cloudDataStoreTest);
+    void inject(CloudHistoricalRecordDataStoreTest cloudHistoricalRecordDataStoreTest);
 
 }

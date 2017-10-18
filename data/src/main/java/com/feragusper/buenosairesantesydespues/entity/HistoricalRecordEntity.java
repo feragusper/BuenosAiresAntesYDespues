@@ -24,8 +24,11 @@ public class HistoricalRecordEntity {
     @SerializedName("attachments")
     private List<AttachmentEntity> attachments;
 
-    public HistoricalRecordEntity() {
-        //empty
+    public HistoricalRecordEntity(Long historicalRecordId, String title, CustomFieldsEntity customFields, List<AttachmentEntity> attachments) {
+        this.historicalRecordId = historicalRecordId;
+        this.title = title;
+        this.customFields = customFields;
+        this.attachments = attachments;
     }
 
     public String getHistoricalRecordId() {
@@ -94,7 +97,7 @@ public class HistoricalRecordEntity {
     public String getImageURLThumbnail() {
         final AttachmentEntity attachmentWithKey = getAttachmentWithKey(AttachmentEntity.KEY_BEFORE);
         if (attachmentWithKey != null) {
-            attachmentWithKey.getThumbnailImageURL();
+            return attachmentWithKey.getThumbnailImageURL();
         }
         return null;
     }
