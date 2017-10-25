@@ -26,6 +26,10 @@ public class HistoricalRecordListPageEntity {
         this.historicalRecordList = historicalRecordList;
     }
 
+    public HistoricalRecordListPageEntity() {
+        // empty constructor
+    }
+
     public List<HistoricalRecordEntity> getHistoricalRecordList() {
         return historicalRecordList;
     }

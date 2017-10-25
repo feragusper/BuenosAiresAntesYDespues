@@ -31,6 +31,10 @@ public class HistoricalRecordEntity {
         this.attachments = attachments;
     }
 
+    public HistoricalRecordEntity() {
+        // empty constructor
+    }
+
     public String getHistoricalRecordId() {
         return historicalRecordId.toString();
     }
