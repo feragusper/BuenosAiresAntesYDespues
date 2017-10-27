@@ -43,14 +43,6 @@ public class HistoricalRecord {
         this.credits = credits;
     }
 
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(String folder) {
-        this.folder = folder;
-    }
-
     public String getDescription() {
         return description;
     }

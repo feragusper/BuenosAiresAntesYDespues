@@ -33,4 +33,8 @@ public class HistoricalRecordListPage {
     public int getCountTotal() {
         return countTotal;
     }
+
+    public int getPages() {
+        return pages;
+    }
 }

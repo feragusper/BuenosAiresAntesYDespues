@@ -43,9 +43,10 @@ public class HistoricalRecordCacheImpl implements HistoricalRecordCache {
      * @param userCacheSerializer {@link JsonSerializer} for object serialization.
      * @param fileManager         {@link FileManager} for saving serialized objects to the file system.
      */
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public HistoricalRecordCacheImpl(Context context, JsonSerializer userCacheSerializer,
-                                     FileManager fileManager, ThreadExecutor executor) {
+                                      FileManager fileManager, ThreadExecutor executor) {
         if (context == null || userCacheSerializer == null || fileManager == null || executor == null) {
             throw new IllegalArgumentException("Invalid null parameter");
         }
@@ -96,19 +97,16 @@ public class HistoricalRecordCacheImpl implements HistoricalRecordCache {
 
     @Override
     public synchronized Observable<HistoricalRecordEntity> get(final String historicalRecordId) {
-        return Observable.create(new Observable.OnSubscribe<HistoricalRecordEntity>() {
-            @Override
-            public void call(Subscriber<? super HistoricalRecordEntity> subscriber) {
-                File historicalRecordEntityFile = HistoricalRecordCacheImpl.this.buildFile(historicalRecordId);
-                String fileContent = HistoricalRecordCacheImpl.this.fileManager.readFileContent(historicalRecordEntityFile);
-                HistoricalRecordEntity historicalRecordEntity = HistoricalRecordCacheImpl.this.serializer.deserialize(fileContent);
+        return Observable.create(subscriber -> {
+            File historicalRecordEntityFile = HistoricalRecordCacheImpl.this.buildFile(historicalRecordId);
+            String fileContent = HistoricalRecordCacheImpl.this.fileManager.readFileContent(historicalRecordEntityFile);
+            HistoricalRecordEntity historicalRecordEntity = HistoricalRecordCacheImpl.this.serializer.deserialize(fileContent);
 
-                if (historicalRecordEntity != null) {
-                    subscriber.onNext(historicalRecordEntity);
-                    subscriber.onCompleted();
-                } else {
-                    subscriber.onError(new HistoricalRecordNotFoundException());
-                }
+            if (historicalRecordEntity != null) {
+                subscriber.onNext(historicalRecordEntity);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(new HistoricalRecordNotFoundException());
             }
         });
     }

@@ -1,7 +1,9 @@
 package com.feragusper.buenosairesantesydespues.entity;
 
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +20,16 @@ public class HistoricalRecordListPageEntity {
     @SerializedName("pages")
     private int pages;
 
+    public HistoricalRecordListPageEntity(int pages, int countTotal, List<HistoricalRecordEntity> historicalRecordList) {
+        this.pages = pages;
+        this.countTotal = countTotal;
+        this.historicalRecordList = historicalRecordList;
+    }
+
+    public HistoricalRecordListPageEntity() {
+        // empty constructor
+    }
+
     public List<HistoricalRecordEntity> getHistoricalRecordList() {
         return historicalRecordList;
     }
@@ -29,4 +41,5 @@ public class HistoricalRecordListPageEntity {
     public int getPages() {
         return pages;
     }
+
 }

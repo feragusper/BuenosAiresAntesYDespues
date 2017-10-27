@@ -4,8 +4,6 @@ import com.feragusper.buenosairesantesydespues.cache.HistoricalRecordCache;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**

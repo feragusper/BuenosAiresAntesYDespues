@@ -1,5 +1,11 @@
+machine:
+  java:
+    version: oraclejdk8
+  environment:
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+
 dependencies:
-  pre:
+  override:
      - echo y | android list sdk
      - echo y | android update sdk --no-ui --all --filter "tools"
      - echo y | android update sdk --no-ui --all --filter "platform-tools"
@@ -10,14 +16,22 @@ dependencies:
      - echo y | android update sdk --no-ui --all --filter "extra-android-support"
      - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
 
+compile:
+  override:
+    # Assemble the project
+    - ./gradlew assemble
+
+test:
+  override:
+    # Execute Tests
+    - ./gradlew test
+
+    # Check lint hints
+    - ./gradlew lint
+
 deployment:
   playstore:
     branch: master
     commands:
+      # Publish to playstore
       - ./gradlew publishRelease
-
-machine:
-  java:
-    version: oraclejdk8
-  environment:
-    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
