@@ -3,16 +3,18 @@ package com.feragusper.buenosairesantesydespues.presenter;
 import android.support.annotation.NonNull;
 
 import com.feragusper.buenosairesantesydespues.di.PerActivity;
-import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.exception.DefaultErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.exception.ErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.interactor.DefaultSubscriber;
-import com.feragusper.buenosairesantesydespues.domain.interactor.UseCase;
+import com.feragusper.buenosairesantesydespues.domain.interactor.GetHistoricalRecordListUseCase;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
 import com.feragusper.buenosairesantesydespues.exception.ErrorMessageFactory;
 import com.feragusper.buenosairesantesydespues.mapper.HistoricalRecordModelDataMapper;
 import com.feragusper.buenosairesantesydespues.model.HistoricalRecordModel;
 import com.feragusper.buenosairesantesydespues.view.HistoricalRecordListView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,20 +31,50 @@ import javax.inject.Named;
 @PerActivity
 public class HistoricalRecordListPresenter extends DefaultSubscriber<List<HistoricalRecord>> implements Presenter {
 
-    private HistoricalRecordListView viewListView;
-
-    private final UseCase getHistoricalRecordListUseCase;
+    private final GetHistoricalRecordListUseCase getHistoricalRecordListUseCase;
     private final HistoricalRecordModelDataMapper historicalRecordModelDataMapper;
-    private Collection<HistoricalRecord> historicalRecords;
+    private HistoricalRecordListView view;
+    private Collection<HistoricalRecord> historicalRecords = new ArrayList<>();
+    private int page;
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
-    public HistoricalRecordListPresenter(@Named("historicalRecordList") UseCase getHistoricalRecordListUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
+    public HistoricalRecordListPresenter(@Named("historicalRecordList") GetHistoricalRecordListUseCase getHistoricalRecordListUseCase, HistoricalRecordModelDataMapper historicalRecordModelDataMapper) {
         this.getHistoricalRecordListUseCase = getHistoricalRecordListUseCase;
         this.historicalRecordModelDataMapper = historicalRecordModelDataMapper;
     }
 
+    private final class HistoricalRecordListSubscriber extends DefaultSubscriber<HistoricalRecordListPage> {
+
+        @Override
+        public void onCompleted() {
+            hideViewLoading();
+            if (!historicalRecords.isEmpty()) {
+                view.hideEmptyListView();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            if (historicalRecords.isEmpty()) {
+                view.displayEmptyListView();
+            }
+        }
+
+        @Override
+        public void onNext(HistoricalRecordListPage historicalRecordListPage) {
+            historicalRecords.addAll(historicalRecordListPage.getHistoricalRecordList());
+            view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordListPage.getHistoricalRecordList()));
+            if (historicalRecordListPage.getCountTotal() <= historicalRecords.size()) {
+                view.noMorePages();
+            }
+        }
+    }
+
     public void setView(@NonNull HistoricalRecordListView view) {
-        this.viewListView = view;
+        this.view = view;
     }
 
     @Override
@@ -59,80 +91,36 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     }
 
     /**
-     * Initializes the presenter by start retrieving the historicalRecord list.
-     */
-    public void initialize() {
-        this.loadHistoricalRecordList();
-    }
-
-    /**
      * Loads all historicalRecords.
      */
-    private void loadHistoricalRecordList() {
-        this.hideViewRetry();
-        this.showViewLoading();
-        this.getHistoricalRecordList();
-    }
-
-    public void onHistoricalRecordClicked(HistoricalRecordModel historicalRecordModel) {
-        this.viewListView.viewHistoricalRecord(historicalRecordModel);
+    public void loadHistoricalRecordList() {
+        showViewLoading();
+        getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
     }
 
     private void showViewLoading() {
-        this.viewListView.showLoading();
+        view.showLoading();
+    }
+
+    public void reloadHistoricalRecordList() {
+        view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecords), page);
     }
 
     private void hideViewLoading() {
-        this.viewListView.hideLoading();
+        view.hideLoading();
     }
 
-    private void showViewRetry() {
-        this.viewListView.showRetry();
-    }
-
-    private void hideViewRetry() {
-        this.viewListView.hideRetry();
+    public void onHistoricalRecordClicked(HistoricalRecordModel historicalRecordModel) {
+        this.view.viewHistoricalRecord(historicalRecordModel);
     }
 
     private void showErrorMessage(ErrorBundle errorBundle) {
-        String errorMessage = ErrorMessageFactory.create(this.viewListView.getContext(),
-                errorBundle.getException());
-        this.viewListView.showError(errorMessage);
+        view.showError(ErrorMessageFactory.create(view.getContext(), errorBundle.getException()));
     }
 
-    private void showHistoricalRecordsCollectionInView(Collection<HistoricalRecord> historicalRecordsCollection) {
-        final Collection<HistoricalRecordModel> historicalRecordModelsCollection =
-                this.historicalRecordModelDataMapper.transform(historicalRecordsCollection);
-        this.viewListView.renderHistoricalRecordList(historicalRecordModelsCollection);
-    }
-
-    private void getHistoricalRecordList() {
-        if (historicalRecords == null) {
-            this.getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
-        } else {
-            hideViewLoading();
-            showHistoricalRecordsCollectionInView(historicalRecords);
-        }
-    }
-
-    private final class HistoricalRecordListSubscriber extends DefaultSubscriber<List<HistoricalRecord>> {
-
-        @Override
-        public void onCompleted() {
-            hideViewLoading();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            hideViewLoading();
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
-            showViewRetry();
-        }
-
-        @Override
-        public void onNext(List<HistoricalRecord> historicalRecords) {
-            HistoricalRecordListPresenter.this.historicalRecords = historicalRecords;
-            showHistoricalRecordsCollectionInView(historicalRecords);
-        }
+    public void onLoadMore(int page) {
+        this.page = page;
+        getHistoricalRecordListUseCase.setPage(page);
+        getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
     }
 }

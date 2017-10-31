@@ -27,6 +27,10 @@ public class AboutActivity extends ToolbarActivity {
     @InjectView(R.id.tv_about_history)
     TextView aboutHistory;
 
+    public static Intent getCallingIntent(Context context) {
+        return new Intent(context, AboutActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +54,5 @@ public class AboutActivity extends ToolbarActivity {
     @Override
     protected int getContentViewResourceId() {
         return R.layout.activity_about;
-    }
-
-    public static Intent getCallingIntent(Context context) {
-        return new Intent(context, AboutActivity.class);
     }
 }

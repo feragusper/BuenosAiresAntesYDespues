@@ -10,7 +10,7 @@ import dagger.Provides;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * A module to wrap the Activity state and expose it to the graph.
  */
 @Module

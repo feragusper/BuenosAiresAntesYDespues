@@ -1,5 +1,7 @@
 package com.feragusper.buenosairesantesydespues.executor;
 
+import android.support.annotation.NonNull;
+
 import com.feragusper.buenosairesantesydespues.domain.executor.ThreadExecutor;
 
 import java.util.concurrent.BlockingQueue;
@@ -36,19 +38,11 @@ public class JobExecutor implements ThreadExecutor {
     private final ThreadFactory threadFactory;
 
     @Inject
-    public JobExecutor() {
+    JobExecutor() {
         this.workQueue = new LinkedBlockingQueue<>();
         this.threadFactory = new JobThreadFactory();
         this.threadPoolExecutor = new ThreadPoolExecutor(INITIAL_POOL_SIZE, MAX_POOL_SIZE,
                 KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, this.workQueue, this.threadFactory);
-    }
-
-    @Override
-    public void execute(Runnable runnable) {
-        if (runnable == null) {
-            throw new IllegalArgumentException("Runnable to execute cannot be null");
-        }
-        this.threadPoolExecutor.execute(runnable);
     }
 
     private static class JobThreadFactory implements ThreadFactory {
@@ -56,8 +50,13 @@ public class JobExecutor implements ThreadExecutor {
         private int counter = 0;
 
         @Override
-        public Thread newThread(Runnable runnable) {
+        public Thread newThread(@NonNull Runnable runnable) {
             return new Thread(runnable, THREAD_NAME + counter);
         }
+    }
+
+    @Override
+    public void execute(@NonNull Runnable runnable) {
+        this.threadPoolExecutor.execute(runnable);
     }
 }

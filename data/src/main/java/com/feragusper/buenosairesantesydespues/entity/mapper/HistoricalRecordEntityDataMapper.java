@@ -2,12 +2,13 @@ package com.feragusper.buenosairesantesydespues.entity.mapper;
 
 import android.util.Log;
 
-import com.feragusper.buenosairesantesydespues.domain.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
 import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordEntity;
+import com.feragusper.buenosairesantesydespues.entity.HistoricalRecordListPageEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,7 +25,37 @@ import javax.inject.Singleton;
 public class HistoricalRecordEntityDataMapper {
 
     @Inject
-    public HistoricalRecordEntityDataMapper() {
+    HistoricalRecordEntityDataMapper() {
+    }
+
+    /**
+     * Transform a List of {@link HistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
+     *
+     * @param historicalRecordListPageEntity Object Collection to be transformed.
+     * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
+     */
+    public HistoricalRecordListPage transform(HistoricalRecordListPageEntity historicalRecordListPageEntity) {
+        HistoricalRecordListPage historicalRecordListPage = new HistoricalRecordListPage();
+
+        HistoricalRecord historicalRecord = null;
+        historicalRecordListPage.setCountTotal(historicalRecordListPageEntity.getCountTotal());
+        historicalRecordListPage.setPages(historicalRecordListPageEntity.getPages());
+        for (HistoricalRecordEntity historicalRecordEntity : historicalRecordListPageEntity.getHistoricalRecordList()) {
+            try {
+                historicalRecord = transform(historicalRecordEntity);
+            } catch (Exception e) {
+                if (historicalRecord != null) {
+                    Log.e(this.getClass().getSimpleName(), "There was an error trying to transform Historical Record with id " + (historicalRecord.getHistoricalRecordId()), e);
+                } else {
+                    Log.e(this.getClass().getSimpleName(), "There was an error trying to transform some Historical Record. Can't do a transform a null reference ", e);
+                }
+            }
+            if (historicalRecord != null) {
+                historicalRecordListPage.addHistoricalRecord(historicalRecord);
+            }
+        }
+
+        return historicalRecordListPage;
     }
 
     /**
@@ -58,29 +89,5 @@ public class HistoricalRecordEntityDataMapper {
         }
 
         return historicalRecord;
-    }
-
-    /**
-     * Transform a List of {@link HistoricalRecordEntity} into a Collection of {@link HistoricalRecord}.
-     *
-     * @param historicalRecordEntityCollection Object Collection to be transformed.
-     * @return {@link HistoricalRecord} if valid {@link HistoricalRecordEntity} otherwise null.
-     */
-    public List<HistoricalRecord> transform(Collection<HistoricalRecordEntity> historicalRecordEntityCollection) {
-        List<HistoricalRecord> historicalRecordList = new ArrayList<>();
-
-        HistoricalRecord historicalRecord = null;
-        for (HistoricalRecordEntity historicalRecordEntity : historicalRecordEntityCollection) {
-            try {
-                historicalRecord = transform(historicalRecordEntity);
-            } catch (Exception e) {
-                Log.e(this.getClass().getSimpleName(), "There was an error trying to transform Historical Record with id " + historicalRecord.getHistoricalRecordId(), e);
-            }
-            if (historicalRecord != null) {
-                historicalRecordList.add(historicalRecord);
-            }
-        }
-
-        return historicalRecordList;
     }
 }

@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Class user as Serializer/Deserializer for user entities.
  */
 @Singleton
@@ -17,6 +17,7 @@ public class JsonSerializer {
 
     private final Gson gson = new Gson();
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public JsonSerializer() {
     }
@@ -27,8 +28,7 @@ public class JsonSerializer {
      * @param historicalRecordEntity {@link HistoricalRecordEntity} to serialize.
      */
     public String serialize(HistoricalRecordEntity historicalRecordEntity) {
-        String jsonString = gson.toJson(historicalRecordEntity, HistoricalRecordEntity.class);
-        return jsonString;
+        return gson.toJson(historicalRecordEntity, HistoricalRecordEntity.class);
     }
 
     /**
@@ -38,7 +38,6 @@ public class JsonSerializer {
      * @return {@link HistoricalRecordEntity}
      */
     public HistoricalRecordEntity deserialize(String jsonString) {
-        HistoricalRecordEntity historicalRecordEntity = gson.fromJson(jsonString, HistoricalRecordEntity.class);
-        return historicalRecordEntity;
+        return gson.fromJson(jsonString, HistoricalRecordEntity.class);
     }
 }
