@@ -24,8 +24,15 @@ public class HistoricalRecordEntity {
     @SerializedName("attachments")
     private List<AttachmentEntity> attachments;
 
+    public HistoricalRecordEntity(Long historicalRecordId, String title, CustomFieldsEntity customFields, List<AttachmentEntity> attachments) {
+        this.historicalRecordId = historicalRecordId;
+        this.title = title;
+        this.customFields = customFields;
+        this.attachments = attachments;
+    }
+
     public HistoricalRecordEntity() {
-        //empty
+        // empty constructor
     }
 
     public String getHistoricalRecordId() {
@@ -33,11 +40,11 @@ public class HistoricalRecordEntity {
     }
 
     public String getTitle() {
-        return title.toString();
+        return title;
     }
 
     public String getCreditsNow() {
-        return customFields.getCreditsNow().toString();
+        return customFields.getCreditsNow();
     }
 
     public String getDescription() {
@@ -65,15 +72,12 @@ public class HistoricalRecordEntity {
     }
 
     public String getImageURLBefore() {
-        return getAttachmentWithKey(AttachmentEntity.KEY_BEFORE).getFullImageURL();
-    }
+        final AttachmentEntity attachmentWithKey = getAttachmentWithKey(AttachmentEntity.KEY_BEFORE);
+        if (attachmentWithKey != null) {
+            return attachmentWithKey.getFullImageURL();
+        }
 
-    public String getImageURLAfter() {
-        return getAttachmentWithKey(AttachmentEntity.KEY_AFTER).getFullImageURL();
-    }
-
-    public String getImageURLThumbnail() {
-        return getAttachmentWithKey(AttachmentEntity.KEY_BEFORE).getThumbnailImageURL();
+        return null;
     }
 
     private AttachmentEntity getAttachmentWithKey(String key) {
@@ -83,6 +87,22 @@ public class HistoricalRecordEntity {
             }
         }
 
+        return null;
+    }
+
+    public String getImageURLAfter() {
+        final AttachmentEntity attachmentWithKey = getAttachmentWithKey(AttachmentEntity.KEY_AFTER);
+        if (attachmentWithKey != null) {
+            return attachmentWithKey.getFullImageURL();
+        }
+        return null;
+    }
+
+    public String getImageURLThumbnail() {
+        final AttachmentEntity attachmentWithKey = getAttachmentWithKey(AttachmentEntity.KEY_BEFORE);
+        if (attachmentWithKey != null) {
+            return attachmentWithKey.getThumbnailImageURL();
+        }
         return null;
     }
 

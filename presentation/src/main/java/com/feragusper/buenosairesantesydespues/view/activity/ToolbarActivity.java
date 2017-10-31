@@ -31,6 +31,13 @@ public abstract class ToolbarActivity extends BaseActivity {
         initializeToolBar();
     }
 
+    @CallSuper
+    protected void initializeToolBar() {
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -54,13 +61,6 @@ public abstract class ToolbarActivity extends BaseActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @CallSuper
-    protected void initializeToolBar() {
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
         }
     }
 }

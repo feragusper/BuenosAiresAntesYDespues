@@ -7,11 +7,22 @@
     tools:context="com.feragusper.buenosairesantesydespues.view.activity.SplashActivity"
     android:background="@drawable/bkg_pattern">
 
+    <TextView
+        android:id="@+id/tv_versionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/logo"
-        android:layout_centerInParent="true"/>
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:ignore="ContentDescription" />
 
 </RelativeLayout>

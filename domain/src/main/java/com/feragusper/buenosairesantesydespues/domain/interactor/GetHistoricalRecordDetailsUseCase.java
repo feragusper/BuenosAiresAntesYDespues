@@ -2,6 +2,7 @@ package com.feragusper.buenosairesantesydespues.domain.interactor;
 
 import com.feragusper.buenosairesantesydespues.domain.executor.PostExecutionThread;
 import com.feragusper.buenosairesantesydespues.domain.executor.ThreadExecutor;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.repository.HistoricalRecordRepository;
 
 import javax.inject.Inject;
@@ -11,9 +12,9 @@ import rx.Observable;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving data related to an specific {@link com.feragusper.buenosairesantesydespues.domain.HistoricalRecord}.
+ * retrieving data related to an specific {@link HistoricalRecord}.
  */
 public class GetHistoricalRecordDetailsUseCase extends UseCase {
 
@@ -31,4 +32,5 @@ public class GetHistoricalRecordDetailsUseCase extends UseCase {
     protected Observable buildUseCaseObservable() {
         return this.historicalRecordRepository.getHistoricalRecord(this.historicalRecordId);
     }
+
 }

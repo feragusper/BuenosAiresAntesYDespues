@@ -2,6 +2,7 @@ package com.feragusper.buenosairesantesydespues.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,8 @@ import java.util.List;
  * <p>
  * CustomFields Entity used in the data layer.
  */
-class CustomFieldsEntity {
+public class CustomFieldsEntity {
+
     @SerializedName("creditos_ahora")
     private List<String> creditsNow;
 
@@ -32,7 +34,24 @@ class CustomFieldsEntity {
     @SerializedName("geo")
     private List<String> geo;
 
-    public String getCreditsNow() {
+    public CustomFieldsEntity(String creditsNow, String creditsBefore, String description, String yearBefore, String address, String neighborhood, String geo) {
+        this.creditsNow = new ArrayList<>();
+        this.creditsNow.add(creditsNow);
+        this.creditsBefore = new ArrayList<>();
+        this.creditsBefore.add(creditsBefore);
+        this.description = new ArrayList<>();
+        this.description.add(description);
+        this.yearBefore = new ArrayList<>();
+        this.yearBefore.add(yearBefore);
+        this.address = new ArrayList<>();
+        this.address.add(address);
+        this.neighborhood = new ArrayList<>();
+        this.neighborhood.add(neighborhood);
+        this.geo = new ArrayList<>();
+        this.geo.add(geo);
+    }
+
+    String getCreditsNow() {
         return creditsNow.get(0);
     }
 
@@ -40,23 +59,23 @@ class CustomFieldsEntity {
         return creditsBefore.get(0);
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description.get(0);
     }
 
-    public String getGeo() {
+    String getGeo() {
         return geo.get(0);
     }
 
-    public String getYearBefore() {
+    String getYearBefore() {
         return yearBefore.get(0);
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address.get(0);
     }
 
-    public String getNeighborhood() {
+    String getNeighborhood() {
         return neighborhood.get(0);
     }
 

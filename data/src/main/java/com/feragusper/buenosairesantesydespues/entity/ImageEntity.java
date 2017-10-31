@@ -8,12 +8,16 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Image Entity used in the data layer.
  */
-class ImageEntity {
+public class ImageEntity {
 
     @SerializedName("url")
     private String url;
 
-    public String getUrl() {
+    public ImageEntity(String url) {
+        this.url = url;
+    }
+
+    String getUrl() {
         return url;
     }
 }

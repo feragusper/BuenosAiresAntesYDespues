@@ -8,7 +8,7 @@ import android.content.Context;
  * <p>
  * Interface representing a View that will use to load data.
  */
-public interface LoadDataView {
+interface LoadDataView {
     /**
      * Show a view with a progress bar indicating a loading process.
      */
@@ -18,16 +18,6 @@ public interface LoadDataView {
      * Hide a loading view.
      */
     void hideLoading();
-
-    /**
-     * Show a retry view in case of an error when retrieving data.
-     */
-    void showRetry();
-
-    /**
-     * Hide a retry view shown if there was an error when retrieving data.
-     */
-    void hideRetry();
 
     /**
      * Show an error message

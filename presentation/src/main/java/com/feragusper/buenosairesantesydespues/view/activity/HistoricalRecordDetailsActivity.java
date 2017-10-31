@@ -50,41 +50,6 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
         this.initializeInjector();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if (outState != null) {
-            outState.putString(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID, this.historicalRecordId);
-        }
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();    //Call the back button's method
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    //endregion
-
-    //region BaseActivity Implementation
-    @Override
-    protected void onBeforeSetContentView() {
-        //noinspection deprecation
-        if (getWindowManager().getDefaultDisplay().getWidth() > getWindowManager().getDefaultDisplay().getHeight()) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-    }
-
-    @Override
-    protected int getContentViewResourceId() {
-        return R.layout.activity_historical_record_details;
-    }
-    //endregion
-
     //region ToolbarActivity Implementation
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -98,12 +63,15 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
             getSupportActionBar().setHomeAsUpIndicator(upArrow);
         }
     }
-    //endregion
 
-    //region HasComponent Implementation
     @Override
-    public HistoricalRecordComponent getComponent() {
-        return historicalRecordComponent;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();    //Call the back button's method
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
     //endregion
 
@@ -123,6 +91,38 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
                 .activityModule(getActivityModule())
                 .historicalRecordModule(new HistoricalRecordModule(this.historicalRecordId))
                 .build();
+    }
+    //endregion
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putString(INSTANCE_STATE_PARAM_HISTORICAL_RECORD_ID, this.historicalRecordId);
+        }
+        super.onSaveInstanceState(outState);
+    }
+    //endregion
+
+    //region BaseActivity Implementation
+    @Override
+    protected void onBeforeSetContentView() {
+        //noinspection deprecation
+        if (getWindowManager().getDefaultDisplay().getWidth() > getWindowManager().getDefaultDisplay().getHeight()) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+    //endregion
+
+    @Override
+    protected int getContentViewResourceId() {
+        return R.layout.activity_historical_record_details;
+    }
+
+    //region HasComponent Implementation
+    @Override
+    public HistoricalRecordComponent getComponent() {
+        return historicalRecordComponent;
     }
     //endregion
 

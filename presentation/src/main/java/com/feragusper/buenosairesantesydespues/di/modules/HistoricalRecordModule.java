@@ -16,7 +16,7 @@ import dagger.Provides;
 /**
  * @author Fernando.Perez
  * @since 0.1
- *
+ * <p>
  * Dagger module that provides historicalRecord related collaborators.
  */
 @Module
@@ -34,7 +34,7 @@ public class HistoricalRecordModule {
     @Provides
     @PerActivity
     @Named("historicalRecordList")
-    UseCase provideGetHistoricalRecordListUseCase(GetHistoricalRecordListUseCase getHistoricalRecordListUseCase) {
+    GetHistoricalRecordListUseCase provideGetHistoricalRecordListUseCase(GetHistoricalRecordListUseCase getHistoricalRecordListUseCase) {
         return getHistoricalRecordListUseCase;
     }
 

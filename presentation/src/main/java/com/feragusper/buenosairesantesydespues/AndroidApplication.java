@@ -18,13 +18,12 @@ import com.google.android.gms.analytics.Tracker;
 public class AndroidApplication extends Application {
 
     private static final int DISPATCH_PERIOD_IN_SECCOD = 30;
+    private static final String TRACKER_ID_PROD = "UA-69017801-2";
+    private static final String TRACKER_ID_DEBUG = "UA-69017801-1";
     private ApplicationComponent applicationComponent;
-
     // Analytics
     private GoogleAnalytics analytics;
     private Tracker tracker;
-    private static final String TRACKER_ID_PROD = "UA-69017801-2";
-    private static final String TRACKER_ID_DEBUG = "UA-69017801-1";
 
     @Override
     public void onCreate() {
@@ -38,6 +37,12 @@ public class AndroidApplication extends Application {
         }
     }
 
+    private void initializeInjector() {
+        this.applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+    }
+
     private void initializeAnalytics() {
         analytics = GoogleAnalytics.getInstance(this);
         analytics.enableAutoActivityReports(this);
@@ -46,12 +51,6 @@ public class AndroidApplication extends Application {
         tracker = analytics.newTracker(AndroidApplication.TRACKER_ID_PROD);
         tracker.enableExceptionReporting(true);
         tracker.enableAutoActivityTracking(true);
-    }
-
-    private void initializeInjector() {
-        this.applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
     }
 
     public ApplicationComponent getApplicationComponent() {

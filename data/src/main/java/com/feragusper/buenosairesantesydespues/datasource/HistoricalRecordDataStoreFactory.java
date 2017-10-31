@@ -22,6 +22,7 @@ public class HistoricalRecordDataStoreFactory {
     private final Context context;
     private final HistoricalRecordCache historicalRecordCache;
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public HistoricalRecordDataStoreFactory(Context context, HistoricalRecordCache historicalRecordCache) {
         if (context == null || historicalRecordCache == null) {
