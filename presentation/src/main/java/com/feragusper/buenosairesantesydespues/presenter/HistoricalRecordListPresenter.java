@@ -44,35 +44,6 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         this.historicalRecordModelDataMapper = historicalRecordModelDataMapper;
     }
 
-    private final class HistoricalRecordListSubscriber extends DefaultSubscriber<HistoricalRecordListPage> {
-
-        @Override
-        public void onCompleted() {
-            hideViewLoading();
-            if (!historicalRecords.isEmpty()) {
-                view.hideEmptyListView();
-            }
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            hideViewLoading();
-            showErrorMessage(new DefaultErrorBundle((Exception) e));
-            if (historicalRecords.isEmpty()) {
-                view.displayEmptyListView();
-            }
-        }
-
-        @Override
-        public void onNext(HistoricalRecordListPage historicalRecordListPage) {
-            historicalRecords.addAll(historicalRecordListPage.getHistoricalRecordList());
-            view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordListPage.getHistoricalRecordList()));
-            if (historicalRecordListPage.getCountTotal() <= historicalRecords.size()) {
-                view.noMorePages();
-            }
-        }
-    }
-
     public void setView(@NonNull HistoricalRecordListView view) {
         this.view = view;
     }
@@ -103,7 +74,11 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
     }
 
     public void reloadHistoricalRecordList() {
-        view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecords), page);
+        if (historicalRecords.size() > 0) {
+            view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecords), page);
+        } else {
+            loadHistoricalRecordList();
+        }
     }
 
     private void hideViewLoading() {
@@ -122,5 +97,34 @@ public class HistoricalRecordListPresenter extends DefaultSubscriber<List<Histor
         this.page = page;
         getHistoricalRecordListUseCase.setPage(page);
         getHistoricalRecordListUseCase.execute(new HistoricalRecordListSubscriber());
+    }
+
+    private final class HistoricalRecordListSubscriber extends DefaultSubscriber<HistoricalRecordListPage> {
+
+        @Override
+        public void onCompleted() {
+            hideViewLoading();
+            if (!historicalRecords.isEmpty()) {
+                view.hideEmptyListView();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            if (historicalRecords.isEmpty()) {
+                view.displayEmptyListView();
+            }
+        }
+
+        @Override
+        public void onNext(HistoricalRecordListPage historicalRecordListPage) {
+            historicalRecords.addAll(historicalRecordListPage.getHistoricalRecordList());
+            view.renderHistoricalRecordList(historicalRecordModelDataMapper.transform(historicalRecordListPage.getHistoricalRecordList()));
+            if (historicalRecordListPage.getCountTotal() <= historicalRecords.size()) {
+                view.noMorePages();
+            }
+        }
     }
 }
