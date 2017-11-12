@@ -9,14 +9,14 @@ def getVersionName = { ->
             executable "/bin/sh"
             //noinspection GroovyAssignabilityCheck
             args "-c", "echo -n `git rev-list HEAD | wc -l | sed 's/^[ ^t]*//'`"
-            standardOutput = revision;
+            standardOutput = revision
         }
     } else {
         exec {
             executable "cmd"
             //noinspection GroovyAssignabilityCheck
             args "/c", "git rev-list HEAD | find /c /v \"\""
-            standardOutput = revision;
+            standardOutput = revision
         }
         revision = revision as String
         revision = revision.trim()
@@ -43,7 +43,7 @@ allprojects {
     }
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
-        androidVersionCode = 14
+        androidVersionCode = 15
         androidVersionName = '1.4.0.' + getVersionName()
     }
 }
