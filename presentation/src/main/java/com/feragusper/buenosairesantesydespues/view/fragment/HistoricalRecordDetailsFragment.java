@@ -189,15 +189,11 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     //endregion
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         this.historicalRecordDetailsPresenter.destroy();
+        slideImageView.reset();
+        ButterKnife.reset(this);
     }
 
     //region Private Implementation

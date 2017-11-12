@@ -64,13 +64,6 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
         super();
     }
 
-    /**
-     * Interface for listening historicalRecord list events.
-     */
-    public interface HistoricalRecordListListener {
-        void onHistoricalRecordClicked(final HistoricalRecordModel historicalRecordModel);
-    }
-
     @Override
     public void showLoading() {
         rl_progress.setVisibility(View.VISIBLE);
@@ -147,7 +140,7 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
     }
 
     @Override
-    public void onAttach(Context activity) {
+    public void onAttachToContext(Context activity) {
         super.onAttach(activity);
         if (activity instanceof HistoricalRecordListListener) {
             historicalRecordListListener = (HistoricalRecordListListener) activity;
@@ -235,6 +228,13 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
             }
         });
         rv_historicalRecords.setOnScrollListener(endlessRecyclerViewScrollListener);
+    }
+
+    /**
+     * Interface for listening historicalRecord list events.
+     */
+    public interface HistoricalRecordListListener {
+        void onHistoricalRecordClicked(final HistoricalRecordModel historicalRecordModel);
     }
 
 }
