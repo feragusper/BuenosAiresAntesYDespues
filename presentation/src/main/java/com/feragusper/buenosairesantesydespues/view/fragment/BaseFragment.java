@@ -1,6 +1,10 @@
 package com.feragusper.buenosairesantesydespues.view.fragment;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -35,5 +39,34 @@ public abstract class BaseFragment extends Fragment {
     @SuppressWarnings("unchecked")
     protected <C> C getComponent(Class<C> componentType) {
         return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
+    }
+
+    @TargetApi(23)
+    @Override
+    public final void onAttach(Context context) {
+//        This method avoid to call super.onAttach(context) if I'm not using api 23 or more
+        if (Build.VERSION.SDK_INT >= 23) {
+            super.onAttach(context);
+            onAttachToContext(context);
+        }
+    }
+
+    /*
+     * Deprecated on API 23
+     * Use onAttachToContext instead
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public final void onAttach(Activity activity) {
+        if (Build.VERSION.SDK_INT < 23) {
+            super.onAttach(activity);
+            onAttachToContext(activity);
+        }
+    }
+
+    /*
+     * This method will be called from one of the two previous method
+     */
+    protected void onAttachToContext(Context context) {
     }
 }

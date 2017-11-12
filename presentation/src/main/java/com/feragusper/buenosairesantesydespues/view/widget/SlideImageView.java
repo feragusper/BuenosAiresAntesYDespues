@@ -58,32 +58,8 @@ public class SlideImageView extends RelativeLayout {
         init();
     }
 
-    private class BeforeAfterSliderTouchListener implements View.OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            int x = (int) event.getX();
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_MOVE:
-                    if (x >= 0 && x <= image1.getWidth()) {
-                        image2.getLayoutParams().width = x;
-                        slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
-                        sliderContainer.requestLayout();
-                    }
-                    break;
-                case MotionEvent.ACTION_DOWN:
-                    // Disallow ScrollView to intercept touch events.
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    // Allow ScrollView to intercept touch events.
-                    v.getParent().requestDisallowInterceptTouchEvent(false);
-                    break;
-            }
-
-            return true;
-        }
+    public void reset() {
+        Picasso.with(getContext()).cancelRequest(image1);
     }
 
     private void init() {
@@ -118,5 +94,33 @@ public class SlideImageView extends RelativeLayout {
                 Log.e(this.getClass().getSimpleName(), "There was an error trying to load image url1 = " + url1);
             }
         });
+    }
+
+    private class BeforeAfterSliderTouchListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int x = (int) event.getX();
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_MOVE:
+                    if (x >= 0 && x <= image1.getWidth()) {
+                        image2.getLayoutParams().width = x;
+                        slider.setX(x - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, PX_OFFSET_SLIDER, getResources().getDisplayMetrics()));
+                        sliderContainer.requestLayout();
+                    }
+                    break;
+                case MotionEvent.ACTION_DOWN:
+                    // Disallow ScrollView to intercept touch events.
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    // Allow ScrollView to intercept touch events.
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+
+            return true;
+        }
     }
 }
