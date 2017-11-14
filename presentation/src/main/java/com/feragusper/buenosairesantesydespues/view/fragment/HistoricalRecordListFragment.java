@@ -141,7 +141,6 @@ public class HistoricalRecordListFragment extends BaseFragment implements Histor
 
     @Override
     public void onAttachToContext(Context activity) {
-        super.onAttach(activity);
         if (activity instanceof HistoricalRecordListListener) {
             historicalRecordListListener = (HistoricalRecordListListener) activity;
         }

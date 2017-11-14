@@ -44,9 +44,8 @@ public abstract class BaseFragment extends Fragment {
     @TargetApi(23)
     @Override
     public final void onAttach(Context context) {
-//        This method avoid to call super.onAttach(context) if I'm not using api 23 or more
+        super.onAttach(context);
         if (Build.VERSION.SDK_INT >= 23) {
-            super.onAttach(context);
             onAttachToContext(context);
         }
     }
@@ -58,8 +57,8 @@ public abstract class BaseFragment extends Fragment {
     @SuppressWarnings("deprecation")
     @Override
     public final void onAttach(Activity activity) {
+        super.onAttach(activity);
         if (Build.VERSION.SDK_INT < 23) {
-            super.onAttach(activity);
             onAttachToContext(activity);
         }
     }
