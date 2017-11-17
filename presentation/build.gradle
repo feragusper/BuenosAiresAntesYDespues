@@ -18,6 +18,8 @@ android {
         versionName globalConfiguration.getAt("androidVersionName")
         archivesBaseName = "BAAD-$versionName"
         signingConfig signingConfigs.debug
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -62,31 +64,39 @@ android {
             debuggable false
         }
     }
+
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
+    }
 }
 
 dependencies {
-    def presentationDependencies = rootProject.ext.presentationDependencies
+    def firebaseVersion = "9.8.0"
+    def playServicesVersion = "9.8.0"
+    def androidSupportVersion = "22.2.1"
 
-    apt presentationDependencies.daggerCompiler
+    apt "com.google.dagger:dagger-compiler:2.0"
 
     compile project(':domain')
     compile project(':data')
 
-    compile presentationDependencies.dagger
-    compile presentationDependencies.butterKnife
-    compile presentationDependencies.recyclerView
-    compile presentationDependencies.rxJava
-    compile presentationDependencies.rxAndroid
-    compile presentationDependencies.picasso
-    compile presentationDependencies.setho
-    compile presentationDependencies.appCompat
-    compile presentationDependencies.design
-    compile presentationDependencies.playServicesAnalytics
-    compile presentationDependencies.playServicesMaps
-    compile presentationDependencies.firebaseMessaging
-    compile presentationDependencies.firebaseCore
+    compile "com.jakewharton:butterknife:6.0.0"
+    compile "com.squareup.picasso:picasso:2.5.2"
+    compile "com.facebook.stetho:stetho:1.2.0"
 
-    provided presentationDependencies.javaxAnnotation
+    compile "com.android.support:appcompat-v7:${androidSupportVersion}"
+    compile "com.android.support:recyclerview-v7:${androidSupportVersion}"
+    compile "com.android.support:design:${androidSupportVersion}"
+    compile "com.google.android.gms:play-services-analytics:${playServicesVersion}"
+    compile "com.google.android.gms:play-services-maps:${playServicesVersion}"
+    compile "com.google.firebase:firebase-messaging:${firebaseVersion}"
+    compile "com.google.firebase:firebase-core:${firebaseVersion}"
+
+    provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }
 
 apply plugin: 'com.google.gms.google-services'
