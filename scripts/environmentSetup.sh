@@ -15,7 +15,7 @@ function getAndroidSDK(){
     echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
     echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
     echo y | android update sdk --no-ui --all --filter "extra-android-support"
-    echo no | android create avd -n testAVD -f -t android-26 --abi default/x86 &&
+    echo no | android create avd -n testAVD -f -t android-26 --abi default/armeabi-v7a &&
     touch $DEPS
   fi
 }

@@ -1,7 +1,8 @@
 general:
   artifacts:
-    - app/build/reports
-    - app/build/outputs
+#    - app/build/reports
+#    - app/build/outputs
+    -/home/ubuntu/**repo_name**/build/outputs/reports/**testFolderName**/connected
 
 machine:
   java:
