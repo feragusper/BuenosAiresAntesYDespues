@@ -40,12 +40,12 @@ test:
 
     # Check lint hints
     - ./gradlew lint
-    - $ANDROID_HOME/tools/emulator -avd testAVD -no-skin -no-audio -no-window:
-      background: true
-    - (./gradlew assembleDebug):
-      timeout: 1200
-    - (./gradlew assembleDebugTest):
-      timeout: 1200
+#    - $ANDROID_HOME/tools/emulator -avd testAVD -no-skin -no-audio -no-window:
+#      background: true
+#    - (./gradlew assembleDebug):
+#      timeout: 1200
+#    - (./gradlew assembleDebugTest):
+#      timeout: 1200
 #    - (source scripts/environmentSetup.sh && waitForAVD)
 #    - (./gradlew connectedAndroidTest)
     # Starting the Android Emulator
