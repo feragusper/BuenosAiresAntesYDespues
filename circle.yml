@@ -39,7 +39,7 @@ test:
     - ./gradlew lint
     # Starting the Android Emulator
     # https://circleci.com/docs/android/#starting-the-android-emulator
-    - emulator -avd circleci-android26 -no-audio -no-window:
+    - emulator -avd circleci-android26 -no-window:
         background: true
         parallel: true
     # wait for it to have booted
