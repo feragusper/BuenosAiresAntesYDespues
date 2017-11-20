@@ -9,7 +9,6 @@ machine:
     version: oraclejdk8
   environment:
     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
-    ANDROID_HOME: /home/ubuntu/android
 
 dependencies:
   override:
