@@ -13,16 +13,16 @@ machine:
 
 dependencies:
   override:
-    - (source scripts/environmentSetup.sh && getAndroidSDK)
-#    - echo y | android list sdk
-#    - echo y | android update sdk --no-ui --all --filter "tools"
-#    - echo y | android update sdk --no-ui --all --filter "platform-tools"
-#    - echo y | android update sdk --no-ui --all --filter "build-tools-25.0.0"
-#    - echo y | android update sdk --no-ui --all --filter "android-26"
-#    - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
-#    - echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
-#    - echo y | android update sdk --no-ui --all --filter "extra-android-support"
-#    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
+#    - (source scripts/environmentSetup.sh && getAndroidSDK)
+    - echo y | android list sdk
+    - echo y | android update sdk --no-ui --all --filter "tools"
+    - echo y | android update sdk --no-ui --all --filter "platform-tools"
+    - echo y | android update sdk --no-ui --all --filter "build-tools-25.0.0"
+    - echo y | android update sdk --no-ui --all --filter "android-26"
+    - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
+    - echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
+    - echo y | android update sdk --no-ui --all --filter "extra-android-support"
+    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
   cache_directories:
     - ~/.android
     - ~/android
@@ -47,25 +47,26 @@ test:
       timeout: 1200
     - (./gradlew assembleDebugTest):
       timeout: 1200
-    - (source scripts/environmentSetup.sh && waitForAVD)
-    - (./gradlew connectedAndroidTest)
-#    # Starting the Android Emulator
-#    # https://circleci.com/docs/android/#starting-the-android-emulator
-#    - emulator -avd circleci-android24 -no-audio -no-window:
-#        background: true
-#        parallel: true
-#    # wait for it to have booted
+#    - (source scripts/environmentSetup.sh && waitForAVD)
+#    - (./gradlew connectedAndroidTest)
+    # Starting the Android Emulator
+    # https://circleci.com/docs/android/#starting-the-android-emulator
+    - emulator -avd circleci-android24 -no-audio -no-window:
+        background: true
+        parallel: true
+    # wait for it to have booted
 #    - circle-android wait-for-boot
-#    # unlock the emulator screen
-#    # https://github.com/circleci/EspressoSample/blob/master/circle.yml#L22
-#    - sleep 30
-#    - adb shell input keyevent 82
-#    # run tests  against the emulator.
-#    - ./gradlew connectedAndroidTest -PdisablePreDex
-#    # copy the build outputs to artifacts
-#    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-#    # copy the test results to the test results directory.
-#    - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+     - adb wait-for-device
+    # unlock the emulator screen
+    # https://github.com/circleci/EspressoSample/blob/master/circle.yml#L22
+    - sleep 30
+    - adb shell input keyevent 82
+    # run tests  against the emulator.
+    - ./gradlew connectedAndroidTest -PdisablePreDex
+    # copy the build outputs to artifacts
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    # copy the test results to the test results directory.
+    - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
 
 deployment:
   playstore:
