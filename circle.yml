@@ -43,7 +43,7 @@ test:
         background: true
         parallel: true
     # wait for it to have booted
-    - circle-android wait-for-boot
+#    - circle-android wait-for-boot
     # unlock the emulator screen
     # https://github.com/circleci/EspressoSample/blob/master/circle.yml#L22
     - sleep 30
