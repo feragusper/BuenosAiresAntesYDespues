@@ -50,24 +50,18 @@ android {
 }
 
 dependencies {
-    def dataDependencies = rootProject.ext.dataDependencies
-    def testDependencies = rootProject.ext.dataTestDependencies
-
     compile project(':domain')
 
-    apt dataDependencies.daggerCompiler
-    provided dataDependencies.javaxAnnotation
-    compile dataDependencies.dagger
-    compile dataDependencies.okHttp
-    compile dataDependencies.gson
-    compile dataDependencies.rxJava
-    compile dataDependencies.rxAndroid
-    compile dataDependencies.androidAnnotations
-    compile dataDependencies.sethoOkHttp
+    compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    compile "com.squareup.okhttp:okhttp:2.3.0"
+    compile "com.google.code.gson:gson:2.3"
+    compile "io.reactivex:rxandroid:${rootProject.ext.rxAndroidVersion}"
+    compile "com.android.support:support-annotations:${rootProject.ext.androidAnnotationsVersion}"
+    compile "com.facebook.stetho:stetho-okhttp:1.2.0"
     compile 'com.squareup.okhttp:logging-interceptor:+'
 
-    testCompile testDependencies.junit
-    testCompile testDependencies.mockito
-    testCompile testDependencies.robolectric
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.9.5"
+    testCompile "org.robolectric:robolectric:3.1.1"
     testApt "com.google.dagger:dagger-compiler:2.0"
 }

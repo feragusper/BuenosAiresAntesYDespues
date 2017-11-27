@@ -216,8 +216,10 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
 
     @Override
     public void hideLoading() {
-        rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        if (rl_progress != null) {
+            rl_progress.setVisibility(View.GONE);
+            this.getActivity().setProgressBarIndeterminateVisibility(false);
+        }
     }
 
     @Override

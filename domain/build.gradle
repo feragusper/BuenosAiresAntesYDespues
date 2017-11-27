@@ -6,21 +6,19 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 configurations {
-  provided
+    provided
 }
 
 sourceSets {
-  main {
-    compileClasspath += configurations.provided
-  }
+    main {
+        compileClasspath += configurations.provided
+    }
 }
 
 dependencies {
-  def domainDependencies = rootProject.ext.domainDependencies
+    provided "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
+    provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
 
-  provided domainDependencies.daggerCompiler
-  provided domainDependencies.javaxAnnotation
-
-  compile domainDependencies.dagger
-  compile domainDependencies.rxJava
+    compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    compile "io.reactivex:rxjava:${rootProject.ext.rxJavaVersion}"
 }
