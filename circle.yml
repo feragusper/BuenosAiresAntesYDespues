@@ -1,8 +1,7 @@
 general:
   artifacts:
-#    - app/build/reports
-#    - app/build/outputs
-#    -/home/ubuntu/**repo_name**/build/outputs/reports/**testFolderName**/connected
+    - app/build/reports
+    - app/build/outputs
 
 machine:
   java:
@@ -67,7 +66,7 @@ test:
     # copy the build outputs to artifacts
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
     # copy the test results to the test results directory.
-    - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+    - cp -r BuenosAiresAntesYDespues/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
 
 deployment:
   playstore:
