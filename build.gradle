@@ -1,30 +1,6 @@
 apply from: 'buildsystem/ci.gradle'
 apply from: 'buildsystem/dependencies.gradle'
 
-def getVersionName = { ->
-    def os = System.getProperty("os.name").toLowerCase()
-    def revision = new ByteArrayOutputStream()
-    if (!os.contains("windows")) {
-        exec {
-            executable "/bin/sh"
-            //noinspection GroovyAssignabilityCheck
-            args "-c", "echo -n `git rev-list HEAD | wc -l | sed 's/^[ ^t]*//'`"
-            standardOutput = revision
-        }
-    } else {
-        exec {
-            executable "cmd"
-            //noinspection GroovyAssignabilityCheck
-            args "/c", "git rev-list HEAD | find /c /v \"\""
-            standardOutput = revision
-        }
-        revision = revision as String
-        revision = revision.trim()
-    }
-
-    return revision
-}
-
 buildscript {
     repositories {
         jcenter()
@@ -43,7 +19,7 @@ allprojects {
     }
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
-        androidVersionCode = 17
-        androidVersionName = '1.4.0.' + getVersionName()
+        androidVersionCode = "git rev-list --all --count".execute().text.toInteger()
+        androidVersionName = '1.4.0.' + "git rev-list --all --count".execute().text.toInteger()
     }
 }
