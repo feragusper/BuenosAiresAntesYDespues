@@ -76,7 +76,7 @@ dependencies {
     def firebaseVersion = "11.8.0"
     def playServicesVersion = "11.8.0"
     def androidSupportVersion = "26.1.0"
-    def leakCanaryVersion = '1.5.2'
+    def leakCanaryVersion = '1.5.1'
 
     apt "com.google.dagger:dagger-compiler:2.0"
 
