@@ -20,8 +20,6 @@ android {
         signingConfig signingConfigs.debug
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        multiDexEnabled true
     }
 
     compileOptions {
@@ -65,10 +63,6 @@ android {
         release {
             debuggable false
         }
-    }
-
-    configurations.all {
-        resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
     }
 }
 
