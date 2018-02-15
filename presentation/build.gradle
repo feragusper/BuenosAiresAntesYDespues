@@ -64,16 +64,13 @@ android {
             debuggable false
         }
     }
-
-    configurations.all {
-        resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
-    }
 }
 
 dependencies {
-    def firebaseVersion = "9.8.0"
-    def playServicesVersion = "9.8.0"
-    def androidSupportVersion = "22.2.1"
+    def firebaseVersion = "11.8.0"
+    def playServicesVersion = "11.8.0"
+    def androidSupportVersion = "26.1.0"
+    def leakCanaryVersion = '1.5.1'
 
     apt "com.google.dagger:dagger-compiler:2.0"
 
@@ -91,6 +88,13 @@ dependencies {
     compile "com.google.android.gms:play-services-maps:${playServicesVersion}"
     compile "com.google.firebase:firebase-messaging:${firebaseVersion}"
     compile "com.google.firebase:firebase-core:${firebaseVersion}"
+    compile 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0'
+    compile "com.mikepenz:iconics-core:2.9.5@aar"
+    compile 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
+
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
 
     provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
 

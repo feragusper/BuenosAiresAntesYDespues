@@ -32,14 +32,17 @@
         </activity>
 
         <activity
-            android:name=".view.activity.HistoricalRecordListActivity"
-            android:launchMode="singleInstance" />
+            android:name=".view.activity.HistoricalRecordListActivity" />
 
         <activity android:name=".view.activity.HistoricalRecordDetailsActivity" />
 
         <activity
             android:name=".view.activity.AboutActivity"
-            android:label="@string/about" />
+            android:theme="@style/AppTheme.MaterialAboutActivity" />
+
+        <activity
+            android:name=".view.activity.AboutLicensesActivity"
+            android:theme="@style/AppTheme.MaterialAboutActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"

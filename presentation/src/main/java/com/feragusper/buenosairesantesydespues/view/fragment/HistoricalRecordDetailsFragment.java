@@ -1,5 +1,6 @@
 package com.feragusper.buenosairesantesydespues.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,6 +82,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     //endregion
 
     //region HistoricalRecordDetailsView Implementatino
+    @SuppressLint("SetTextI18n")
     @SuppressWarnings("ConstantConditions")
     @Override
     public void renderHistoricalRecord(final HistoricalRecordModel historicalRecord) {
@@ -157,7 +159,7 @@ public class HistoricalRecordDetailsFragment extends BaseFragment implements His
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final SupportMapFragment supportMapFragment = (SupportMapFragment) ((AppCompatActivity) getActivity()).getSupportFragmentManager().findFragmentById(R.id.map);
+        final SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (supportMapFragment != null) {
             supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override

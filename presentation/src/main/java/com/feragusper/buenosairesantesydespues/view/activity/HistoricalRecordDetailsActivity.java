@@ -2,8 +2,6 @@ package com.feragusper.buenosairesantesydespues.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
@@ -58,9 +56,7 @@ public class HistoricalRecordDetailsActivity extends ToolbarActivity implements 
 
         if (toolbar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-            upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setHomeAsUpIndicator(upArrow);
+            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_action_arrow_back));
         }
     }
 
