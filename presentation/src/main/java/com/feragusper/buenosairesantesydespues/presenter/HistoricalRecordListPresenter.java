@@ -3,11 +3,11 @@ package com.feragusper.buenosairesantesydespues.presenter;
 import android.support.annotation.NonNull;
 
 import com.feragusper.buenosairesantesydespues.di.PerActivity;
-import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.exception.DefaultErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.exception.ErrorBundle;
 import com.feragusper.buenosairesantesydespues.domain.interactor.DefaultSubscriber;
 import com.feragusper.buenosairesantesydespues.domain.interactor.GetHistoricalRecordListUseCase;
+import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecord;
 import com.feragusper.buenosairesantesydespues.domain.model.HistoricalRecordListPage;
 import com.feragusper.buenosairesantesydespues.exception.ErrorMessageFactory;
 import com.feragusper.buenosairesantesydespues.mapper.HistoricalRecordModelDataMapper;
