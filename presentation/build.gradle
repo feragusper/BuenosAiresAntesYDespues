@@ -20,6 +20,8 @@ android {
         signingConfig signingConfigs.debug
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
 
     compileOptions {
