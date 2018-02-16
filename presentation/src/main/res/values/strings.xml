@@ -18,7 +18,7 @@
     <string name="send_feedback">Feedback</string>
     <string name="version">Version %1$s</string>
     <string name="send_feedback_subject">Feedback desde BAAD Android</string>
-    <string name="versionName">Version %1$s</string>
+    <string name="versionName">Versión %1$s - Code %2$s</string>
     <string name="oops_por_alguna_razon_no_pudimos_cargar_resultados">Oops, por alguna razon no pudimos cargar resultados :(</string>
     <string name="releases">Releases</string>
     <string name="changelog">Changelog</string>

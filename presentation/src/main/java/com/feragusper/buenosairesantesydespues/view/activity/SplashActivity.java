@@ -1,5 +1,6 @@
 package com.feragusper.buenosairesantesydespues.view.activity;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class SplashActivity extends BaseActivity {
     @InjectView(R.id.tv_versionName)
     TextView mVersionName;
 
+    @SuppressLint("StringFormatMatches")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,14 +33,18 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(HistoricalRecordListActivity.getCallingIntent(SplashActivity.this));
+                if (isInForeground) {
+                    startActivity(HistoricalRecordListActivity.getCallingIntent(SplashActivity.this));
+                } else {
+                    finish();
+                }
             }
         }, 2000);
 
         if (BuildConfig.BUILD_TYPE.equals("debug")) {
             try {
-                PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-                mVersionName.setText(getString(R.string.versionName, pInfo.versionName + " " + BuildConfig.BUILD_TYPE));
+                PackageInfo packageInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+                mVersionName.setText(getString(R.string.versionName, packageInfo.versionName + " " + BuildConfig.BUILD_TYPE, packageInfo.versionCode));
             } catch (PackageManager.NameNotFoundException e) {
                 Log.e(this.getClass().getSimpleName(), "An error has occurred while trying to get the versionName", e);
             }

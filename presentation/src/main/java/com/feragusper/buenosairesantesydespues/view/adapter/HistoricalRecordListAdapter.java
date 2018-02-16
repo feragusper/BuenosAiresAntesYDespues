@@ -66,7 +66,7 @@ public class HistoricalRecordListAdapter extends RecyclerView.Adapter<RecyclerVi
 
         LoadingViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 
