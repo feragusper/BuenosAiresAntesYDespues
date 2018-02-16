@@ -2,6 +2,7 @@ package com.feragusper.buenosairesantesydespues.view.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject
     Navigator navigator;
+    protected boolean isInForeground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.getApplicationComponent().inject(this);
         setContentView(getContentViewResourceId());
         ButterKnife.inject(this);
+    }
+
+    @CallSuper
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isInForeground = true;
+    }
+
+    @CallSuper
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isInForeground = false;
     }
 
     @Override
