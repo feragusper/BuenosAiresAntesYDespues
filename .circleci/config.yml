@@ -24,6 +24,7 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
+      - run: ./yaml-setup.sh
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
