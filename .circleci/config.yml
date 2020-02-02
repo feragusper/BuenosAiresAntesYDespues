@@ -24,14 +24,7 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "tools"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "platform-tools"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "build-tools-25.0.0"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "android-26"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "extra-google-m2repository"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "extra-google-google_play_services"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "extra-android-support"
-      - run: echo y | sdkmanager --update sdk --no-ui --all --filter "extra-android-m2repository"
+      - run: echo yes | sdkmanager --update sdkmanager --licenses
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
