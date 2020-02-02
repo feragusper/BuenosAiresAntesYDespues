@@ -24,7 +24,7 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
-      - run: echo yes | sdkmanager --update sdkmanager --licenses
+      - run: echo yes | sdkmanager --licenses
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
