@@ -24,6 +24,16 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
+      - run: |-
+          wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddYVQwTVBSTHZXamM' -O presentation/src/main/res/values/google_maps_api.xml
+
+          wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxndddGZZd2tBUEhqeDA' -O buildsystem/release.keystore
+
+          wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddQmdUcksxNkRNaDg' -O buildsystem/playstore_deploy_keys.json
+
+          wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddWVRDa3BTaDY0N1U' -O buildsystem/extension.gradle
+
+          wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddeExzNEV3Q1RDV0U' -O presentation/google-services.json
       - run:
           name: Install licenses
           command: cp licenses/* /opt/android/sdk/licenses/
@@ -33,7 +43,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: Run Tests
           command: ./gradlew lint test
