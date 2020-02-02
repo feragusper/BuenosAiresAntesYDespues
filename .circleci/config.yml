@@ -24,7 +24,9 @@ jobs:
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
-      - run: echo yes | sdkmanager --licenses
+      - run:
+          name: Install licenses
+          command: cp licenses/* /opt/android/sdk/licenses/
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
