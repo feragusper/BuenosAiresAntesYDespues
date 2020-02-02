@@ -6,9 +6,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - develop
     working_directory: ~/feragusper/BuenosAiresAntesYDespues
     docker:
       - image: circleci/android:api-25-alpha
@@ -50,9 +47,6 @@ jobs:
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: app/build/test-results
   deploy:
-    branches:
-      only:
-        - master
     working_directory: ~/feragusper/BuenosAiresAntesYDespues
     docker:
       - image: circleci/android:api-25-alpha
@@ -83,3 +77,17 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
+workflows:
+  version: 2
+  dev:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
