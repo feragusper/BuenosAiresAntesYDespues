@@ -23,6 +23,6 @@ allprojects {
     ext {
         androidApplicationId = 'com.feragusper.buenosairesantesydespues'
         androidVersionCode = "git rev-list --all --count".execute().text.toInteger()
-        androidVersionName = '1.5.0.' + "git rev-list --all --count".execute().text.toInteger()
+        androidVersionName = '1.6.0.' + "git rev-list --all --count".execute().text.toInteger()
     }
 }

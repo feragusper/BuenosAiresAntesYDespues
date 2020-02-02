@@ -8,4 +8,23 @@
         android:layout_height="match_parent" />
 
     <include layout="@layout/view_progress" />
+
+<!--
+    This is here due to fix a "fragment has not been attached yet" problem that was happening when the activity rotated
+    Adding a map fragment wrapped in a framelayout with visibility gone fixes the problem because the fragment is present in landscape and portrait
+    It's an uggly fix cause we don't actually want this fragment in landscape
+-->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin" />
+    </FrameLayout>
+
 </RelativeLayout>
