@@ -13,8 +13,6 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
@@ -34,10 +32,6 @@ jobs:
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: Run Tests
           command: ./gradlew lint test
@@ -54,8 +48,6 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
@@ -73,10 +65,6 @@ jobs:
           name: Install licenses
           command: cp licenses/* /opt/android/sdk/licenses/
       - run: ./gradlew publishRelease
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
 workflows:
   version: 2
   dev:
