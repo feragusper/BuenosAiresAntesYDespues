@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.triplet.play'
 apply from: '../buildsystem/extension.gradle'
 
@@ -20,11 +19,17 @@ android {
         signingConfig signingConfigs.debug
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {
@@ -72,29 +77,32 @@ dependencies {
     def androidSupportVersion = "26.1.0"
     def leakCanaryVersion = '1.5.1'
 
-    apt "com.google.dagger:dagger-compiler:2.0"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.0"
 
-    compile project(':domain')
-    compile project(':data')
+    implementation project(':domain')
+    implementation project(':data')
 
-    compile "com.jakewharton:butterknife:6.0.0"
-    compile "com.squareup.picasso:picasso:2.5.2"
-    compile "com.facebook.stetho:stetho:1.2.0"
+    implementation "com.jakewharton:butterknife:6.0.0"
+    implementation "com.squareup.picasso:picasso:2.5.2"
+    implementation "com.facebook.stetho:stetho:1.2.0"
 
-    compile "com.android.support:appcompat-v7:${androidSupportVersion}"
-    compile "com.android.support:recyclerview-v7:${androidSupportVersion}"
-    compile "com.android.support:design:${androidSupportVersion}"
-    compile "com.google.android.gms:play-services-analytics:${playServicesVersion}"
-    compile "com.google.android.gms:play-services-maps:${playServicesVersion}"
-    compile "com.google.firebase:firebase-messaging:${firebaseVersion}"
-    compile "com.google.firebase:firebase-core:${firebaseVersion}"
-    compile 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0'
-    compile "com.mikepenz:iconics-core:2.9.5@aar"
-    compile 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
+    implementation "com.android.support:appcompat-v7:${androidSupportVersion}"
+    implementation "com.android.support:recyclerview-v7:${androidSupportVersion}"
+    implementation "com.android.support:design:${androidSupportVersion}"
+    implementation "com.google.android.gms:play-services-analytics:${playServicesVersion}"
+    implementation "com.google.android.gms:play-services-maps:${playServicesVersion}"
+    implementation "com.google.firebase:firebase-messaging:${firebaseVersion}"
+    implementation "com.google.firebase:firebase-core:${firebaseVersion}"
+    implementation 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0'
+    implementation "com.mikepenz:iconics-core:2.9.5@aar"
+    implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
+    implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    implementation "io.reactivex:rxjava:${rootProject.ext.rxJavaVersion}"
+    implementation "io.reactivex:rxandroid:${rootProject.ext.rxAndroidVersion}"
 
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
 
     provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
 

@@ -5,11 +5,11 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.github.triplet.gradle:play-publisher:2.0.0-SNAPSHOT'
         classpath 'com.google.gms:google-services:3.0.0'
     }
 }
