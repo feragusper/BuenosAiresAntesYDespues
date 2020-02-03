@@ -16,9 +16,6 @@ sourceSets {
 }
 
 dependencies {
-    provided "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
-    provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
-
-    compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
-    compile "io.reactivex:rxjava:${rootProject.ext.rxJavaVersion}"
+    implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
+    implementation "io.reactivex:rxjava:${rootProject.ext.rxJavaVersion}"
 }
