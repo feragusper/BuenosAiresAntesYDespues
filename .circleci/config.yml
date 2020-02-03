@@ -13,6 +13,8 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
@@ -32,6 +34,10 @@ jobs:
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: Run Tests
           command: ./gradlew lint test
@@ -48,6 +54,8 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
@@ -58,13 +66,17 @@ jobs:
 
           wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddQmdUcksxNkRNaDg' -O buildsystem/playstore_deploy_keys.json
 
-          wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddWVRDa3BTaDY0N1U' -O buildsystem/extension.gradle
+          wget --no-check-certificate  'https://drive.google.com/u/0/uc?id=1NO6uVaEPsm-ZSSlxfGa5KP91oQxph5uG' -O buildsystem/extension.gradle
 
           wget --no-check-certificate  'https://drive.google.com/uc?export=download&id=0B_9goqUbxnddeExzNEV3Q1RDV0U' -O presentation/google-services.json
       - run:
           name: Install licenses
           command: cp licenses/* /opt/android/sdk/licenses/
       - run: ./gradlew publishRelease
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
 workflows:
   version: 2
   dev:
