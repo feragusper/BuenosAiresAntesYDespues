@@ -2,7 +2,6 @@ package com.feragusper.buenosairesantesydespues;
 
 import android.app.Application;
 
-import com.facebook.stetho.Stetho;
 import com.feragusper.buenosairesantesydespues.di.components.ApplicationComponent;
 import com.feragusper.buenosairesantesydespues.di.components.DaggerApplicationComponent;
 import com.feragusper.buenosairesantesydespues.di.modules.ApplicationModule;
@@ -31,10 +30,6 @@ public class AndroidApplication extends Application {
 
         initializeInjector();
         initializeAnalytics();
-
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
-        }
     }
 
     private void initializeInjector() {
