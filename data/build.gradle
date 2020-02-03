@@ -2,9 +2,6 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.7.1'
-    }
 }
 
 repositories {
@@ -12,7 +9,6 @@ repositories {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -59,6 +55,8 @@ dependencies {
     implementation "com.facebook.stetho:stetho-okhttp:1.2.0"
     implementation 'com.squareup.okhttp:logging-interceptor:2.7.5'
     implementation "io.reactivex:rxjava:${rootProject.ext.rxJavaVersion}"
+
+    provided "org.glassfish:javax.annotation:${rootProject.ext.javaxAnnotationVersion}"
 
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:1.9.5"
