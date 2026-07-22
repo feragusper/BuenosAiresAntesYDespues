@@ -35,8 +35,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberUpdatedMarkerState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -139,7 +139,7 @@ private fun RecordDetailContent(record: HistoricalRecord) {
                 cameraPositionState = cameraPositionState,
             ) {
                 Marker(
-                    state = MarkerState(position = position),
+                    state = rememberUpdatedMarkerState(position = position),
                     title = record.address,
                 )
             }
