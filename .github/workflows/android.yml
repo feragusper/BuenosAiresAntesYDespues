@@ -24,14 +24,17 @@ jobs:
       - name: Provide Maps API key
         run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" >> local.properties
 
-      # google-services.json is not committed; CI writes it from a repository secret.
-      - name: Provide google-services.json
-        env:
-          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+      # The real google-services.json is not committed. CI writes a structurally valid
+      # dummy (fake project, correct package names) so the google-services plugin can run
+      # without needing any Firebase secret.
+      - name: Provide dummy google-services.json
         run: |
           mkdir -p app/src/debug app/src/release
-          printf '%s' "$GOOGLE_SERVICES_JSON" > app/src/debug/google-services.json
-          printf '%s' "$GOOGLE_SERVICES_JSON" > app/src/release/google-services.json
+          write_gsj() {
+            printf '{"project_info":{"project_number":"000000000000","project_id":"baad-ci","storage_bucket":"baad-ci.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:000000000000:android:0000000000000000","android_client_info":{"package_name":"%s"}},"oauth_client":[],"api_key":[{"current_key":"AIzaSyDUMMYciDUMMYciDUMMYciDUMMYciDUMMYci0"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}}],"configuration_version":"1"}\n' "$1" > "$2"
+          }
+          write_gsj com.feragusper.buenosairesantesydespues.dev app/src/debug/google-services.json
+          write_gsj com.feragusper.buenosairesantesydespues app/src/release/google-services.json
 
       - name: Build & test
         run: ./gradlew assembleDebug lintDebug testDebugUnitTest --stacktrace
@@ -42,3 +45,4 @@ jobs:
         with:
           name: reports
           path: '**/build/reports'
+          if-no-files-found: ignore
