@@ -1,62 +1,75 @@
-# BAAD - Buenos Aires Antes y Despues App for Android
+# BAAD — Buenos Aires Antes y Después (Android)
 
-A journey through time between Buenos Aires yesterday and today. The essence of this project is based on a selection of old photos of the Federal Capital, from which we seek to imitate, at present, the curious eye of that time; the same location and angle of the original record.
-Most of the old photos are the General Archive of the Nation and the Facebook group "Old Pictures of Buenos Aires". The current took them Gaston de la Llana, mentor of the project, web designer and amateur photographer.
-If you want to collaborate sending us old photos or your own before and after to send us fotos@bsasantesydespues.com.ar
+A journey through time between Buenos Aires yesterday and today: a curated set of old photos
+of the city paired with a current photo taken from the same spot and angle.
 
-Follow Us
------------------
- - [Google Play] (https://play.google.com/store/apps/details?id=com.feragusper.buenosairesantesydespues) 
- - [Web] (http://bsasantesydespues.com.ar)
- - [FB] (https://www.facebook.com/bsasantesydespues)
+Old photos come from the General Archive of the Nation and the "Fotos Viejas de Buenos Aires"
+Facebook group; the current ones were taken by Gastón de la Llana, mentor of the project.
 
-Screenshots
------------------
-![Grid](/etc/grid.png?raw=true)
-![Detail](/etc/detail.png?raw=true)
+- [Google Play](https://play.google.com/store/apps/details?id=com.feragusper.buenosairesantesydespues)
+- [Web](http://bsasantesydespues.com.ar)
+- [Facebook](https://www.facebook.com/bsasantesydespues)
 
-Support
------------------
-If you've found an error in this project, please file an issue: https://github.com/feragusper/BuenosAiresAntesYDespues/issues
+## Tech stack
 
-Patches are encouraged, and may be submitted by forking this project and submitting a pull request through GitHub.
+Fully modernized (2026) from the original Java / RxJava / Dagger / XML app:
 
-Contribute
------------------
-Pull requests are welcome.
+| Area | Technology |
+|------|------------|
+| Language | Kotlin 2.3, Java 25 bytecode |
+| UI | Jetpack Compose + Material 3 |
+| Architecture | MVVM + unidirectional data flow, multi-module (feature + core) |
+| Async | Coroutines + Flow / StateFlow |
+| DI | Hilt |
+| Networking | Retrofit 3 + OkHttp 5 + kotlinx.serialization |
+| Images | Coil 3 |
+| Maps | Maps Compose |
+| Navigation | Navigation-Compose |
+| Build | Gradle 9.6 (Kotlin DSL), AGP 9.3 (built-in Kotlin), version catalog, convention plugins |
+| Min / Target / Compile SDK | 24 / 36 / 36 |
 
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+## Module structure
 
-Build Configuration
------------------
-This project was build on JDK 1.8
+```
+:app                     Application, MainActivity, navigation host, splash, about
+:feature:records         Records list (grid + pagination) and detail (before/after + map)
+:core:model              Pure-Kotlin domain models
+:core:common             Coroutine dispatchers, shared errors
+:core:network            Retrofit API, DTOs, DTO→domain mappers
+:core:data               Repository (single source of truth)
+:core:designsystem       Compose theme (Material 3)
+build-logic              Gradle convention plugins shared by all modules
+```
 
-Requirements
------------------
-- [Android SDK](http://developer.android.com/sdk/index.html).
-- Android [5.0 (API 22) ](http://developer.android.com/tools/revisions/platforms.html#5.0).
-- Android Build Tools 23.0.0.
+Dependency direction: `app → feature → core:data → core:network → core:model`.
 
-Architecture
------------------
-This project follows architecture guidelines that are based on [Fernando Ceja's blog post] (http://fernandocejas.com/2015/07/18/architecting-android-the-evolution). 
+## Building
 
-Libraries and tools included
------------------
-- Support Libraries
-- Play Services
-- RecyclerViews
-- [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid) 
-- [OkHTTP](http://square.github.io/okhttp/)
-- [Gson](https://github.com/google/gson/)
-- [Dagger 2](http://google.github.io/dagger/)
-- [Butterknife](https://github.com/JakeWharton/butterknife)
-- [Picasso](http://square.github.io/picasso/)
+Requires **JDK 25** and the Android SDK (compileSdk 36).
 
-Licensing
----------
-Please see the file called LICENSE.
+```bash
+./gradlew assembleDebug
+```
+
+Create a `local.properties` with your SDK path and a Google Maps key:
+
+```properties
+sdk.dir=/path/to/Android/sdk
+MAPS_API_KEY=your_maps_api_key
+```
+
+A Firebase `google-services.json` is required under `app/src/debug/` and `app/src/release/`
+(kept out of version control).
+
+## Architecture guidelines
+
+The layering follows the modern Android app architecture guidance (UI ← ViewModel ← Repository
+← data source) with immutable `UiState` exposed as `StateFlow`.
+
+## Contributing
+
+Pull requests are welcome. Fork, branch, commit, push, open a PR.
+
+## License
+
+See [LICENSE](LICENSE).

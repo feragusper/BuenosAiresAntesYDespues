@@ -1,37 +1,50 @@
-# Windows thumbnail db
-Thumbs.db
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
 
-# OSX files
-.DS_Store
+# Files for the ART/Dalvik VM
+*.dex
 
-# generated files
+# Java class files
+*.class
+
+# Generated files
 bin/
 gen/
+out/
 
-# Local configuration file (sdk path, etc)
+# Gradle
+.gradle/
+build/
+# Keep the wrapper jar
+!gradle-wrapper.jar
+
+# Kotlin
+.kotlin/
+
+# Local configuration (SDK path, API keys)
 local.properties
-  
-# Eclipse project files
-.classpath
-.project
 
-# Release files
-buildsystem/extension.gradle
-buildsystem/playstore_deploy_keys.json
+# Secrets — not committed
+**/google-services.json
 buildsystem/release.keystore
-presentation/google-services.json
-presentation/src/main/res/values/google_maps_api.xml
-  
-# Android Studio
-.idea
-.gradle
-/*/local.properties
-/*/out
-/*/*/build
-build
-/*/*/production
+buildsystem/playstore_deploy_keys.json
+
+# Android Studio / IntelliJ
+.idea/
 *.iml
 *.iws
 *.ipr
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor backups
 *~
 *.swp
