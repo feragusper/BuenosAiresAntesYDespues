@@ -1,6 +1,13 @@
 package com.feragusper.buenosairesantesydespues.feature.records.detail
 
+import android.content.Context
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,10 +34,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.feragusper.buenosairesantesydespues.core.model.HistoricalRecord
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -38,9 +47,11 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberUpdatedMarkerState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun RecordDetailScreen(
+    sharedTransitionScope: SharedTransitionScope,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecordDetailViewModel = hiltViewModel(),
@@ -78,52 +89,73 @@ fun RecordDetailScreen(
             when {
                 uiState.isLoading -> CircularProgressIndicator()
                 uiState.errorMessage != null -> Text(uiState.errorMessage!!)
-                record != null -> RecordDetailContent(record)
+                record != null -> RecordDetailContent(
+                    record = record,
+                    sharedTransitionScope = sharedTransitionScope,
+                    animatedVisibilityScope = animatedVisibilityScope,
+                )
             }
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun RecordDetailContent(record: HistoricalRecord) {
+private fun RecordDetailContent(
+    record: HistoricalRecord,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        BeforeAfterSlider(
-            beforeUrl = record.imageUrlBefore,
-            afterUrl = record.imageUrlAfter,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(4f / 3f),
-        )
+        with(sharedTransitionScope) {
+            BeforeAfterSlider(
+                beforeUrl = record.imageUrlBefore,
+                afterUrl = record.imageUrlAfter,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(4f / 3f)
+                    .sharedElement(
+                        sharedContentState = rememberSharedContentState(key = "image-${record.id}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                    ),
+            )
+        }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            val yearNeighborhood = listOf(record.year, record.neighborhood)
-                .filter { it.isNotBlank() }
-                .joinToString(" - ")
-            if (yearNeighborhood.isNotBlank()) {
-                Text(yearNeighborhood, style = MaterialTheme.typography.titleMedium)
-            }
-            if (record.address.isNotBlank()) {
-                Text(record.address, style = MaterialTheme.typography.bodyLarge)
-            }
-            if (record.description.isNotBlank()) {
-                Text(record.description, style = MaterialTheme.typography.bodyMedium)
-            }
-            if (record.credits.isNotBlank()) {
-                Text(
-                    record.credits,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+        with(animatedVisibilityScope) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .animateEnterExit(
+                        enter = fadeIn() + slideInVertically { it / 3 },
+                        exit = fadeOut(),
+                    ),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                val yearNeighborhood = listOf(record.year, record.neighborhood)
+                    .filter { it.isNotBlank() }
+                    .joinToString(" - ")
+                if (yearNeighborhood.isNotBlank()) {
+                    Text(yearNeighborhood, style = MaterialTheme.typography.titleMedium)
+                }
+                if (record.address.isNotBlank()) {
+                    Text(record.address, style = MaterialTheme.typography.bodyLarge)
+                }
+                if (record.description.isNotBlank()) {
+                    Text(record.description, style = MaterialTheme.typography.bodyMedium)
+                }
+                if (record.credits.isNotBlank()) {
+                    Text(
+                        record.credits,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
 
@@ -132,22 +164,27 @@ private fun RecordDetailContent(record: HistoricalRecord) {
             val cameraPositionState = rememberCameraPositionState {
                 this.position = CameraPosition.fromLatLngZoom(position, 14f)
             }
-            GoogleMap(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(240.dp),
-                cameraPositionState = cameraPositionState,
-            ) {
-                Marker(
-                    state = rememberUpdatedMarkerState(position = position),
-                    title = record.address,
-                )
+            with(animatedVisibilityScope) {
+                GoogleMap(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .height(220.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .animateEnterExit(enter = fadeIn(), exit = fadeOut()),
+                    cameraPositionState = cameraPositionState,
+                ) {
+                    Marker(
+                        state = rememberUpdatedMarkerState(position = position),
+                        title = record.address,
+                    )
+                }
             }
         }
     }
 }
 
-private fun shareRecord(context: android.content.Context, record: HistoricalRecord) {
+private fun shareRecord(context: Context, record: HistoricalRecord) {
     val sendIntent = Intent(Intent.ACTION_SEND).apply {
         putExtra(
             Intent.EXTRA_TEXT,

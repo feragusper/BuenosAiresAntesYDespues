@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Before/after mark: a framed photo split down the middle, with the comparison
+     slider (divider + handle). Art kept inside the 66dp adaptive safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Left half of the photo (antes / sepia), rounded on the left corners. -->
+    <path
+        android:fillColor="#D7BE9C"
+        android:pathData="M54,34 H36 A8,8 0 0 0 28,42 V66 A8,8 0 0 0 36,74 H54 Z" />
+
+    <!-- Right half of the photo (después / teal), rounded on the right corners. -->
+    <path
+        android:fillColor="#79A9B1"
+        android:pathData="M54,34 H72 A8,8 0 0 1 80,42 V66 A8,8 0 0 1 72,74 H54 Z" />
+
+    <!-- Slider divider. -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M51.5,30 H56.5 V78 H51.5 Z" />
+
+    <!-- Slider handle (white disc). -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,45 a9,9 0 1 0 0,18 a9,9 0 1 0 0,-18 Z" />
+
+    <!-- Handle center dot in the brand color. -->
+    <path
+        android:fillColor="#15242B"
+        android:pathData="M54,50.5 a3.5,3.5 0 1 0 0,7 a3.5,3.5 0 1 0 0,-7 Z" />
+</vector>

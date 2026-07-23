@@ -7,11 +7,20 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
-// Read the Google Maps key from local.properties (kept out of version control).
-val mapsApiKey: String = Properties().apply {
+// Read secrets from local.properties (kept out of version control).
+val localProps = Properties().apply {
     val f = rootProject.file("local.properties")
     if (f.exists()) f.inputStream().use { load(it) }
-}.getProperty("MAPS_API_KEY", "")
+}
+val mapsApiKeyDebug: String = localProps.getProperty("MAPS_API_KEY", "")
+val mapsApiKeyRelease: String = localProps.getProperty("MAPS_API_KEY_RELEASE", mapsApiKeyDebug)
+
+// Release signing config from keystore.properties (also out of version control).
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+val hasReleaseSigning = keystoreProps.getProperty("storeFile") != null
 
 android {
     namespace = "com.feragusper.buenosairesantesydespues"
@@ -22,12 +31,12 @@ android {
 
     defaultConfig {
         applicationId = "com.feragusper.buenosairesantesydespues"
-        versionCode = 100
+        versionCode = 300
         versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKeyDebug
     }
 
     signingConfigs {
@@ -36,6 +45,14 @@ android {
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
+        }
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
         }
     }
 
@@ -50,6 +67,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            manifestPlaceholders["MAPS_API_KEY"] = mapsApiKeyRelease
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 }
@@ -59,6 +80,8 @@ dependencies {
     implementation(projects.core.designsystem)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)

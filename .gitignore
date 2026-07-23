@@ -29,6 +29,7 @@ local.properties
 
 # Secrets — not committed
 **/google-services.json
+keystore.properties
 buildsystem/release.keystore
 buildsystem/playstore_deploy_keys.json
 

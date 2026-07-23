@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Themed-icon (monochrome) layer: split-photo silhouette with a gap for the slider.
+     Single color; the system tints it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:fillColor="#000000"
+        android:pathData="M51,34 H36 A8,8 0 0 0 28,42 V66 A8,8 0 0 0 36,74 H51 Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M57,34 H72 A8,8 0 0 1 80,42 V66 A8,8 0 0 1 72,74 H57 Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,46 a8,8 0 1 0 0,16 a8,8 0 1 0 0,-16 Z" />
+</vector>

@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.common)
 
+    implementation(libs.androidx.compose.animation)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.maps.compose)
