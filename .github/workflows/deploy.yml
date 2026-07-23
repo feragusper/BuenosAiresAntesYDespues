@@ -1,0 +1,71 @@
+name: Deploy to Play
+
+# Manual trigger. Builds the signed release and uploads it via the Play Developer API.
+# NOTE: the very first submission also needs the one-time Play Console declarations
+# (health features, data safety, content rating, target audience). Those are set in the
+# Console UI once; after that this workflow can publish on its own.
+
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: "Play track"
+        default: "internal"
+        type: choice
+        options: [internal, alpha, beta, production]
+      status:
+        description: "Release status"
+        default: "draft"
+        type: choice
+        options: [draft, completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Restore secrets
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+          KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          GOOGLE_SERVICES_JSON_DEBUG: ${{ secrets.GOOGLE_SERVICES_JSON_DEBUG }}
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          MAPS_API_KEY_RELEASE: ${{ secrets.MAPS_API_KEY_RELEASE }}
+        run: |
+          mkdir -p buildsystem app/src/debug app/src/release
+          echo "$RELEASE_KEYSTORE_BASE64" | base64 --decode > buildsystem/release.keystore
+          printf '%s' "$KEYSTORE_PROPERTIES" > keystore.properties
+          printf '%s' "$GOOGLE_SERVICES_JSON" > app/src/release/google-services.json
+          printf '%s' "$GOOGLE_SERVICES_JSON_DEBUG" > app/src/debug/google-services.json
+          printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON" > buildsystem/playstore_deploy_keys.json
+          {
+            echo "MAPS_API_KEY=$MAPS_API_KEY"
+            echo "MAPS_API_KEY_RELEASE=$MAPS_API_KEY_RELEASE"
+          } >> local.properties
+
+      - name: Build signed release APK
+        run: ./gradlew :app:assembleRelease --stacktrace
+
+      - name: Install Play publisher deps
+        run: python3 -m pip install --quiet google-api-python-client google-auth
+
+      - name: Publish to Play
+        run: |
+          python3 scripts/publish_play.py \
+            --aab app/build/outputs/apk/release/app-release.apk \
+            --credentials buildsystem/playstore_deploy_keys.json \
+            --package com.feragusper.buenosairesantesydespues \
+            --track "${{ inputs.track }}" \
+            --status "${{ inputs.status }}"
