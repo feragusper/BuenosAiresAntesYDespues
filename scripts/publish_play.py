@@ -69,12 +69,9 @@ def main() -> int:
         body={"releases": [release]},
     ).execute()
 
-    print("Committing edit (changes staged, not auto-sent for review) ...")
-    edits.commit(
-        packageName=args.package, editId=edit_id, changesNotSentForReview=True
-    ).execute()
-    print(f"✅ Done: versionCode {version_code} staged on '{args.track}' ({args.status}).")
-    print("   Finish + send for review from the Play Console.")
+    print("Committing edit ...")
+    edits.commit(packageName=args.package, editId=edit_id).execute()
+    print(f"✅ Done: versionCode {version_code} on '{args.track}' ({args.status}), sent for review.")
     return 0
 
 
