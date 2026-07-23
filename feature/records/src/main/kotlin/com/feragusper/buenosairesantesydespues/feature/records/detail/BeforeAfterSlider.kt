@@ -16,17 +16,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
 /**
- * Before/after image comparison. The "after" image fills the box; the "before" image is
- * revealed from the left up to a draggable vertical divider — the Compose equivalent of the
- * original SlideImageView.
+ * Before/after image comparison, mirroring the website's img-comparison-slider.
+ *
+ * Both images occupy the exact same box (same size, same [ContentScale.Crop] framing) and are
+ * stacked. Only the *drawing* of the top ("before") image is clipped to the slider fraction, so
+ * neither image ever moves or re-frames while dragging — the two stay pixel-aligned and only the
+ * reveal boundary moves.
  */
 @Composable
 fun BeforeAfterSlider(
@@ -36,10 +40,9 @@ fun BeforeAfterSlider(
 ) {
     BoxWithConstraints(modifier = modifier.clipToBounds()) {
         val boxWidth = maxWidth
-        val maxWidthPx = with(LocalDensity.current) { boxWidth.toPx() }
         var fraction by remember { mutableFloatStateOf(0.5f) }
 
-        // After image (full background).
+        // "After" image — full, underneath.
         AsyncImage(
             model = afterUrl,
             contentDescription = "Después",
@@ -47,41 +50,38 @@ fun BeforeAfterSlider(
             modifier = Modifier.fillMaxSize(),
         )
 
-        // Before image, clipped to the current fraction but rendered at full width so it lines up.
-        Box(
+        // "Before" image — same box/framing, but only painted up to `fraction` of the width.
+        AsyncImage(
+            model = beforeUrl,
+            contentDescription = "Antes",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxHeight()
-                .width(boxWidth * fraction)
-                .clipToBounds(),
-        ) {
-            AsyncImage(
-                model = beforeUrl,
-                contentDescription = "Antes",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(boxWidth)
-                    .fillMaxHeight(),
-            )
-        }
+                .fillMaxSize()
+                .drawWithContent {
+                    clipRect(right = size.width * fraction) {
+                        this@drawWithContent.drawContent()
+                    }
+                },
+        )
 
         // Divider handle.
         Box(
             modifier = Modifier
-                .fillMaxHeight()
+                .align(Alignment.CenterStart)
                 .offset(x = boxWidth * fraction - 1.dp)
+                .fillMaxHeight()
                 .width(2.dp)
-                .background(Color.White)
-                .align(Alignment.CenterStart),
+                .background(Color.White),
         )
 
-        // Drag surface.
+        // Drag surface on top.
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .pointerInput(maxWidthPx) {
+                .pointerInput(Unit) {
                     detectHorizontalDragGestures { change, _ ->
                         change.consume()
-                        fraction = (change.position.x / maxWidthPx).coerceIn(0f, 1f)
+                        fraction = (change.position.x / size.width).coerceIn(0f, 1f)
                     }
                 },
         )
